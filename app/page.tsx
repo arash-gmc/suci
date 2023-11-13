@@ -1,10 +1,12 @@
-import { Button } from "@radix-ui/themes";
+import { Button, Container, TextField } from "@radix-ui/themes";
+import NewPost from "./NewPost";
 
 export default function Home() {
   return (
     <>
-      <h1>Hello</h1>
-      <Button>Click Me</Button>
+      <Container>
+        <NewPost />
+      </Container>
     </>
   );
 }
