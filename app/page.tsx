@@ -1,12 +1,14 @@
-import { Button, Container, TextField } from "@radix-ui/themes";
+import { Container, Flex } from "@radix-ui/themes";
 import NewPost from "./NewPost";
+import PostTable from "./PostTable";
 
 export default function Home() {
   return (
     <>
-      <Container>
+      <Flex direction="column" gap="2">
         <NewPost />
-      </Container>
+        <PostTable posts={[{ id: 1, text: "hello" }]} />
+      </Flex>
     </>
   );
 }
