@@ -1,4 +1,4 @@
-import { Container, Flex } from "@radix-ui/themes";
+import { Flex } from "@radix-ui/themes";
 import NewPost from "./NewPost";
 import PostTable from "./PostTable";
 

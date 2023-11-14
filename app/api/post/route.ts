@@ -12,3 +12,13 @@ export async function POST(request: NextRequest) {
   });
   return NextResponse.json(newPost);
 }
+
+export async function GET(request: NextRequest) {
+  const posts = await prisma.posts.findMany();
+  return NextResponse.json([...posts]);
+}
+
+export async function DELETE(request: NextRequest) {
+  await prisma.posts.deleteMany();
+  return NextResponse.json({});
+}

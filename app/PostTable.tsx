@@ -1,7 +1,5 @@
 import prisma from "@/prisma/client";
-import { Posts } from "@prisma/client";
 import { Table } from "@radix-ui/themes";
-import React from "react";
 
 const PostTable = async () => {
   const posts = await prisma.posts.findMany();
