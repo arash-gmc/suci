@@ -7,7 +7,7 @@ export default function Home() {
     <>
       <Flex direction="column" gap="2">
         <NewPost />
-        <PostTable posts={[{ id: 1, text: "hello" }]} />
+        <PostTable />
       </Flex>
     </>
   );

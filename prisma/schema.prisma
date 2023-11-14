@@ -11,6 +11,7 @@ datasource db {
 }
 
 model Posts {
-  id   Int    @id
-  text String
+  id   Int      @id @default(autoincrement())
+  text String   @db.VarChar(300)
+  date DateTime @default(now())
 }
