@@ -17,8 +17,8 @@ const NewPost = () => {
       <form
         onSubmit={handleSubmit((data) => {
           axios.post("/api/post", { text: data.text });
-          reset();
           router.refresh();
+          reset();
         })}
       >
         <Flex gap="4" mx="2">
