@@ -15,8 +15,8 @@ const NewPost = () => {
   return (
     <>
       <form
-        onSubmit={handleSubmit((data) => {
-          axios.post("/api/post", { text: data.text });
+        onSubmit={handleSubmit(async (data) => {
+          await axios.post("/api/post", { text: data.text });
           router.refresh();
           reset();
         })}
