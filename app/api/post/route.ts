@@ -11,12 +11,9 @@ export async function POST(request: NextRequest) {
   const validation = newPostSchema.safeParse(body);
   if (!validation.success)
     return NextResponse.json({ error: "text not provided" }, { status: 400 });
-  const user = await prisma.user.findUnique({
-    where: { email: session.user?.email || undefined },
-  });
-  if (!user) return;
+
   const newPost = await prisma.posts.create({
-    data: { text: body.text, authorId: user.id },
+    data: { text: body.text, authorId: session.user.id },
   });
   return NextResponse.json(newPost);
 }
