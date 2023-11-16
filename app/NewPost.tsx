@@ -4,6 +4,7 @@ import axios from "axios";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 interface NewPost {
   text: string;
@@ -12,36 +13,39 @@ interface NewPost {
 const NewPost = () => {
   const { register, handleSubmit, reset } = useForm<NewPost>();
   const router = useRouter();
-  return (
-    <>
-      <form
-        onSubmit={handleSubmit(async (data) => {
-          await axios.post("/api/post", { text: data.text });
-          router.refresh();
-          reset();
-        })}
-      >
-        <Flex gap="4" mx="2">
-          <TextField.Root className="w-full">
-            <TextField.Input
-              placeholder="Enter your status"
-              {...register("text")}
-            />
-          </TextField.Root>
-          <Button>Post</Button>
-          <Button
-            type="button"
-            onClick={async () => {
-              await axios.delete("/api/post");
-              router.refresh();
-            }}
-          >
-            Delete All
-          </Button>
-        </Flex>
-      </form>
-    </>
-  );
+  const { status } = useSession();
+  if (status === "authenticated")
+    return (
+      <>
+        <form
+          onSubmit={handleSubmit(async (data) => {
+            await axios.post("/api/post", { text: data.text });
+            router.refresh();
+            reset();
+          })}
+        >
+          <Flex gap="4" mx="2">
+            <TextField.Root className="w-full">
+              <TextField.Input
+                placeholder="Enter your status"
+                {...register("text")}
+              />
+            </TextField.Root>
+            <Button>Post</Button>
+            <Button
+              type="button"
+              onClick={async () => {
+                await axios.delete("/api/post");
+                router.refresh();
+              }}
+            >
+              Delete All
+            </Button>
+          </Flex>
+        </form>
+      </>
+    );
+  return null;
 };
 
 export default NewPost;

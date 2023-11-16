@@ -3,6 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import "@radix-ui/themes/styles.css";
 import { Container, Theme, ThemePanel } from "@radix-ui/themes";
+import NavBar from "./NavBar";
+import Session from "./_providers/Session";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,7 +27,10 @@ export default function RootLayout({
           radius="large"
           scaling="105%"
         >
-          <Container>{children}</Container>
+          <NavBar />
+          <Session>
+            <Container>{children}</Container>
+          </Session>
         </Theme>
       </body>
     </html>
