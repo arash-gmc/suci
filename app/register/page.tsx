@@ -1,24 +1,32 @@
 "use client";
-import { Box, Button, Flex, TextField } from "@radix-ui/themes";
+import { Button, Flex, TextField } from "@radix-ui/themes";
 import axios from "axios";
-import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { newUserSchema } from "../api/user/schema";
 
 const RegisterPage = () => {
-  const fields = [
+  type InputFields = z.infer<typeof newUserSchema>;
+
+  const fields: { label: string; type: string; value: keyof InputFields }[] = [
     { label: "Name", value: "name", type: "text" },
     { label: "Email", value: "email", type: "email" },
     { label: "Password", value: "password", type: "password" },
   ];
 
-  const { register, handleSubmit } = useForm();
-  const router = useRouter();
+  const { register, handleSubmit } = useForm<InputFields>();
   return (
     <form
       onSubmit={handleSubmit(async (data) => {
         await axios.post("/api/user", data);
-        router.push("/api/auth/signin");
+        await signIn("credentials", {
+          email: data.email,
+          password: data.password,
+          redirect: true,
+          callbackUrl: "/",
+        });
       })}
     >
       <h1 className="text-center my-10">Register with Suci</h1>
