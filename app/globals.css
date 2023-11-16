@@ -13,3 +13,8 @@ body {
   color: rgb(var(--foreground-rgb));
   padding: 2rem;
 }
+
+h1{
+  @apply text-3xl font-bold my-4
+
+}
