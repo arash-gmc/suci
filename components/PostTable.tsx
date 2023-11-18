@@ -1,8 +1,12 @@
 import prisma from "@/prisma/client";
+import { Posts, User } from "@prisma/client";
 import { Table } from "@radix-ui/themes";
 
-const PostTable = async () => {
-  const posts = await prisma.posts.findMany({ include: { author: true } });
+interface PostsWithUsers extends Posts {
+  author: User;
+}
+
+const PostTable = async ({ posts }: { posts: PostsWithUsers[] }) => {
   return (
     <Table.Root variant="surface">
       <Table.Header>
