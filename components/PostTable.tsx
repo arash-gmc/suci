@@ -1,6 +1,7 @@
 import prisma from "@/prisma/client";
 import { Posts, User } from "@prisma/client";
 import { Table } from "@radix-ui/themes";
+import Link from "next/link";
 
 interface PostsWithUsers extends Posts {
   author: User;
@@ -21,7 +22,9 @@ const PostTable = async ({ posts }: { posts: PostsWithUsers[] }) => {
           <Table.Row key={post.id}>
             <Table.Cell>{post.id}</Table.Cell>
             <Table.Cell>{post.text}</Table.Cell>
-            <Table.Cell>{post.author.name}</Table.Cell>
+            <Table.Cell>
+              <Link href={"/profile/" + post.authorId}>{post.author.name}</Link>
+            </Table.Cell>
           </Table.Row>
         ))}
       </Table.Body>

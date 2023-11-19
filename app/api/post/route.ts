@@ -9,6 +9,7 @@ export async function POST(request: NextRequest) {
   if (!session) return NextResponse.json({}, { status: 401 });
   const body = await request.json();
   const validation = newPostSchema.safeParse(body);
+
   if (!validation.success)
     return NextResponse.json({ error: "text not provided" }, { status: 400 });
 

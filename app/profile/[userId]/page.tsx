@@ -6,6 +6,7 @@ import { Flex, Grid, Heading, Text } from "@radix-ui/themes";
 import { getServerSession } from "next-auth";
 import { notFound } from "next/navigation";
 import React from "react";
+import ProfileHeader from "./ProfileHeader";
 
 const page = async ({ params }: { params: { userId: string } }) => {
   const user = await prisma.user.findUnique({ where: { id: params.userId } });
@@ -15,20 +16,10 @@ const page = async ({ params }: { params: { userId: string } }) => {
     include: { author: true },
   });
   const session = await getServerSession(nextauthConfig);
-  const following = await prisma.follow.findMany({
-    where: { followingId: session?.user.id, followerId: user.id },
-  });
-  const isFollowing = following.length === 0 ? false : true;
+
   return (
     <Flex direction="column" gap="3">
-      <Grid columns="2">
-        <Heading>{user.name}</Heading>
-        <Flex justify="between">
-          <Text>{posts.length} Posts</Text>
-          <Text>0 followers</Text>
-          <Text>0 followings</Text>
-        </Flex>
-      </Grid>
+      <ProfileHeader user={user} postsCount={posts.length} session={session} />
       {session?.user.id === user.id && <NewPost />}
       <PostTable posts={posts} />
     </Flex>
