@@ -15,6 +15,10 @@ const page = async ({ params }: { params: { userId: string } }) => {
     include: { author: true },
   });
   const session = await getServerSession(nextauthConfig);
+  const following = await prisma.follow.findMany({
+    where: { followingId: session?.user.id, followerId: user.id },
+  });
+  const isFollowing = following.length === 0 ? false : true;
   return (
     <Flex direction="column" gap="3">
       <Grid columns="2">

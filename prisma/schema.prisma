@@ -18,6 +18,30 @@ model Posts {
   author   User     @relation(fields: [authorId], references: [id])
 }
 
+model Follow {
+  id          Int    @id @default(autoincrement())
+  followingId String
+  followerId  String
+  following   User   @relation("Following", fields: [followingId], references: [id])
+  follower    User   @relation("Follower", fields: [followerId], references: [id])
+
+  @@unique([followerId, followingId])
+}
+
+model User {
+  id             String    @id @default(cuid())
+  name           String?
+  hashedPassword String
+  email          String?   @unique
+  emailVerified  DateTime?
+  image          String?
+  accounts       Account[]
+  sessions       Session[]
+  posts          Posts[]
+  following      Follow[]  @relation("Following")
+  follower       Follow[]  @relation("Follower")
+}
+
 model Account {
   id                String  @id @default(cuid())
   userId            String
@@ -43,18 +67,6 @@ model Session {
   userId       String
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
-
-model User {
-  id             String    @id @default(cuid())
-  name           String?
-  hashedPassword String
-  email          String?   @unique
-  emailVerified  DateTime?
-  image          String?
-  accounts       Account[]
-  sessions       Session[]
-  posts          Posts[]
 }
 
 model VerificationToken {
