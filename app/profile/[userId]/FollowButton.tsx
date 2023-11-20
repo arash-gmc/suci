@@ -1,39 +1,51 @@
 "use client";
 import { Button } from "@radix-ui/themes";
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import axios, { AxiosError } from "axios";
+import React, { SetStateAction, useEffect, useState } from "react";
 
 interface Props {
   followingId: string | undefined;
   followerId: string;
+  setFollowers: (value: SetStateAction<number>) => void;
 }
 
-const FollowButton = ({ followerId, followingId }: Props) => {
+const FollowButton = ({ followerId, followingId, setFollowers }: Props) => {
   if (!followingId) return null;
   if (followerId === followingId) return null;
 
-  const [isFollowing, setFollowing] = useState(false);
+  const [isFollowing, setFollowing] = useState<boolean>(false);
 
   useEffect(() => {
     axios
       .get<boolean>("/api/user/follow", {
         headers: { followerId, followingId },
       })
-      .then((res) => setFollowing(res.data));
+      .then((res) => setFollowing(res.data))
+      .catch((e: AxiosError) => console.log(e.message));
   }, []);
 
-  const unfollow = async () => {
-    await axios.delete("/api/user/follow", {
-      data: { followerId, followingId },
-    });
-    setFollowing(false);
+  const unfollow = () => {
+    axios
+      .delete("/api/user/follow", {
+        data: { followerId, followingId },
+      })
+      .then(() => {
+        setFollowing(false);
+        setFollowers((prev) => prev - 1);
+      })
+      .catch((e: AxiosError) => console.log(e.message));
   };
-  const follow = async () => {
-    const res = await axios.post("/api/user/follow", {
-      followerId,
-      followingId,
-    });
-    setFollowing(true);
+  const follow = () => {
+    axios
+      .post("/api/user/follow", {
+        followerId,
+        followingId,
+      })
+      .then(() => {
+        setFollowing(true);
+        setFollowers((prev) => prev + 1);
+      })
+      .catch((e: AxiosError) => console.log(e.message));
   };
 
   if (isFollowing)
