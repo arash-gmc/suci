@@ -4,6 +4,7 @@ import prisma from "@/prisma/client";
 import { getServerSession } from "next-auth";
 import { nextauthConfig } from "../auth/[...nextauth]/route";
 
+// Add a new post
 export async function POST(request: NextRequest) {
   const session = await getServerSession(nextauthConfig);
   if (!session) return NextResponse.json({}, { status: 401 });
@@ -19,11 +20,13 @@ export async function POST(request: NextRequest) {
   return NextResponse.json(newPost);
 }
 
+//get all post with authors
 export async function GET(request: NextRequest) {
-  const posts = await prisma.posts.findMany();
+  const posts = await prisma.posts.findMany({ include: { author: true } });
   return NextResponse.json([...posts]);
 }
 
+//delete all posts
 export async function DELETE(request: NextRequest) {
   await prisma.posts.deleteMany();
   return NextResponse.json({});

@@ -1,13 +1,8 @@
-import prisma from "@/prisma/client";
-import { Posts, User } from "@prisma/client";
 import { Table } from "@radix-ui/themes";
 import Link from "next/link";
+import { PostsWithUsers } from "../app/Interfaces";
 
-interface PostsWithUsers extends Posts {
-  author: User;
-}
-
-const PostTable = async ({ posts }: { posts: PostsWithUsers[] }) => {
+const PostTable = ({ posts }: { posts: PostsWithUsers[] }) => {
   return (
     <Table.Root variant="surface">
       <Table.Header>
