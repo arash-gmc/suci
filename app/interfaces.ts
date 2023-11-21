@@ -7,5 +7,5 @@ export interface PostsWithUsers extends Posts {
 export interface FilterObject {
   label: string;
   value: string;
-  where: Prisma.PostsWhereInput;
+  onClick: () => void;
 }
