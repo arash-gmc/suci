@@ -28,12 +28,7 @@ const Filter = ({ setWhere }: Props) => {
     },
   ];
 
-  if (status === "authenticated")
-    return (
-      <div className="fixed right-5">
-        <ButtonGroups options={filters} />
-      </div>
-    );
+  if (status === "authenticated") return <ButtonGroups options={filters} />;
   return null;
 };
 

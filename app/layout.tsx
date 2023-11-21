@@ -27,8 +27,8 @@ export default function RootLayout({
           radius="large"
           scaling="105%"
         >
-          <NavBar />
           <Session>
+            <NavBar />
             <Container>{children}</Container>
           </Session>
         </Theme>

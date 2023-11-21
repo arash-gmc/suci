@@ -1,5 +1,5 @@
 "use client";
-import { Button, Flex, TextField } from "@radix-ui/themes";
+import { Button, Container, Flex, TextField } from "@radix-ui/themes";
 import axios from "axios";
 import React from "react";
 import { useForm } from "react-hook-form";
@@ -16,7 +16,7 @@ const NewPost = () => {
   const { status } = useSession();
   if (status === "authenticated")
     return (
-      <>
+      <Container>
         <form
           onSubmit={handleSubmit(async (data) => {
             await axios.post("/api/post", { text: data.text });
@@ -43,7 +43,7 @@ const NewPost = () => {
             </Button>
           </Flex>
         </form>
-      </>
+      </Container>
     );
   return null;
 };

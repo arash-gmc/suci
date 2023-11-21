@@ -1,11 +1,10 @@
-import { getServerSession } from "next-auth";
-import React from "react";
-import { nextauthConfig } from "./api/auth/[...nextauth]/route";
+"use client";
 import { Container, Flex, Text } from "@radix-ui/themes";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 
-const NavBar = async () => {
-  const session = await getServerSession(nextauthConfig);
+const NavBar = () => {
+  const { data: session, status } = useSession();
 
   return (
     <nav className="border-b-2 mb-5 p-2">
@@ -16,7 +15,9 @@ const NavBar = async () => {
           </Flex>
           {session && (
             <Flex gap="5">
-              <Text>{session?.user?.name}</Text>
+              <Link href={"/profile/" + session.user.id}>
+                {session?.user?.name}
+              </Link>
               <Link href="/api/auth/signout">Sign Out</Link>
             </Flex>
           )}

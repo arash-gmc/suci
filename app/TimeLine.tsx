@@ -5,6 +5,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Filter from "./Filter";
 import { PostsWithUsers } from "./interfaces";
+import { Box, Flex, Grid } from "@radix-ui/themes";
 
 const TimeLine = () => {
   const [posts, setPosts] = useState<PostsWithUsers[]>([]);
@@ -16,11 +17,14 @@ const TimeLine = () => {
       .then((res) => setPosts(res.data));
   }, [where]);
   return (
-    <>
-      <PostTable posts={posts} />
+    <Flex gap="3">
+      <Box></Box>
+      <Box width="100%">
+        <PostTable posts={posts} />
+      </Box>
 
       <Filter setWhere={setWhere} />
-    </>
+    </Flex>
   );
 };
 
