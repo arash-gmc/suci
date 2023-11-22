@@ -40,6 +40,14 @@ model User {
   posts          Posts[]
   following      Follow[]  @relation("Following")
   follower       Follow[]  @relation("Follower")
+  brithYear      Int?
+  city           String?
+  gender         Gender?
+}
+
+enum Gender {
+  male
+  female
 }
 
 model Account {

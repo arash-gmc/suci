@@ -1,22 +1,40 @@
 "use client";
-import { Button, Flex, TextField } from "@radix-ui/themes";
+import {
+  Button,
+  Flex,
+  Grid,
+  Heading,
+  Select,
+  TextField,
+} from "@radix-ui/themes";
 import axios from "axios";
 import { signIn } from "next-auth/react";
 import React from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { newUserSchema } from "../api/user/schema";
+import SelectComponent from "@/components/Select";
+
+const years: { label: string; value: string }[] = [];
+for (let i = 2010; i > 1950; i--) {
+  years.push({ label: i.toString(), value: i.toString() });
+}
 
 const RegisterPage = () => {
   type InputFields = z.infer<typeof newUserSchema>;
 
-  const fields: { label: string; type: string; value: keyof InputFields }[] = [
+  const fields: {
+    label: string;
+    type: React.HTMLInputTypeAttribute;
+    value: keyof InputFields;
+  }[] = [
     { label: "Name", value: "name", type: "text" },
     { label: "Email", value: "email", type: "email" },
     { label: "Password", value: "password", type: "password" },
+    { label: "City", value: "city", type: "text" },
   ];
 
-  const { register, handleSubmit } = useForm<InputFields>();
+  const { register, handleSubmit, control } = useForm<InputFields>();
   return (
     <form
       onSubmit={handleSubmit(async (data) => {
@@ -29,19 +47,36 @@ const RegisterPage = () => {
         });
       })}
     >
-      <h1 className="text-center my-10">Register with Suci</h1>
-      <Flex gap="5" direction="column" className="max-w-2xl mx-auto">
+      <Flex gap="4" direction="column" className="max-w-2xl mx-auto">
+        <Heading my="5" size="5">
+          Register with Suci
+        </Heading>
         {fields.map((field) => (
           <TextField.Input
             key={field.value}
             placeholder={field.label}
-            size="3"
+            size="2"
             type={field.type}
             {...register(field.value)}
           />
         ))}
+        <SelectComponent
+          name="gender"
+          label="Gender"
+          control={control}
+          items={[
+            { label: "Male", value: "male" },
+            { label: "Female", value: "female" },
+          ]}
+        />
+        <SelectComponent
+          name="brithYear"
+          label="Year of Brith"
+          control={control}
+          items={years}
+        />
         <Flex>
-          <Button size="4">Register</Button>
+          <Button size="3">Register</Button>
         </Flex>
       </Flex>
     </form>
