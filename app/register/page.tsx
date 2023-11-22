@@ -12,7 +12,7 @@ import { signIn } from "next-auth/react";
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
-import { newUserSchema } from "../api/user/schema";
+import { newUserSchema } from "../api/user/register/schema";
 import SelectComponent from "@/components/Select";
 
 const years: { label: string; value: string }[] = [];
@@ -38,7 +38,7 @@ const RegisterPage = () => {
   return (
     <form
       onSubmit={handleSubmit(async (data) => {
-        await axios.post("/api/user", data);
+        await axios.post("/api/user/register", data);
         await signIn("credentials", {
           email: data.email,
           password: data.password,

@@ -1,4 +1,4 @@
-import { newUserSchema } from "@/app/api/user/schema";
+import { newUserSchema } from "@/app/api/user/register/schema";
 import { Select } from "@radix-ui/themes";
 import React from "react";
 import { Control, Controller, FieldValues } from "react-hook-form";
