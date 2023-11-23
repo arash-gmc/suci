@@ -5,15 +5,18 @@ import {
   Grid,
   Heading,
   Select,
+  Text,
   TextField,
 } from "@radix-ui/themes";
 import axios from "axios";
 import { signIn } from "next-auth/react";
-import React from "react";
+import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { newUserSchema } from "../api/user/register/schema";
 import SelectComponent from "@/components/Select";
+import { CldUploadWidget } from "next-cloudinary";
+import { CheckCircledIcon } from "@radix-ui/react-icons";
 
 const years: { label: string; value: string }[] = [];
 for (let i = 2010; i > 1950; i--) {
@@ -22,7 +25,7 @@ for (let i = 2010; i > 1950; i--) {
 
 const RegisterPage = () => {
   type InputFields = z.infer<typeof newUserSchema>;
-
+  const [publicId, setPublicId] = useState<string | null>(null);
   const fields: {
     label: string;
     type: React.HTMLInputTypeAttribute;
@@ -38,7 +41,10 @@ const RegisterPage = () => {
   return (
     <form
       onSubmit={handleSubmit(async (data) => {
-        await axios.post("/api/user/register", data);
+        await axios.post("/api/user/register", {
+          ...data,
+          imagePublicId: publicId,
+        });
         await signIn("credentials", {
           email: data.email,
           password: data.password,
@@ -75,6 +81,30 @@ const RegisterPage = () => {
           control={control}
           items={years}
         />
+        <Flex my="2" gap="5" align="center">
+          <Text>Profile Image:</Text>
+          <CldUploadWidget
+            uploadPreset="qxnmut04"
+            options={{
+              sources: ["local"],
+              multiple: false,
+              cropping: true,
+              croppingAspectRatio: 1,
+            }}
+            onUpload={(result, widget) => {
+              if (result.event !== "success") return;
+              const info = result.info as { public_id: string };
+              setPublicId(info.public_id);
+            }}
+          >
+            {({ open }) => (
+              <Button type="button" variant="soft" onClick={() => open()}>
+                Upload
+              </Button>
+            )}
+          </CldUploadWidget>
+          {publicId && <CheckCircledIcon />}
+        </Flex>
         <Flex>
           <Button size="3">Register</Button>
         </Flex>

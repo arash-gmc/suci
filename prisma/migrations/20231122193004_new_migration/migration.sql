@@ -26,6 +26,9 @@ CREATE TABLE `User` (
     `email` VARCHAR(191) NULL,
     `emailVerified` DATETIME(3) NULL,
     `image` VARCHAR(191) NULL,
+    `brithYear` INTEGER NULL,
+    `city` VARCHAR(191) NULL,
+    `gender` ENUM('male', 'female') NULL,
 
     UNIQUE INDEX `User_email_key`(`email`),
     PRIMARY KEY (`id`)

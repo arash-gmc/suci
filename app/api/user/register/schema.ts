@@ -6,5 +6,6 @@ export const newUserSchema = z.object({
   password: z.string().min(5),
   city: z.string().optional(),
   brithYear: z.string().optional(),
-  gender: z.enum(['male','female']).optional()
+  gender: z.enum(["male", "female"]).optional(),
+  imagePublicId: z.string().optional(),
 });
