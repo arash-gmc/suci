@@ -1,6 +1,6 @@
 import { Flex } from "@radix-ui/themes";
 import NewPost from "./NewPost";
-import PostTable from "../components/PostTable";
+import PostTable from "./_components/PostTable";
 import prisma from "@/prisma/client";
 import TimeLine from "./TimeLine";
 

@@ -1,5 +1,5 @@
 "use client";
-import PostTable from "@/components/PostTable";
+import PostTable from "@/app/_components/PostTable";
 import { Prisma } from "@prisma/client";
 import axios from "axios";
 import { useEffect, useState } from "react";

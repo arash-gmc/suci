@@ -1,6 +1,6 @@
 import NewPost from "@/app/NewPost";
 import { nextauthConfig } from "@/app/api/auth/[...nextauth]/route";
-import PostTable from "@/components/PostTable";
+import PostTable from "@/app/_components/PostTable";
 import prisma from "@/prisma/client";
 import { Flex, Grid, Heading, Text } from "@radix-ui/themes";
 import { getServerSession } from "next-auth";

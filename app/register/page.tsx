@@ -14,7 +14,7 @@ import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { newUserSchema } from "../api/user/register/schema";
-import SelectComponent from "@/components/Select";
+import SelectComponent from "@/app/_components/Select";
 import { CldUploadWidget } from "next-cloudinary";
 import { CheckCircledIcon } from "@radix-ui/react-icons";
 

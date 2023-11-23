@@ -1,4 +1,4 @@
-import ButtonGroups from "@/components/ButtonGroup";
+import ButtonGroups from "@/app/_components/ButtonGroup";
 import React, { SetStateAction, useEffect, useState } from "react";
 import { FilterObject } from "./interfaces";
 import axios from "axios";
