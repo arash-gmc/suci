@@ -33,6 +33,7 @@ model User {
   name           String?
   hashedPassword String
   email          String?   @unique
+  username       String    @unique
   emailVerified  DateTime?
   image          String?
   imagePublicId  String?

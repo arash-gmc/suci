@@ -19,11 +19,13 @@ const SelectComponent = ({ name, control, label, items }: Props) => {
       name={name}
       control={control}
       render={({ field }) => (
-        <Select.Root {...field} onValueChange={field.onChange}>
+        <Select.Root onValueChange={field.onChange}>
           <Select.Trigger placeholder={label} />
           <Select.Content>
             {items.map((item) => (
-              <Select.Item value={item.value}>{item.label}</Select.Item>
+              <Select.Item value={item.value} key={item.value}>
+                {item.label}
+              </Select.Item>
             ))}
           </Select.Content>
         </Select.Root>
@@ -33,15 +35,3 @@ const SelectComponent = ({ name, control, label, items }: Props) => {
 };
 
 export default SelectComponent;
-
-{
-  /* <SelectComponent
-            name="gender"
-            label="Gender"
-            control={control}
-            items={[
-              { label: "Male", value: "male" },
-              { label: "Female", value: "female" },
-            ]}
-          /> */
-}

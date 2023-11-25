@@ -8,7 +8,7 @@ import {
   Text,
   TextField,
 } from "@radix-ui/themes";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { signIn } from "next-auth/react";
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
@@ -25,34 +25,37 @@ for (let i = 2010; i > 1950; i--) {
 
 const RegisterPage = () => {
   type InputFields = z.infer<typeof newUserSchema>;
-  const [publicId, setPublicId] = useState<string | null>(null);
+  const [publicId, setPublicId] = useState<string | undefined>();
   const fields: {
     label: string;
     type: React.HTMLInputTypeAttribute;
     value: keyof InputFields;
   }[] = [
     { label: "Name", value: "name", type: "text" },
+    { label: "Username", value: "username", type: "text" },
     { label: "Email", value: "email", type: "email" },
     { label: "Password", value: "password", type: "password" },
     { label: "City", value: "city", type: "text" },
   ];
-
+  const onSubmit = async (data: InputFields) => {
+    try {
+      await axios.post("/api/user/register", {
+        ...data,
+        imagePublicId: publicId,
+      });
+      await signIn("credentials", {
+        email: data.email,
+        password: data.password,
+        redirect: true,
+        callbackUrl: "/",
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const { register, handleSubmit, control } = useForm<InputFields>();
   return (
-    <form
-      onSubmit={handleSubmit(async (data) => {
-        await axios.post("/api/user/register", {
-          ...data,
-          imagePublicId: publicId,
-        });
-        await signIn("credentials", {
-          email: data.email,
-          password: data.password,
-          redirect: true,
-          callbackUrl: "/",
-        });
-      })}
-    >
+    <form onSubmit={handleSubmit(onSubmit)}>
       <Flex gap="4" direction="column" className="max-w-2xl mx-auto">
         <Heading my="5" size="5">
           Register with Suci
