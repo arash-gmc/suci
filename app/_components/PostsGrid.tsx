@@ -13,7 +13,7 @@ const PostsGrid = ({ posts }: { posts: PostsWithUsers[] }) => {
   return (
     <Flex direction="column" gap="3">
       {posts.map((post) => (
-        <SinglePost post={post} />
+        <SinglePost post={post} key={post.id} />
       ))}
     </Flex>
   );

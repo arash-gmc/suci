@@ -10,10 +10,16 @@ interface Props {
 }
 
 const ProfilePicture = ({ user, size }: Props) => {
-  const sizeMap = {
-    sm: 60,
-    md: 72,
-    lg: 180,
+  const sizeMap: Record<
+    string,
+    {
+      picture: number;
+      avatar: "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9";
+    }
+  > = {
+    sm: { picture: 40, avatar: "2" },
+    md: { picture: 72, avatar: "4" },
+    lg: { picture: 160, avatar: "8" },
   };
   if (!user.imagePublicId) {
     let color: "gray" | "indigo" | "pink" = "gray";
@@ -32,7 +38,7 @@ const ProfilePicture = ({ user, size }: Props) => {
         variant="solid"
         color={color}
         radius="full"
-        size="4"
+        size={sizeMap[size].avatar}
         fallback={fallback}
       />
     );
@@ -40,8 +46,8 @@ const ProfilePicture = ({ user, size }: Props) => {
   return (
     <CldImage
       src={user.imagePublicId}
-      width={sizeMap[size]}
-      height={sizeMap[size]}
+      width={sizeMap[size].picture}
+      height={sizeMap[size].picture}
       crop="thumb"
       className="rounded-full"
       alt="profile-picture"
