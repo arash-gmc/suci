@@ -4,19 +4,18 @@ import { GoBookmark, GoBookmarkFill } from "react-icons/go";
 import { FaRegComment, FaRetweet } from "react-icons/fa6";
 import React from "react";
 import ProfilePicture from "./ProfilePicture";
-import { Posts, User } from "@prisma/client";
+import { PostsWithUsers } from "../interfaces";
+import Link from "next/link";
 
-interface Props {
-  user: User;
-  post: Posts;
-}
-
-const Tweet = ({ user, post }: Props) => {
+const SinglePost = ({ post }: { post: PostsWithUsers }) => {
+  const user = post.author;
   return (
     <Container>
-      <Flex gap="3" mx="5" className="border-b-2 pb-6">
+      <Flex gap="3" mx="3" px="3" className="border-b-2 pb-6">
         <Flex direction="column">
-          <ProfilePicture user={user} size="md" />
+          <Link href={"/profile/" + user.username}>
+            <ProfilePicture user={user} size="md" />
+          </Link>
         </Flex>
 
         <Flex
@@ -50,4 +49,4 @@ const Tweet = ({ user, post }: Props) => {
   );
 };
 
-export default Tweet;
+export default SinglePost;

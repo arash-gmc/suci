@@ -7,12 +7,15 @@ import { getServerSession } from "next-auth";
 import { notFound } from "next/navigation";
 import React from "react";
 import ProfileHeader from "./ProfileHeader";
+import { User } from "@prisma/client";
 
-const page = async ({ params }: { params: { userId: string } }) => {
-  const user = await prisma.user.findUnique({ where: { id: params.userId } });
+const page = async ({ params }: { params: { username: string } }) => {
+  const user: User | null = await prisma.user.findUnique({
+    where: { username: params.username },
+  });
   if (!user) notFound();
   const posts = await prisma.posts.findMany({
-    where: { authorId: params.userId },
+    where: { authorId: user.id },
     include: { author: true },
   });
   const session = await getServerSession(nextauthConfig);

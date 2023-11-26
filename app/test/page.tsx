@@ -1,15 +1,15 @@
 import React from "react";
-import Tweet from "../_components/Tweet";
+import SinglePost from "../_components/SinglePost";
 import prisma from "@/prisma/client";
+import PostsGrid from "../_components/PostsGrid";
 
 interface Info {
   public_id: string;
 }
 
 const page = async () => {
-  const post = await prisma.posts.findMany({ include: { author: true } });
-  if (!post) return null;
-  return <Tweet post={post[1]} user={post[0].author} />;
+  const posts = await prisma.posts.findMany({ include: { author: true } });
+  return <PostsGrid posts={posts} />;
 };
 
 export default page;
