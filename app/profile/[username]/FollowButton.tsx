@@ -50,13 +50,13 @@ const FollowButton = ({ followerId, followingId, setFollowers }: Props) => {
 
   if (isFollowing)
     return (
-      <Button size="3" onClick={unfollow} variant="outline">
+      <Button size="1" my="2" onClick={unfollow} variant="outline">
         Unfollow
       </Button>
     );
   if (!isFollowing)
     return (
-      <Button size="3" onClick={follow}>
+      <Button size="1" my="2" onClick={follow}>
         Follow
       </Button>
     );

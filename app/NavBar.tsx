@@ -13,7 +13,7 @@ const NavBar = () => {
           <Flex>
             <Link href="/">Home</Link>
           </Flex>
-          {session && (
+          {status === "authenticated" && (
             <Flex gap="5">
               <Link href={"/profile/" + session.user.id}>
                 {session?.user?.name}
@@ -21,7 +21,7 @@ const NavBar = () => {
               <Link href="/api/auth/signout">Sign Out</Link>
             </Flex>
           )}
-          {!session && (
+          {status === "unauthenticated" && (
             <Flex gap="5">
               <Link href="/api/auth/signin">SignIn</Link>
               <Link href="/register">Register</Link>

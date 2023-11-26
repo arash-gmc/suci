@@ -13,7 +13,7 @@ const ProfilePicture = ({ user, size }: Props) => {
   const sizeMap = {
     sm: 60,
     md: 72,
-    lg: 90,
+    lg: 180,
   };
   if (!user.imagePublicId) {
     let color: "gray" | "indigo" | "pink" = "gray";
