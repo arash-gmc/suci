@@ -22,7 +22,7 @@ const Search = () => {
       setSearchedUsers([]);
     }
   };
-
+  const searched = searchRef.current?.value;
   return (
     <Box className="relative">
       <TextField.Root>
@@ -35,7 +35,7 @@ const Search = () => {
           <MagnifyingGlassIcon height="16" width="16" />
         </TextField.Slot>
       </TextField.Root>
-      {searchRef.current?.value && (
+      {searched && (
         <Flex className="absolute bg-white w-full z-10" direction="column">
           {searchedUsers.map((user) => (
             <Link href={"/profile/" + user.username}>
@@ -50,6 +50,13 @@ const Search = () => {
               </Flex>
             </Link>
           ))}
+          <Link
+            href={"/posts/search?searched=" + searched}
+            color="blue"
+            className="py-3 text-center"
+          >
+            Search for "{searched}" in posts
+          </Link>
         </Flex>
       )}
     </Box>
