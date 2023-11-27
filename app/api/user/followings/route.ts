@@ -3,11 +3,21 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
   const userId = request.headers.get("userId");
-  if (!userId)
-    return NextResponse.json({ error: "userId not provided" }, { status: 400 });
-  const followingsRecords = await prisma.follow.findMany({
-    where: { followingId: userId },
+  const relation = request.headers.get("relation");
+
+  if (!userId || !relation)
+    return NextResponse.json(
+      { error: "userId or relation not provided" },
+      { status: 400 }
+    );
+  const records = await prisma.follow.findMany({
+    where: { [relation + "Id"]: userId },
   });
-  const followings = followingsRecords.map((record) => record.followerId);
-  return NextResponse.json([...followings]);
+  let listOfUsers: string[] = [];
+  if (relation === "following")
+    listOfUsers = records.map((record) => record.followerId);
+  if (relation === "follower")
+    listOfUsers = records.map((record) => record.followingId);
+
+  return NextResponse.json([...listOfUsers]);
 }

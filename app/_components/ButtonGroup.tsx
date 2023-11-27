@@ -1,8 +1,8 @@
 "use client";
-import { FilterObject } from "@/app/interfaces";
+import { ButtonGroupProps } from "@/app/interfaces";
 
 interface Props {
-  options: FilterObject[];
+  options: ButtonGroupProps[];
 }
 
 const ButtonGroups = ({ options }: Props) => {
@@ -15,7 +15,7 @@ const ButtonGroups = ({ options }: Props) => {
           key={option.value}
           onClick={() => option.onClick()}
         >
-          {option.label}
+          {option.labelIcon} {option.label}
         </button>
       ))}
     </div>
