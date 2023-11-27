@@ -17,7 +17,7 @@ const ProfilePicture = ({ user, size }: Props) => {
       avatar: "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9";
     }
   > = {
-    sm: { picture: 40, avatar: "2" },
+    sm: { picture: 44, avatar: "3" },
     md: { picture: 72, avatar: "4" },
     lg: { picture: 160, avatar: "8" },
   };

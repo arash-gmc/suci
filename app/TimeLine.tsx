@@ -3,7 +3,7 @@ import PostTable from "@/app/_components/PostTable";
 import { Prisma } from "@prisma/client";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import Filter from "./Filter";
+import Filter from "./filter/Filter";
 import { PostsWithUsers } from "./interfaces";
 import { Box, Flex, Grid } from "@radix-ui/themes";
 import PostsGrid from "./_components/PostsGrid";
