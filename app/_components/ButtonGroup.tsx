@@ -1,11 +1,22 @@
 "use client";
 import { ButtonGroupProps } from "@/app/interfaces";
+import { useState } from "react";
 
 interface Props {
   options: ButtonGroupProps[];
 }
 
 const ButtonGroups = ({ options }: Props) => {
+  const collapseNumber = 3;
+  const [collapse, setCollapse] = useState(true);
+  if (options.length > collapseNumber && collapse) {
+    options = [...options.slice(0, collapseNumber)];
+    options.push({
+      label: "... More",
+      value: "more",
+      onClick: () => setCollapse(false),
+    });
+  }
   return (
     <div className="max-w-sm w-44 flex flex-col rounded-lg shadow-sm">
       {options.map((option) => (

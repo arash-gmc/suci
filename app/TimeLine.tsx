@@ -7,6 +7,7 @@ import Filter from "./filter/Filter";
 import { PostsWithUsers } from "./interfaces";
 import { Box, Flex, Grid } from "@radix-ui/themes";
 import PostsGrid from "./_components/PostsGrid";
+import NewPost from "./NewPost";
 
 const TimeLine = () => {
   const [posts, setPosts] = useState<PostsWithUsers[]>([]);
@@ -21,6 +22,7 @@ const TimeLine = () => {
     <Flex gap="3">
       <Box></Box>
       <Box width="100%">
+        <NewPost />
         <PostsGrid posts={posts} />
       </Box>
 
