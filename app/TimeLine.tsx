@@ -20,9 +20,8 @@ const TimeLine = () => {
   }, [where]);
   return (
     <Flex gap="3">
-      <Box></Box>
       <Box width="100%">
-        <NewPost />
+        <NewPost setPosts={setPosts} />
         <PostsGrid posts={posts} />
       </Box>
 

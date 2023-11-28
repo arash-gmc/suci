@@ -1,21 +1,30 @@
 import { NextRequest, NextResponse } from "next/server";
-import { newPostSchema } from "./schema";
+import { AddPostBody, newPostSchema } from "./schema";
 import prisma from "@/prisma/client";
 import { getServerSession } from "next-auth";
 import { nextauthConfig } from "../auth/[...nextauth]/route";
 
 // Add a new post
 export async function POST(request: NextRequest) {
-  const session = await getServerSession(nextauthConfig);
-  if (!session) return NextResponse.json({}, { status: 401 });
-  const body = await request.json();
+  const body: AddPostBody = await request.json();
   const validation = newPostSchema.safeParse(body);
 
   if (!validation.success)
-    return NextResponse.json({ error: "text not provided" }, { status: 400 });
+    return NextResponse.json(
+      { error: "text or userId not provided" },
+      { status: 400 }
+    );
+  const { text, authorId } = body;
+  const user = await prisma.user.findUnique({ where: { id: authorId } });
+  if (!user)
+    return NextResponse.json(
+      { error: "user does not exists" },
+      { status: 404 }
+    );
 
   const newPost = await prisma.posts.create({
-    data: { text: body.text, authorId: session.user.id },
+    data: { text: body.text, authorId },
+    include: { author: true },
   });
   return NextResponse.json(newPost);
 }
@@ -24,10 +33,4 @@ export async function POST(request: NextRequest) {
 export async function GET(request: NextRequest) {
   const posts = await prisma.posts.findMany({ include: { author: true } });
   return NextResponse.json([...posts]);
-}
-
-//delete all posts
-export async function DELETE(request: NextRequest) {
-  await prisma.posts.deleteMany();
-  return NextResponse.json({});
 }
