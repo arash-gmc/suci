@@ -5,7 +5,7 @@ import ProfilePicture from "../_components/ProfilePicture";
 
 const UsersField = ({ users }: { users: User[] }) => {
   return (
-    <Box className="border-2 w-full border-dashed rounded-lg py-5">
+    <Box className="border-2 w-full border-dashed rounded-lg py-5 mt-5">
       <Grid columns="4" gapY="5">
         {users.map((user) => (
           <Flex direction="column" align="center" key={user.id}>

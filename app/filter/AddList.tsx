@@ -1,15 +1,21 @@
 import { PlusIcon } from "@radix-ui/react-icons";
 import { Dialog, Button, Flex, TextField, Text } from "@radix-ui/themes";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Search from "./Search";
 import UsersField from "./UsersField";
 import { User } from "@prisma/client";
+import axios from "axios";
+import { useSession } from "next-auth/react";
 
 const AddList = () => {
   const [members, setMembers] = useState<User[]>([]);
+  const [listName, setListName] = useState<string>("");
+  const { data: session, status } = useSession();
   const addMember = (user: User) => {
     setMembers((prev) => [...prev, user]);
   };
+
+  if (status === "unauthenticated" || status === "loading") return null;
   return (
     <Dialog.Root>
       <Dialog.Trigger>
@@ -30,10 +36,15 @@ const AddList = () => {
             <Text as="div" size="2" mb="1" weight="bold">
               List Name
             </Text>
-            <TextField.Input placeholder="Enter your List Name" />
+            <TextField.Input
+              placeholder="Enter your List Name"
+              onChange={(e) => setListName(e.currentTarget.value)}
+            />
           </label>
           <label>
-            <Text>List Members</Text>
+            <Text as="div" size="2" mb="1" weight="bold">
+              List Members
+            </Text>
             <Search addUser={addMember} listUsers={members} />
             <UsersField users={members} />
           </label>
@@ -46,7 +57,19 @@ const AddList = () => {
             </Button>
           </Dialog.Close>
           <Dialog.Close>
-            <Button>Save</Button>
+            <Button
+              disabled={members.length === 0 || !listName}
+              onClick={async () => {
+                await axios.post("/api/list", {
+                  name: listName,
+                  ownerId: session?.user.id,
+                  members: members.map((m) => m.id),
+                });
+                setMembers([]);
+              }}
+            >
+              Save
+            </Button>
           </Dialog.Close>
         </Flex>
       </Dialog.Content>
