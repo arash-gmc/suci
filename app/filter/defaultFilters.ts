@@ -1,15 +1,30 @@
-import { SetStateAction } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import { ButtonGroupProps } from "../interfaces";
 import { Prisma, User } from "@prisma/client";
+import axios from "axios";
 
 interface Props {
   setWhere: (value: SetStateAction<Prisma.PostsWhereInput>) => void;
-  followings: string[];
-  followers: string[];
   user: User | null;
 }
 
-export function getFilters({ setWhere, followings, followers, user }: Props) {
+export function getFilters({ setWhere, user }: Props) {
+  const [followings, setFollowings] = useState<string[]>([]);
+  const [followers, setFollowers] = useState<string[]>([]);
+  useEffect(() => {
+    if (user) {
+      axios
+        .get("/api/user/followings", {
+          headers: { userId: user.id, relation: "following" },
+        })
+        .then((res) => setFollowings(res.data));
+      axios
+        .get("/api/user/followings", {
+          headers: { userId: user.id, relation: "follower" },
+        })
+        .then((res) => setFollowers(res.data));
+    }
+  }, []);
   const filters: ButtonGroupProps[] = [
     { label: "All", value: "all", onClick: () => setWhere({}) },
     {

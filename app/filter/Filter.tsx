@@ -13,9 +13,6 @@ interface Props {
 
 const Filter = ({ setWhere }: Props) => {
   const { data: session, status } = useSession();
-
-  const [followings, setFollowings] = useState<string[]>([]);
-  const [followers, setFollowers] = useState<string[]>([]);
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
@@ -23,28 +20,17 @@ const Filter = ({ setWhere }: Props) => {
       axios
         .get<User>("/api/user/getOne", { headers: { userId: session.user.id } })
         .then((res) => setUser(res.data));
-      axios
-        .get("/api/user/followings", {
-          headers: { userId: session?.user.id, relation: "following" },
-        })
-        .then((res) => setFollowings(res.data));
-      axios
-        .get("/api/user/followings", {
-          headers: { userId: session?.user.id, relation: "follower" },
-        })
-        .then((res) => setFollowers(res.data));
     }
   }, [status]);
 
-  if (status === "unauthenticated") return null;
-  if (status === "loading") return null;
-
   const filters = getFilters({
     setWhere,
-    followings,
-    followers,
     user,
   });
+
+  if (status === "unauthenticated") return null;
+  if (status === "loading") return null;
+  if (!user) return null;
 
   return (
     <Flex direction="column" gap="3">
