@@ -2,13 +2,14 @@ import { SetStateAction, useEffect, useState } from "react";
 import { ButtonGroupProps } from "../interfaces";
 import { Prisma, User } from "@prisma/client";
 import axios from "axios";
+import ButtonGroups from "@/app/_components/ButtonGroup";
 
 interface Props {
   setWhere: (value: SetStateAction<Prisma.PostsWhereInput>) => void;
   user: User | null;
 }
 
-export function getFilters({ setWhere, user }: Props) {
+const DefaultFilters = ({ setWhere, user }: Props) => {
   const [followings, setFollowings] = useState<string[]>([]);
   const [followers, setFollowers] = useState<string[]>([]);
   useEffect(() => {
@@ -67,5 +68,7 @@ export function getFilters({ setWhere, user }: Props) {
         }),
     });
 
-  return filters;
-}
+  return <ButtonGroups options={filters} />;
+};
+
+export default DefaultFilters;
