@@ -4,7 +4,6 @@ import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { Box, TextField, Text, Flex } from "@radix-ui/themes";
 import axios from "axios";
 import React, { useRef, useState } from "react";
-import Link from "next/link";
 import ProfilePicture from "../_components/ProfilePicture";
 
 interface Props {

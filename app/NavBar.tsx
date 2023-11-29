@@ -1,20 +1,17 @@
 "use client";
 import { Container, Flex, Text } from "@radix-ui/themes";
-import { useSession } from "next-auth/react";
 import Link from "next/link";
-import { userAgent } from "next/server";
 import Search from "./_components/Search";
+import { useContext } from "react";
+import { Context } from "./_providers/Context";
 
 const NavBar = () => {
-  const { data: session, status } = useSession();
-
+  const { viewer, status } = useContext(Context);
   const AuthLinks = () => {
     if (status === "authenticated")
       return (
         <>
-          <Link href={"/profile/" + session.user.id}>
-            {session?.user?.name}
-          </Link>
+          <Link href={"/profile/" + viewer?.username}>{viewer?.name}</Link>
           <Link href="/api/auth/signout">Sign Out</Link>
         </>
       );

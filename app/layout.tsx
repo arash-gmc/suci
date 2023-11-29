@@ -5,6 +5,7 @@ import "@radix-ui/themes/styles.css";
 import { Container, Theme, ThemePanel } from "@radix-ui/themes";
 import NavBar from "./NavBar";
 import Session from "./_providers/Session";
+import ContextProvider from "./_providers/Context";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,8 +29,10 @@ export default function RootLayout({
           scaling="105%"
         >
           <Session>
-            <NavBar />
-            <Container>{children}</Container>
+            <ContextProvider>
+              <NavBar />
+              <Container>{children}</Container>
+            </ContextProvider>
           </Session>
         </Theme>
       </body>

@@ -1,16 +1,16 @@
 import { PlusIcon } from "@radix-ui/react-icons";
 import { Dialog, Button, Flex, TextField, Text } from "@radix-ui/themes";
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import Search from "./Search";
 import UsersField from "./UsersField";
 import { User } from "@prisma/client";
 import axios from "axios";
-import { useSession } from "next-auth/react";
+import { Context } from "../_providers/Context";
 
 const AddList = () => {
   const [members, setMembers] = useState<User[]>([]);
   const [listName, setListName] = useState<string>("");
-  const { data: session, status } = useSession();
+  const { viewer, status } = useContext(Context);
   const addMember = (user: User) => {
     setMembers((prev) => [...prev, user]);
   };
@@ -62,7 +62,7 @@ const AddList = () => {
               onClick={async () => {
                 await axios.post("/api/list", {
                   name: listName,
-                  ownerId: session?.user.id,
+                  ownerId: viewer?.id,
                   members: members.map((m) => m.id),
                 });
                 setMembers([]);

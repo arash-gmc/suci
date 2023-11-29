@@ -1,28 +1,20 @@
 "use client";
-import { Button, Container, Flex, TextArea, TextField } from "@radix-ui/themes";
+import { Button, Flex, TextArea } from "@radix-ui/themes";
 import axios from "axios";
-import React, {
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
+import React, { Dispatch, SetStateAction, useContext, useState } from "react";
 import { PostsWithUsers } from "./interfaces";
+import { Context } from "./_providers/Context";
 
 interface Props {
   setPosts: Dispatch<SetStateAction<PostsWithUsers[]>>;
 }
 
 const NewPost = ({ setPosts }: Props) => {
-  const { data: session, status } = useSession();
+  const { viewer, status } = useContext(Context);
   const [postText, setPostText] = useState<string>("");
   const addPost = async () => {
     const res = await axios.post<PostsWithUsers>("/api/post", {
-      authorId: session?.user.id,
+      authorId: viewer?.id,
       text: postText,
     });
     setPosts((prev) => [res.data, ...prev]);

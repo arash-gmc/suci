@@ -1,4 +1,3 @@
-import NewPost from "@/app/NewPost";
 import { nextauthConfig } from "@/app/api/auth/[...nextauth]/route";
 import prisma from "@/prisma/client";
 import { Flex, Grid, Heading, Text } from "@radix-ui/themes";
@@ -23,7 +22,6 @@ const page = async ({ params }: { params: { username: string } }) => {
   return (
     <Flex direction="column" gap="3">
       <ProfileHeader user={user} postsCount={posts.length} session={session} />
-      {session?.user.id === user.id && <NewPost />}
       <PostsGrid posts={posts} />
     </Flex>
   );

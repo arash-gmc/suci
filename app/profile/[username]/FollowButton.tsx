@@ -13,7 +13,7 @@ const FollowButton = ({ followerId, followingId, setFollowers }: Props) => {
   if (!followingId) return null;
   if (followerId === followingId) return null;
 
-  const [isFollowing, setFollowing] = useState<boolean>(false);
+  const [isFollowing, setFollowing] = useState<boolean | null>(null);
 
   useEffect(() => {
     axios
@@ -47,6 +47,8 @@ const FollowButton = ({ followerId, followingId, setFollowers }: Props) => {
       })
       .catch((e: AxiosError) => console.log(e.message));
   };
+
+  if (isFollowing === null) return null;
 
   if (isFollowing)
     return (
