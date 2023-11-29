@@ -8,8 +8,6 @@ export async function GET(request: NextRequest) {
   if (!postId)
     return NextResponse.json({ error: "not enough inputs" }, { status: 400 });
 
-  const actions: ActionType[] = ["like", "dislike", "bookmark"];
-
   const records = await prisma.postsActions.findMany({
     where: { postId },
     select: { actionType: true },
