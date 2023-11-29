@@ -8,11 +8,28 @@ datasource db {
 }
 
 model Posts {
-  id       Int      @id @default(autoincrement())
-  text     String   @db.VarChar(300)
-  date     DateTime @default(now())
+  id       String         @id @default(cuid())
+  text     String         @db.VarChar(300)
+  date     DateTime       @default(now())
   authorId String
-  author   User     @relation(fields: [authorId], references: [id])
+  author   User           @relation(fields: [authorId], references: [id])
+  actions  PostsActions[]
+}
+
+model PostsActions {
+  id         String     @id @default(cuid())
+  actionType ActionType
+  userId     String
+  postId     String
+  date       DateTime   @default(now())
+  user       User       @relation(fields: [userId], references: [id])
+  post       Posts      @relation(fields: [postId], references: [id])
+}
+
+enum ActionType {
+  like
+  dislike
+  bookmark
 }
 
 model Follow {
@@ -26,23 +43,24 @@ model Follow {
 }
 
 model User {
-  id             String    @id @default(cuid())
+  id             String         @id @default(cuid())
   name           String?
   hashedPassword String
-  email          String?   @unique
-  username       String    @unique
+  email          String?        @unique
+  username       String         @unique
   emailVerified  DateTime?
   image          String?
   imagePublicId  String?
   accounts       Account[]
   sessions       Session[]
   posts          Posts[]
-  following      Follow[]  @relation("Following")
-  follower       Follow[]  @relation("Follower")
   ownedLists     List[]
   brithYear      Int?
   city           String?
   gender         Gender?
+  following      Follow[]       @relation("Following")
+  follower       Follow[]       @relation("Follower")
+  postActions    PostsActions[]
 }
 
 enum Gender {
