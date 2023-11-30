@@ -1,6 +1,7 @@
 import prisma from "@/prisma/client";
 import { ActionType } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
+import { PostActionBody, postActionSchema } from "./schema";
 
 export async function GET(request: NextRequest) {
   const userId = request.headers.get("userId");
@@ -25,25 +26,14 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  const userId = request.headers.get("userId");
-  const postId = request.headers.get("postId");
-  const actionType = request.headers.get("actionType");
-
-  if (!userId || !postId || !actionType)
-    return NextResponse.json({ error: "not enough inputs" }, { status: 400 });
-
-  if (
-    !(
-      actionType === "like" ||
-      actionType === "dislike" ||
-      actionType === "bookmark"
-    )
-  )
+  const body: PostActionBody = await request.json();
+  const validation = postActionSchema.safeParse(body);
+  if (!validation.success)
     return NextResponse.json(
-      { error: "not valid action type" },
+      { error: validation.error.errors },
       { status: 400 }
     );
-
+  const { userId, postId, actionType } = body;
   const user = await prisma.user.findUnique({ where: { id: userId } });
   if (!user) NextResponse.json({ error: "user not found" }, { status: 404 });
 
@@ -65,7 +55,6 @@ export async function DELETE(request: NextRequest) {
   const userId = request.headers.get("userId");
   const postId = request.headers.get("postId");
   const actionType = request.headers.get("actionType");
-
   if (
     !userId ||
     !postId ||

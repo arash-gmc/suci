@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { AddPostBody, newPostSchema } from "./schema";
 import prisma from "@/prisma/client";
-import { getServerSession } from "next-auth";
-import { nextauthConfig } from "../auth/[...nextauth]/route";
 
 // Add a new post
 export async function POST(request: NextRequest) {
