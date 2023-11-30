@@ -1,28 +1,34 @@
 "use client";
-import PostTable from "@/app/_components/PostTable";
 import { Prisma } from "@prisma/client";
+import { Box, Flex } from "@radix-ui/themes";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import NewPost from "./NewPost";
+import PostsGrid from "./_components/PostsGrid";
 import Filter from "./filter/Filter";
 import { PostsWithUsers } from "./interfaces";
-import { Box, Flex, Grid } from "@radix-ui/themes";
-import PostsGrid from "./_components/PostsGrid";
-import NewPost from "./NewPost";
 
 const TimeLine = () => {
   const [posts, setPosts] = useState<PostsWithUsers[]>([]);
   const [where, setWhere] = useState<Prisma.PostsWhereInput>({});
+  const [isLoading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     axios
       .post<PostsWithUsers[]>("/api/post/complex", where)
-      .then((res) => setPosts(res.data));
+      .then((res) => {
+        setPosts(res.data);
+      })
+      .catch((e) =>
+        console.log("there is a problem with getting posts from api.", e)
+      )
+      .finally(() => setLoading(false));
   }, [where]);
   return (
     <Flex gap="3">
       <Box width="100%">
         <NewPost setPosts={setPosts} />
-        <PostsGrid posts={posts} />
+        <PostsGrid posts={posts} isLoading={isLoading} />
       </Box>
 
       <Filter setWhere={setWhere} />
