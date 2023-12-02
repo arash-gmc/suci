@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Flex, Text } from "@radix-ui/themes";
+import { Flex, Grid, Text } from "@radix-ui/themes";
 import { BiLike, BiDislike, BiSolidLike, BiSolidDislike } from "react-icons/bi";
 import { GoBookmark, GoBookmarkFill } from "react-icons/go";
 import { FaRegComment, FaRetweet } from "react-icons/fa6";
@@ -94,6 +94,8 @@ const PostFooter = ({ post }: { post: PostsWithUsers }) => {
   const items = [
     {
       value: "like",
+      done: interactions?.like,
+      color: "text-blue-500",
       icon: interactions?.like ? <BiSolidLike /> : <BiLike />,
       count: counts?.likes,
       onClick: interactions?.like
@@ -102,6 +104,8 @@ const PostFooter = ({ post }: { post: PostsWithUsers }) => {
     },
     {
       value: "dislike",
+      done: interactions?.dislike,
+      color: "text-rose-600",
       icon: interactions?.dislike ? <BiSolidDislike /> : <BiDislike />,
       count: counts?.dislikes,
       onClick: interactions?.dislike
@@ -117,6 +121,8 @@ const PostFooter = ({ post }: { post: PostsWithUsers }) => {
     },
     {
       value: "bookmark",
+      done: interactions?.bookmark,
+      color: "text-amber-400",
       icon: interactions?.bookmark ? <GoBookmarkFill /> : <GoBookmark />,
       count: counts?.bookmarks,
       onClick: interactions?.bookmark
@@ -127,17 +133,25 @@ const PostFooter = ({ post }: { post: PostsWithUsers }) => {
   if (!viewer) return null;
 
   return (
-    <Flex justify="center" className="text-2xl" gap="8" align="center">
+    <Flex
+      justify="center"
+      className="text-2xl text-gray-500"
+      gap="8"
+      align="center"
+    >
       {items.map((item) => (
         <Flex
           align="center"
-          gap="1"
-          className="cursor-pointer"
+          className={
+            "cursor-pointer " + (item.done ? item.color + " font-bold" : "")
+          }
           key={item.value}
           onClick={(e) => item.onClick()}
         >
-          <Text size="2">{item.count ? item.count : null}</Text>
-          {item.icon}
+          <Text className="w-4 whitespace-nowrap" size="2">
+            {item.count ? item.count : null}
+          </Text>
+          <Text>{item.icon}</Text>
         </Flex>
       ))}
     </Flex>
