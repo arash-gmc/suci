@@ -1,8 +1,8 @@
 import { Table } from "@radix-ui/themes";
 import Link from "next/link";
-import { PostsWithUsers } from "../interfaces";
+import { PostAndRef } from "../interfaces";
 
-const PostTable = ({ posts }: { posts: PostsWithUsers[] }) => {
+const PostTable = ({ posts }: { posts: PostAndRef[] }) => {
   return (
     <Table.Root variant="surface">
       <Table.Header>

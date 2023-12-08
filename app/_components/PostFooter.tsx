@@ -5,7 +5,7 @@ import { GoBookmark, GoBookmarkFill } from "react-icons/go";
 import { FaRegComment, FaRetweet } from "react-icons/fa6";
 import { Context } from "../_providers/Context";
 import axios from "axios";
-import { PostsWithUsers } from "../interfaces";
+import { PostAndRef } from "../interfaces";
 import { ActionType } from "@prisma/client";
 
 interface Counts {
@@ -22,7 +22,7 @@ interface Interactions {
   repost: boolean;
 }
 
-const PostFooter = ({ post }: { post: PostsWithUsers }) => {
+const PostFooter = ({ postId }: { postId: string }) => {
   const { viewer } = useContext(Context);
   const [counts, setCounts] = useState<Counts>({} as Counts);
   const [interactions, setInteractions] = useState<Interactions>(
@@ -32,7 +32,7 @@ const PostFooter = ({ post }: { post: PostsWithUsers }) => {
     if (viewer)
       axios
         .get<Interactions>("/api/post/actions", {
-          headers: { postId: post.id, userId: viewer?.id },
+          headers: { postId, userId: viewer?.id },
         })
         .then((res) => setInteractions(res.data))
         .catch((e) =>
@@ -41,7 +41,7 @@ const PostFooter = ({ post }: { post: PostsWithUsers }) => {
   }, [viewer]);
   useEffect(() => {
     axios
-      .get<Counts>("/api/post/actions/counts", { headers: { postId: post.id } })
+      .get<Counts>("/api/post/actions/counts", { headers: { postId } })
       .then((res) => setCounts(res.data));
   }, []);
 
@@ -49,7 +49,7 @@ const PostFooter = ({ post }: { post: PostsWithUsers }) => {
     axios
       .post("/api/post/actions", {
         userId: viewer?.id,
-        postId: post.id,
+        postId,
         actionType: action,
       })
       .then((res) => {
@@ -73,7 +73,7 @@ const PostFooter = ({ post }: { post: PostsWithUsers }) => {
       .delete("/api/post/actions", {
         headers: {
           userId: viewer?.id,
-          postId: post.id,
+          postId,
           actionType: action,
         },
       })
@@ -94,7 +94,7 @@ const PostFooter = ({ post }: { post: PostsWithUsers }) => {
   };
   const repost = () => {
     axios
-      .post("/api/post/repost", { postId: post.id, userId: viewer?.id })
+      .post("/api/post/repost", { postId, userId: viewer?.id })
       .then((res) => {
         setCounts((prev) => ({ ...prev, reposts: prev.reposts + 1 }));
         setInteractions((prev) => ({ ...prev, repost: true }));
@@ -104,7 +104,7 @@ const PostFooter = ({ post }: { post: PostsWithUsers }) => {
   const unrepost = () => {
     axios
       .delete("/api/post/repost", {
-        headers: { postId: post.id, userId: viewer?.id },
+        headers: { postId, userId: viewer?.id },
       })
       .then((res) => {
         setCounts((prev) => ({ ...prev, reposts: prev.reposts - 1 }));

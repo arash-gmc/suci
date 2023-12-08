@@ -1,8 +1,13 @@
 import { Posts, Prisma, User } from "@prisma/client";
 import React from "react";
 
-export interface PostsWithUsers extends Posts {
+interface PostAndAuthor extends Posts {
   author: User;
+}
+
+export interface PostAndRef extends Posts {
+  author: User;
+  postRef: PostAndAuthor;
 }
 
 export interface ButtonGroupProps {
