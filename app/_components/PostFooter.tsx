@@ -12,12 +12,14 @@ interface Counts {
   likes: number;
   dislikes: number;
   bookmarks: number;
+  reposts: number;
 }
 
 interface Interactions {
   like: boolean;
   dislike: boolean;
   bookmark: boolean;
+  repost: boolean;
 }
 
 const PostFooter = ({ post }: { post: PostsWithUsers }) => {
@@ -55,11 +57,11 @@ const PostFooter = ({ post }: { post: PostsWithUsers }) => {
           ...prev,
           [action + "s"]:
             action === "like"
-              ? prev.likes++
+              ? prev.likes + 1
               : action === "dislike"
-              ? prev.dislikes++
+              ? prev.dislikes + 1
               : action === "bookmark"
-              ? prev.bookmarks++
+              ? prev.bookmarks + 1
               : null,
         }));
         setInteractions((prev) => ({ ...prev, [action]: true }));
@@ -80,14 +82,33 @@ const PostFooter = ({ post }: { post: PostsWithUsers }) => {
           ...prev,
           [action + "s"]:
             action === "like"
-              ? prev.likes--
+              ? prev.likes - 1
               : action === "dislike"
-              ? prev.dislikes--
+              ? prev.dislikes - 1
               : action === "bookmark"
-              ? prev.bookmarks--
+              ? prev.bookmarks - 1
               : null,
         }));
         setInteractions((prev) => ({ ...prev, [action]: false }));
+      });
+  };
+  const repost = () => {
+    axios
+      .post("/api/post/repost", { postId: post.id, userId: viewer?.id })
+      .then((res) => {
+        setCounts((prev) => ({ ...prev, reposts: prev.reposts + 1 }));
+        setInteractions((prev) => ({ ...prev, repost: true }));
+      });
+  };
+
+  const unrepost = () => {
+    axios
+      .delete("/api/post/repost", {
+        headers: { postId: post.id, userId: viewer?.id },
+      })
+      .then((res) => {
+        setCounts((prev) => ({ ...prev, reposts: prev.reposts - 1 }));
+        setInteractions((prev) => ({ ...prev, repost: false }));
       });
   };
 
@@ -112,7 +133,14 @@ const PostFooter = ({ post }: { post: PostsWithUsers }) => {
         ? () => undoAction("dislike")
         : () => doAction("dislike"),
     },
-    { value: "retweet", icon: <FaRetweet />, count: null, onClick: () => null },
+    {
+      value: "repost",
+      icon: <FaRetweet />,
+      done: interactions.repost,
+      color: "text-green-700",
+      count: counts.reposts,
+      onClick: () => (interactions.repost ? unrepost() : repost()),
+    },
     {
       value: "comment",
       icon: <FaRegComment />,
@@ -148,7 +176,10 @@ const PostFooter = ({ post }: { post: PostsWithUsers }) => {
           key={item.value}
           onClick={(e) => item.onClick()}
         >
-          <Text className="w-4 whitespace-nowrap" size="2">
+          <Text
+            className="w-4 whitespace-nowrap"
+            size="2"
+          >
             {item.count ? item.count : null}
           </Text>
           <Text>{item.icon}</Text>

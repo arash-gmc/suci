@@ -21,5 +21,7 @@ export async function GET(request: NextRequest) {
     if (record.actionType === "bookmark") bookmarks++;
   });
 
-  return NextResponse.json({ likes, dislikes, bookmarks });
+  const reposts = await prisma.posts.count({ where: { refId: postId } });
+
+  return NextResponse.json({ likes, dislikes, bookmarks, reposts });
 }

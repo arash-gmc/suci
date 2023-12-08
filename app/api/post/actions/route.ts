@@ -22,6 +22,13 @@ export async function GET(request: NextRequest) {
       ? (response = { ...response, [action]: true })
       : (response = { ...response, [action]: false })
   );
+  const repostRecord = await prisma.posts.findMany({
+    where: { authorId: userId, refId: postId },
+  });
+  response =
+    repostRecord.length > 0
+      ? { ...response, repost: true }
+      : { ...response, repost: false };
   return NextResponse.json(response);
 }
 

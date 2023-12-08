@@ -20,3 +20,15 @@ export async function POST(request: NextRequest) {
   });
   return NextResponse.json(newRecord);
 }
+
+export async function DELETE(request: NextRequest) {
+  const userId = request.headers.get("userId");
+  const postId = request.headers.get("postId");
+  if (!userId || !postId)
+    return NextResponse.json({ error: "not enough inputs" }, { status: 400 });
+  const res = await prisma.posts.deleteMany({
+    where: { authorId: userId, refId: postId },
+  });
+  if (res.count > 0) return NextResponse.json({});
+  else return NextResponse.json({}, { status: 404 });
+}

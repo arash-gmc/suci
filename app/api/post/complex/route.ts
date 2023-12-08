@@ -6,6 +6,7 @@ export async function POST(request: NextRequest) {
   const posts = await prisma.posts.findMany({
     include: { author: true },
     where,
+    orderBy: { date: "desc" },
   });
 
   return NextResponse.json([...posts]);
