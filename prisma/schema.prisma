@@ -8,12 +8,15 @@ datasource db {
 }
 
 model Posts {
-  id       String         @id @default(cuid())
-  text     String         @db.VarChar(300)
-  date     DateTime       @default(now())
-  authorId String
-  author   User           @relation(fields: [authorId], references: [id])
-  actions  PostsActions[]
+  id           String         @id @default(cuid())
+  text         String?        @db.VarChar(300)
+  date         DateTime       @default(now())
+  authorId     String
+  author       User           @relation(fields: [authorId], references: [id])
+  refId        String?
+  postRef      Posts?         @relation("repostRef", fields: [refId], references: [id])
+  referedPosts Posts[]        @relation("repostRef")
+  actions      PostsActions[]
 }
 
 model PostsActions {
