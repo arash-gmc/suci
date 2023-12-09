@@ -2,10 +2,9 @@ import React, { useContext, useEffect, useState } from "react";
 import { Flex, Grid, Text } from "@radix-ui/themes";
 import { BiLike, BiDislike, BiSolidLike, BiSolidDislike } from "react-icons/bi";
 import { GoBookmark, GoBookmarkFill } from "react-icons/go";
-import { FaRegComment, FaRetweet } from "react-icons/fa6";
+import { FaRetweet } from "react-icons/fa6";
 import { Context } from "../_providers/Context";
 import axios from "axios";
-import { PostAndRef } from "../interfaces";
 import { ActionType } from "@prisma/client";
 import AddComment from "./AddComment";
 
@@ -14,6 +13,7 @@ interface Counts {
   dislikes: number;
   bookmarks: number;
   reposts: number;
+  comments: number;
 }
 
 interface Interactions {
@@ -21,6 +21,7 @@ interface Interactions {
   dislike: boolean;
   bookmark: boolean;
   repost: boolean;
+  comment: boolean;
 }
 
 const PostFooter = ({ postId }: { postId: string }) => {
@@ -144,8 +145,17 @@ const PostFooter = ({ postId }: { postId: string }) => {
     },
     {
       value: "comment",
-      icon: <AddComment />,
-      count: null,
+      icon: (
+        <AddComment
+          postId={postId}
+          addCount={() =>
+            setCounts((prev) => ({ ...prev, comments: prev.comments + 1 }))
+          }
+        />
+      ),
+      done: interactions.comment,
+      color: "text-purple-600",
+      count: counts.comments,
       onClick: () => null,
     },
     {

@@ -10,13 +10,29 @@ import {
   Checkbox,
   Text,
 } from "@radix-ui/themes";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { FaRegComment } from "react-icons/fa6";
 import ProfilePicture from "./ProfilePicture";
 import { Context } from "../_providers/Context";
+import axios from "axios";
 
-const AddComment = () => {
+interface Props {
+  postId: string;
+  addCount: () => void;
+}
+
+const AddComment = ({ postId, addCount }: Props) => {
   const { viewer } = useContext(Context);
+  const [commentText, setCommentText] = useState("");
+  const sendComment = () => {
+    axios
+      .post("/api/comment/for-post", {
+        authorId: viewer?.id,
+        postId,
+        text: commentText,
+      })
+      .then((res) => addCount());
+  };
   if (!viewer) return null;
   return (
     <Popover.Root>
@@ -37,6 +53,7 @@ const AddComment = () => {
             <TextArea
               placeholder="Write a comment…"
               style={{ height: 80 }}
+              onChange={(e) => setCommentText(e.currentTarget.value)}
             />
             <Flex
               gap="3"
@@ -52,7 +69,12 @@ const AddComment = () => {
                 </Button>
               </Popover.Close>
               <Popover.Close>
-                <Button size="1">Send Comment</Button>
+                <Button
+                  size="1"
+                  onClick={() => sendComment()}
+                >
+                  Send Comment
+                </Button>
               </Popover.Close>
             </Flex>
           </Box>

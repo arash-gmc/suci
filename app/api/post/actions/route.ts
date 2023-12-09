@@ -22,6 +22,7 @@ export async function GET(request: NextRequest) {
       ? (response = { ...response, [action]: true })
       : (response = { ...response, [action]: false })
   );
+
   const repostRecord = await prisma.posts.findMany({
     where: { authorId: userId, refId: postId },
   });
@@ -29,6 +30,15 @@ export async function GET(request: NextRequest) {
     repostRecord.length > 0
       ? { ...response, repost: true }
       : { ...response, repost: false };
+
+  const commentRecord = await prisma.comment.findMany({
+    where: { authorId: userId, postRefId: postId },
+  });
+  response =
+    commentRecord.length > 0
+      ? { ...response, comment: true }
+      : { ...response, comment: false };
+
   return NextResponse.json(response);
 }
 

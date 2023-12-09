@@ -41,11 +41,12 @@ model Comment {
   authorId        String
   author          User      @relation(fields: [authorId], references: [id])
   text            String
-  postRefId       String
-  postRef         Posts     @relation(fields: [postRefId], references: [id])
-  commentRefId    String
-  commnetRef      Comment   @relation("CommentForComment", fields: [commentRefId], references: [id])
+  postRefId       String?
+  postRef         Posts?    @relation(fields: [postRefId], references: [id])
+  commentRefId    String?
+  commnetRef      Comment?  @relation("CommentForComment", fields: [commentRefId], references: [id])
   commentsRefered Comment[] @relation("CommentForComment")
+  date            DateTime  @default(now())
 }
 
 model Follow {

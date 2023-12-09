@@ -22,6 +22,7 @@ export async function GET(request: NextRequest) {
   });
 
   const reposts = await prisma.posts.count({ where: { refId: postId } });
+  const comments = await prisma.comment.count({ where: { postRefId: postId } });
 
-  return NextResponse.json({ likes, dislikes, bookmarks, reposts });
+  return NextResponse.json({ likes, dislikes, bookmarks, reposts, comments });
 }
