@@ -161,7 +161,7 @@ const PostFooter = ({ postId }: { postId: string }) => {
     {
       value: "bookmark",
       done: interactions?.bookmark,
-      color: "text-amber-400",
+      color: "text-orange-400",
       icon: interactions?.bookmark ? <GoBookmarkFill /> : <GoBookmark />,
       count: counts?.bookmarks,
       onClick: interactions?.bookmark
@@ -175,7 +175,7 @@ const PostFooter = ({ postId }: { postId: string }) => {
     <Flex
       justify="center"
       className="text-2xl text-gray-500"
-      gap="8"
+      gap={{ initial: "5", xs: "8" }}
       align="center"
     >
       {items.map((item) => (
@@ -193,7 +193,7 @@ const PostFooter = ({ postId }: { postId: string }) => {
           >
             {item.count ? item.count : null}
           </Text>
-          <Text>{item.icon}</Text>
+          <Text size={{ initial: "5", sm: "6" }}>{item.icon}</Text>
         </Flex>
       ))}
     </Flex>

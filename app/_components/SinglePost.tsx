@@ -57,12 +57,14 @@ const SinglePost = ({ rawPost }: { rawPost: PostAndRef }) => {
             align="baseline"
             gap="2"
           >
-            <Text
-              size="4"
-              className="font-bold"
-            >
-              {author.name}
-            </Text>
+            <Link href={"/profile/" + author.username}>
+              <Text
+                size="4"
+                className="font-bold"
+              >
+                {author.name}
+              </Text>
+            </Link>
             <Text
               size="1"
               color="gray"

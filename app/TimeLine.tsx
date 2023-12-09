@@ -33,8 +33,9 @@ const TimeLine = () => {
           isLoading={isLoading}
         />
       </Box>
-
-      <Filter setWhere={setWhere} />
+      <Box display={{ initial: "none", sm: "block" }}>
+        <Filter setWhere={setWhere} />
+      </Box>
     </Flex>
   );
 };
