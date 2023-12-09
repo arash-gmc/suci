@@ -7,6 +7,7 @@ import { Context } from "../_providers/Context";
 import axios from "axios";
 import { PostAndRef } from "../interfaces";
 import { ActionType } from "@prisma/client";
+import AddComment from "./AddComment";
 
 interface Counts {
   likes: number;
@@ -143,7 +144,7 @@ const PostFooter = ({ postId }: { postId: string }) => {
     },
     {
       value: "comment",
-      icon: <FaRegComment />,
+      icon: <AddComment />,
       count: null,
       onClick: () => null,
     },

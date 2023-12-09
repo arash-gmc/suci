@@ -17,6 +17,7 @@ model Posts {
   postRef      Posts?         @relation("repostRef", fields: [refId], references: [id])
   referedPosts Posts[]        @relation("repostRef")
   actions      PostsActions[]
+  comments     Comment[]
 }
 
 model PostsActions {
@@ -33,6 +34,18 @@ enum ActionType {
   like
   dislike
   bookmark
+}
+
+model Comment {
+  id              String    @id @default(cuid())
+  authorId        String
+  author          User      @relation(fields: [authorId], references: [id])
+  text            String
+  postRefId       String
+  postRef         Posts     @relation(fields: [postRefId], references: [id])
+  commentRefId    String
+  commnetRef      Comment   @relation("CommentForComment", fields: [commentRefId], references: [id])
+  commentsRefered Comment[] @relation("CommentForComment")
 }
 
 model Follow {
@@ -64,6 +77,7 @@ model User {
   following      Follow[]       @relation("Following")
   follower       Follow[]       @relation("Follower")
   postActions    PostsActions[]
+  comments       Comment[]
 }
 
 enum Gender {
