@@ -1,4 +1,4 @@
-import { Container, Flex, Text } from "@radix-ui/themes";
+import { Box, Container, Flex, Text } from "@radix-ui/themes";
 import Link from "next/link";
 import { PostAndRef } from "../interfaces";
 import PostFooter from "./PostFooter";
@@ -79,7 +79,11 @@ const SinglePost = ({ rawPost }: { rawPost: PostAndRef }) => {
               1h
             </Text>
           </Flex>
-          <Text>{post.text}</Text>
+          <Link href={"/posts/" + post.id}>
+            <Box width="100%">
+              <Text>{post.text}</Text>
+            </Box>
+          </Link>
           <PostFooter postId={post.id} />
         </Flex>
       </Flex>

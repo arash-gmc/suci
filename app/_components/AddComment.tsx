@@ -72,6 +72,7 @@ const AddComment = ({ postId, addCount }: Props) => {
                 <Button
                   size="1"
                   onClick={() => sendComment()}
+                  disabled={!commentText}
                 >
                   Send Comment
                 </Button>

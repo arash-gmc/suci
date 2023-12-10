@@ -1,3 +1,4 @@
+"use client";
 import React, { useContext, useEffect, useState } from "react";
 import { Flex, Grid, Text } from "@radix-ui/themes";
 import { BiLike, BiDislike, BiSolidLike, BiSolidDislike } from "react-icons/bi";
