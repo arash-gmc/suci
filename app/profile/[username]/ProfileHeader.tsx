@@ -7,6 +7,7 @@ import axios, { AxiosError } from "axios";
 import FollowButton from "./FollowButton";
 import ProfilePicture from "@/app/_components/ProfilePicture";
 import { getYear } from "date-fns";
+import SendMessage from "./SendMessage";
 
 interface Props {
   user: User;
@@ -91,7 +92,10 @@ const ProfileHeader = ({ user, session }: Props) => {
               followingId={session?.user.id}
               setFollowers={setFolllowes}
             />
-            <Button>Message</Button>
+            <SendMessage
+              profileId={user.id}
+              profileName={user.name}
+            />
           </Grid>
         </Flex>
       </Flex>
@@ -100,8 +104,8 @@ const ProfileHeader = ({ user, session }: Props) => {
         <Flex
           direction={{ initial: "row", sm: "column" }}
           justify="center"
-          gap={{ initial: "8", sm: "2" }}
-          className="font-bold border-l-2"
+          gap={{ initial: "8", sm: "3" }}
+          className="font-bold border-l-2 max-sm:border-0"
           my="3"
           p="2"
         >

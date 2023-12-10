@@ -1,43 +1,38 @@
 "use client";
+import { ChatBubbleIcon } from "@radix-ui/react-icons";
 import { Popover, Button, Flex, Box, TextArea } from "@radix-ui/themes";
 import React, { useContext, useState } from "react";
-import { FaRegComment } from "react-icons/fa6";
-import ProfilePicture from "./ProfilePicture";
-import { Context } from "../_providers/Context";
 import axios from "axios";
+import { Context } from "@/app/_providers/Context";
+import ProfilePicture from "@/app/_components/ProfilePicture";
 
 interface Props {
-  postId: string;
-  addCount: () => void;
-  setStatus: () => void;
+  profileId: string;
+  profileName: string | null;
 }
 
-const AddComment = ({ postId, addCount, setStatus }: Props) => {
+const SendMessage = ({ profileId, profileName }: Props) => {
   const { viewer } = useContext(Context);
-  const [commentText, setCommentText] = useState("");
-  const sendComment = () => {
+  const [messageText, setMessageText] = useState("");
+  const sendMessage = () => {
     axios
-      .post("/api/comment/for-post", {
-        authorId: viewer?.id,
-        postId,
-        text: commentText,
+      .post("/api/message", {
+        fromId: viewer?.id,
+        toId: profileId,
+        text: messageText,
       })
-      .then((res) => {
-        addCount();
-        setStatus();
-      });
+      .then((res) => null);
   };
   if (!viewer) return null;
+  if (viewer.id === profileId) return null;
   return (
     <Popover.Root>
       <Popover.Trigger>
-        <button>
-          <FaRegComment />
-        </button>
+        <Button>Message</Button>
       </Popover.Trigger>
       <Popover.Content style={{ width: 360 }}>
         <Flex gap="3">
-          <Flex>
+          <Flex align="start">
             <ProfilePicture
               user={viewer}
               size="sm"
@@ -45,9 +40,9 @@ const AddComment = ({ postId, addCount, setStatus }: Props) => {
           </Flex>
           <Box grow="1">
             <TextArea
-              placeholder="Write a comment…"
+              placeholder={"Write a message to " + profileName + " ..."}
               style={{ height: 80 }}
-              onChange={(e) => setCommentText(e.currentTarget.value)}
+              onChange={(e) => setMessageText(e.currentTarget.value)}
             />
             <Flex
               gap="3"
@@ -65,10 +60,10 @@ const AddComment = ({ postId, addCount, setStatus }: Props) => {
               <Popover.Close>
                 <Button
                   size="1"
-                  onClick={() => sendComment()}
-                  disabled={!commentText}
+                  onClick={() => sendMessage()}
+                  disabled={!messageText}
                 >
-                  Send Comment
+                  Send Message
                 </Button>
               </Popover.Close>
             </Flex>
@@ -79,4 +74,4 @@ const AddComment = ({ postId, addCount, setStatus }: Props) => {
   );
 };
 
-export default AddComment;
+export default SendMessage;
