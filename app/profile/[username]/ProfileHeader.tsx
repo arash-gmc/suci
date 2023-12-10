@@ -15,21 +15,17 @@ interface Props {
 }
 
 interface Counts {
-  followersCounts: number;
-  followingsCounts: number;
-  postsCounts: number;
+  follower: number;
+  following: number;
+  post: number;
 }
 
 const ProfileHeader = ({ user, session }: Props) => {
-  const [followers, setFollowers] = useState(0);
-  const [followings, setFollowings] = useState(0);
-  const [postsCount, setPostsCount] = useState(0);
+  const [counts, setCounts] = useState<Counts>({} as Counts);
 
   useEffect(() => {
     axios.get<Counts>("/api/user/counts/" + user.id).then((res) => {
-      setFollowers(res.data.followersCounts);
-      setFollowings(res.data.followingsCounts);
-      setPostsCount(res.data.postsCounts);
+      setCounts(res.data);
     });
   }, []);
 
@@ -48,35 +44,73 @@ const ProfileHeader = ({ user, session }: Props) => {
     return status;
   };
 
+  const setFolllowes = (action: "follow" | "unfollow") => {
+    if (action === "follow")
+      setCounts((prev) => ({ ...prev, follower: prev.follower + 1 }));
+    if (action === "unfollow")
+      setCounts((prev) => ({ ...prev, follower: prev.follower - 1 }));
+  };
+
   return (
-    <Grid columns={{ initial: "1", sm: "2" }}>
-      <Flex gap="3">
-        <ProfilePicture user={user} size="lg" />
-        <Flex direction="column" pt="3">
+    <Flex
+      align="center"
+      justify="center"
+      gap="5"
+      direction={{ initial: "column", sm: "row" }}
+    >
+      <Flex gap="6">
+        <ProfilePicture
+          user={user}
+          size="lg"
+        />
+        <Flex
+          direction="column"
+          pt="3"
+        >
           <Heading my="2">{user.name}</Heading>
-          <Text size="2" color="gray">
+          <Text
+            size="2"
+            color="gray"
+          >
             @{user.username}
           </Text>
-          <Text size="2" color="gray">
+          <Text
+            size="2"
+            color="gray"
+          >
             {user.email}
           </Text>
           <Text size="2">{getStatus()}</Text>
+          <Grid
+            gap="2"
+            my="3"
+            columns="2"
+          >
+            <FollowButton
+              followerId={user.id}
+              followingId={session?.user.id}
+              setFollowers={setFolllowes}
+            />
+            <Button>Message</Button>
+          </Grid>
+        </Flex>
+      </Flex>
 
-          <FollowButton
-            followerId={user.id}
-            followingId={session?.user.id}
-            setFollowers={setFollowers}
-          />
+      {Object.keys(counts).length > 0 && (
+        <Flex
+          direction={{ initial: "row", sm: "column" }}
+          justify="center"
+          gap={{ initial: "8", sm: "2" }}
+          className="font-bold border-l-2"
+          my="3"
+          p="2"
+        >
+          <Text>{counts.post} Posts</Text>
+          <Text>{counts.follower} followers</Text>
+          <Text>{counts.following} followings</Text>
         </Flex>
-      </Flex>
-      <Flex direction="column" justify="center" py={{ initial: "5", sm: "0" }}>
-        <Flex justify="center" gap={{ initial: "5", md: "8" }}>
-          <Text>{postsCount} Posts</Text>
-          <Text>{followers} followers</Text>
-          <Text>{followings} followings</Text>
-        </Flex>
-      </Flex>
-    </Grid>
+      )}
+    </Flex>
   );
 };
 

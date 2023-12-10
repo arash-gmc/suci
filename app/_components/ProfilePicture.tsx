@@ -19,7 +19,7 @@ const ProfilePicture = ({ user, size }: Props) => {
   > = {
     sm: { picture: 44, avatar: "3" },
     md: { picture: 76, avatar: "5" },
-    lg: { picture: 160, avatar: "8" },
+    lg: { picture: 176, avatar: "9" },
   };
   if (!user.imagePublicId) {
     let color: "gray" | "indigo" | "pink" = "gray";

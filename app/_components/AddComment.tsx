@@ -19,9 +19,10 @@ import axios from "axios";
 interface Props {
   postId: string;
   addCount: () => void;
+  setStatus: () => void;
 }
 
-const AddComment = ({ postId, addCount }: Props) => {
+const AddComment = ({ postId, addCount, setStatus }: Props) => {
   const { viewer } = useContext(Context);
   const [commentText, setCommentText] = useState("");
   const sendComment = () => {
@@ -31,7 +32,10 @@ const AddComment = ({ postId, addCount }: Props) => {
         postId,
         text: commentText,
       })
-      .then((res) => addCount());
+      .then((res) => {
+        addCount();
+        setStatus();
+      });
   };
   if (!viewer) return null;
   return (

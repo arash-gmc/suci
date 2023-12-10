@@ -6,7 +6,7 @@ import React, { SetStateAction, useEffect, useState } from "react";
 interface Props {
   followingId: string | undefined;
   followerId: string;
-  setFollowers: (value: SetStateAction<number>) => void;
+  setFollowers: (action: "follow" | "unfollow") => void;
 }
 
 const FollowButton = ({ followerId, followingId, setFollowers }: Props) => {
@@ -31,7 +31,7 @@ const FollowButton = ({ followerId, followingId, setFollowers }: Props) => {
       })
       .then(() => {
         setFollowing(false);
-        setFollowers((prev) => prev - 1);
+        setFollowers("unfollow");
       })
       .catch((e: AxiosError) => console.log(e.message));
   };
@@ -43,7 +43,7 @@ const FollowButton = ({ followerId, followingId, setFollowers }: Props) => {
       })
       .then(() => {
         setFollowing(true);
-        setFollowers((prev) => prev + 1);
+        setFollowers("follow");
       })
       .catch((e: AxiosError) => console.log(e.message));
   };
@@ -52,16 +52,14 @@ const FollowButton = ({ followerId, followingId, setFollowers }: Props) => {
 
   if (isFollowing)
     return (
-      <Button size="1" my="2" onClick={unfollow} variant="outline">
+      <Button
+        onClick={unfollow}
+        variant="outline"
+      >
         Unfollow
       </Button>
     );
-  if (!isFollowing)
-    return (
-      <Button size="1" my="2" onClick={follow}>
-        Follow
-      </Button>
-    );
+  if (!isFollowing) return <Button onClick={follow}>Follow</Button>;
 };
 
 export default FollowButton;

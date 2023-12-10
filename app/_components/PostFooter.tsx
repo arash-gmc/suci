@@ -152,6 +152,9 @@ const PostFooter = ({ postId }: { postId: string }) => {
           addCount={() =>
             setCounts((prev) => ({ ...prev, comments: prev.comments + 1 }))
           }
+          setStatus={() =>
+            setInteractions((prev) => ({ ...prev, comment: true }))
+          }
         />
       ),
       done: interactions.comment,

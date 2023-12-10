@@ -16,6 +16,7 @@ const page = async ({ params }: { params: { username: string } }) => {
   if (!user) notFound();
   const posts = (await prisma.posts.findMany({
     where: { authorId: user.id },
+    orderBy: { date: "desc" },
     include: { author: true, postRef: { include: { author: true } } },
   })) as PostAndRef[];
   const session = await getServerSession(nextauthConfig);

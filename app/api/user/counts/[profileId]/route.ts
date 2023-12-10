@@ -11,14 +11,14 @@ export async function GET(
 ) {
   const user = await prisma.user.findUnique({ where: { id: profileId } });
   if (!user) return NextResponse.json({}, { status: 404 });
-  const followersCounts = await prisma.follow.count({
+  const follower = await prisma.follow.count({
     where: { followerId: profileId },
   });
-  const followingsCounts = await prisma.follow.count({
+  const following = await prisma.follow.count({
     where: { followingId: profileId },
   });
-  const postsCounts = await prisma.posts.count({
-    where: { authorId: profileId },
+  const post = await prisma.posts.count({
+    where: { authorId: profileId, postRef: null },
   });
-  return NextResponse.json({ followersCounts, followingsCounts, postsCounts });
+  return NextResponse.json({ follower, following, post });
 }
