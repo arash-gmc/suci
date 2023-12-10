@@ -1,5 +1,4 @@
-import React, { SetStateAction, useContext, useEffect, useState } from "react";
-import axios from "axios";
+import React, { SetStateAction, useContext } from "react";
 import { Prisma, User } from "@prisma/client";
 import AddList from "./AddList";
 import { Flex } from "@radix-ui/themes";
@@ -12,14 +11,23 @@ interface Props {
 }
 
 const Filter = ({ setWhere }: Props) => {
-  const { viewer, status } = useContext(Context);
+  const { viewer } = useContext(Context);
 
   if (!viewer) return null;
 
   return (
-    <Flex direction="column" gap="3">
-      <DefaultFilters setWhere={setWhere} user={viewer} />
-      <Lists setWhere={setWhere} user={viewer} />
+    <Flex
+      direction="column"
+      gap="3"
+    >
+      <DefaultFilters
+        setWhere={setWhere}
+        user={viewer}
+      />
+      <Lists
+        setWhere={setWhere}
+        user={viewer}
+      />
       <AddList />
     </Flex>
   );

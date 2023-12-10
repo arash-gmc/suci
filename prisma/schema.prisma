@@ -77,6 +77,8 @@ model User {
   gender         Gender?
   following      Follow[]       @relation("Following")
   follower       Follow[]       @relation("Follower")
+  fromMessages   Message[]      @relation("FromMessage")
+  toMessages     Message[]      @relation("ToMessage")
   postActions    PostsActions[]
   comments       Comment[]
 }
@@ -92,6 +94,17 @@ model List {
   ownerId String
   owner   User   @relation(fields: [ownerId], references: [id])
   members String @db.Text
+}
+
+model Message {
+  id         String   @id @default(cuid())
+  fromUserId String
+  toUserId   String
+  fromUser   User     @relation("FromMessage", fields: [fromUserId], references: [id])
+  toUser     User     @relation("ToMessage", fields: [toUserId], references: [id])
+  text       String
+  seen       Boolean  @default(false)
+  date       DateTime @default(now())
 }
 
 model Account {

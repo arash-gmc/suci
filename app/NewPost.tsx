@@ -10,7 +10,7 @@ interface Props {
 }
 
 const NewPost = ({ setPosts }: Props) => {
-  const { viewer, status } = useContext(Context);
+  const { viewer } = useContext(Context);
   const [postText, setPostText] = useState<string>("");
   const addPost = async () => {
     const res = await axios.post<PostAndRef>("/api/post", {
@@ -20,7 +20,7 @@ const NewPost = ({ setPosts }: Props) => {
     setPosts((prev) => [res.data, ...prev]);
     setPostText("");
   };
-  if (status === "authenticated")
+  if (viewer)
     return (
       <Flex
         mx="5"

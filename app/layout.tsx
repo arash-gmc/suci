@@ -6,6 +6,8 @@ import { Container, Theme, ThemePanel } from "@radix-ui/themes";
 import NavBar from "./NavBar";
 import Session from "./_providers/Session";
 import ContextProvider from "./_providers/Context";
+import { getServerSession } from "next-auth";
+import { nextauthConfig } from "./api/auth/[...nextauth]/route";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,11 +16,13 @@ export const metadata: Metadata = {
   description: "Social Media for all intersts",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const session = await getServerSession(nextauthConfig);
+
   return (
     <html lang="en">
       <body className={inter.className}>
@@ -28,12 +32,10 @@ export default function RootLayout({
           radius="large"
           scaling="105%"
         >
-          <Session>
-            <ContextProvider>
-              <NavBar />
-              <Container>{children}</Container>
-            </ContextProvider>
-          </Session>
+          <ContextProvider session={session}>
+            <NavBar />
+            <Container>{children}</Container>
+          </ContextProvider>
         </Theme>
       </body>
     </html>
