@@ -12,6 +12,7 @@ const NavBar = () => {
       return (
         <>
           <Link href={"/profile/" + viewer?.username}>{viewer?.name}</Link>
+          <Link href="/messages">Messages</Link>
           <Link href="/api/auth/signout">Sign Out</Link>
         </>
       );
@@ -25,7 +26,7 @@ const NavBar = () => {
   };
 
   return (
-    <nav className="border-b-2 mb-5 p-2">
+    <nav className="border-b-2 p-2">
       <Container>
         <Flex
           justify="between"

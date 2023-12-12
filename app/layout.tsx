@@ -34,7 +34,7 @@ export default async function RootLayout({
         >
           <ContextProvider session={session}>
             <NavBar />
-            <Container>{children}</Container>
+            {children}
           </ContextProvider>
         </Theme>
       </body>
