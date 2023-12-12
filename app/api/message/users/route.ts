@@ -1,5 +1,12 @@
 import prisma from "@/prisma/client";
+import { Message, User } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
+
+export interface ChatContactsInfo {
+  user: User;
+  unseens: number;
+  lastMessage: string;
+}
 
 export async function GET(request: NextRequest) {
   const userId = request.headers.get("userId");
@@ -12,22 +19,33 @@ export async function GET(request: NextRequest) {
   const records = await prisma.message.findMany({
     where: { OR: [{ fromUserId: user.id }, { toUserId: user.id }] },
     orderBy: { date: "desc" },
-    select: { fromUserId: true, toUserId: true, fromUser: true, toUser: true },
+    include: { fromUser: true, toUser: true },
   });
-  const users: any[] = [];
-  const usersId: string[] = [];
+  const chatInfo: Record<string, ChatContactsInfo> = {};
+
   records.forEach((record) => {
-    if (record.fromUserId === user.id && !usersId.includes(record.toUserId)) {
-      const { hashedPassword, ...user } = record.toUser;
-      users.push(user);
-      usersId.push(record.toUserId);
+    if (record.fromUserId === user.id && !chatInfo[record.toUserId]) {
+      record.toUser.hashedPassword = "";
+      chatInfo[record.toUserId] = {
+        user: record.toUser,
+        unseens: 0,
+        lastMessage: record.text,
+      };
     }
-    if (record.toUserId === user.id && !usersId.includes(record.fromUserId)) {
-      const { hashedPassword, ...user } = record.fromUser;
-      users.push(user);
-      usersId.push(record.fromUserId);
+    if (record.toUserId === user.id) {
+      if (!chatInfo[record.fromUserId]) {
+        record.fromUser.hashedPassword = "";
+        chatInfo[record.fromUserId] = {
+          user: record.fromUser,
+          unseens: 0,
+          lastMessage: record.text,
+        };
+      }
+      if (!record.seen) {
+        chatInfo[record.fromUserId].unseens++;
+      }
     }
   });
 
-  return NextResponse.json(users);
+  return NextResponse.json(Object.values(chatInfo));
 }

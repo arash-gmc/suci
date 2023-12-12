@@ -17,7 +17,7 @@ const ChatBox = ({ messages, viewerId }: Props) => {
     >
       <Flex
         direction="column-reverse"
-        gap="3"
+        gap="2"
         p="5"
       >
         {messages.map((message) => (
