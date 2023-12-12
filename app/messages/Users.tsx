@@ -7,8 +7,9 @@ import ProfilePicture from "../_components/ProfilePicture";
 
 interface Props {
   setUser: React.Dispatch<React.SetStateAction<string | null>>;
+  selectedUserId: string | null;
 }
-const Users = ({ setUser }: Props) => {
+const Users = ({ setUser, selectedUserId }: Props) => {
   const [users, setUsers] = useState<User[]>([]);
   const { viewer } = useContext(Context);
   useEffect(() => {
@@ -26,10 +27,13 @@ const Users = ({ setUser }: Props) => {
       {users.map((user) => (
         <Flex
           key={user.id}
-          gap="1"
+          gap="2"
           py="2"
           align="center"
-          className="border-b-2 cursor-pointer px-3 mx-1"
+          className={
+            (user.id === selectedUserId ? "bg-sky-200 " : "") +
+            "border-b-2 cursor-pointer px-3 mx-1 "
+          }
           onClick={() => setUser(user.id)}
         >
           <ProfilePicture

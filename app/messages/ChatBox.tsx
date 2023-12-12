@@ -4,24 +4,16 @@ import axios from "axios";
 import { Message } from "@prisma/client";
 import { Box, Flex, Text } from "@radix-ui/themes";
 interface Props {
-  contactId: string | null;
+  messages: Message[];
+  viewerId: string | null;
 }
-const ChatBox = ({ contactId }: Props) => {
-  const { viewer } = useContext(Context);
-  const [messages, setMessages] = useState<Message[]>([]);
-  useEffect(() => {
-    if (viewer && contactId)
-      axios
-        .get<Message[]>("/api/message/chat", {
-          headers: { userId: viewer?.id, contactId },
-        })
-        .then((res) => setMessages(res.data));
-  }, [viewer, contactId]);
+const ChatBox = ({ messages, viewerId }: Props) => {
   return (
     <Box
       height="100%"
       width="100%"
-      className="bg-teal-100"
+      className="max-h-full overflow-y-scroll border-b-2"
+      style={{ backgroundColor: "var(--accent-3)" }}
     >
       <Flex
         direction="column-reverse"
@@ -31,12 +23,12 @@ const ChatBox = ({ contactId }: Props) => {
         {messages.map((message) => (
           <Flex
             key={message.id}
-            justify={message.fromUserId === viewer?.id ? "end" : "start"}
+            justify={message.fromUserId === viewerId ? "end" : "start"}
           >
             <Box
               className={
-                (message.fromUserId === viewer?.id
-                  ? "bg-teal-300 "
+                (message.fromUserId === viewerId
+                  ? "bg-teal-200 "
                   : "bg-gray-50") + " rounded-2xl"
               }
               p="3"
