@@ -11,11 +11,13 @@ import { Context } from "../_providers/Context";
 import NewMessage from "./NewMessage";
 import axios from "axios";
 import TinyUsers from "./TinyUsers";
+import { ChatContactsInfo } from "../api/message/users/route";
 
 const page = () => {
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
   const { viewer } = useContext(Context);
   const [messages, setMessages] = useState<Message[]>([]);
+  const [contactsInfo, setContactsInfo] = useState<ChatContactsInfo[]>([]);
   const [refreshs, setRefreshs] = useState(0);
   //setInterval(() => setRefreshs((prev) => prev + 1), 5000);
   useEffect(() => {
@@ -26,6 +28,31 @@ const page = () => {
         })
         .then((res) => setMessages(res.data));
   }, [viewer, selectedUserId, refreshs]);
+  useEffect(() => {
+    if (viewer?.id)
+      axios
+        .get<ChatContactsInfo[]>("/api/message/users", {
+          headers: { userId: viewer?.id },
+        })
+        .then((res) => setContactsInfo(res.data));
+  }, [viewer]);
+  useEffect(() => {
+    if (viewer?.id && selectedUserId)
+      axios
+        .patch("/api/message/seen", {
+          userId: viewer?.id,
+          contactId: selectedUserId,
+        })
+        .then((res) => {
+          setContactsInfo((prev) =>
+            prev.map((contact) =>
+              contact.user.id === selectedUserId
+                ? { ...contact, unseens: 0 }
+                : contact
+            )
+          );
+        });
+  }, [selectedUserId, refreshs]);
   if (!viewer) return null;
   return (
     <Flex>
@@ -36,6 +63,7 @@ const page = () => {
         <Users
           setUser={setSelectedUserId}
           selectedUserId={selectedUserId}
+          contactsInfo={contactsInfo}
         />
       </Flex>
       <Flex
@@ -45,6 +73,7 @@ const page = () => {
         <TinyUsers
           setUser={setSelectedUserId}
           selectedUserId={selectedUserId}
+          contactsInfo={contactsInfo}
         />
       </Flex>
       <Flex

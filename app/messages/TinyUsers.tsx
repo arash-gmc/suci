@@ -1,4 +1,3 @@
-import { User } from "@prisma/client";
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../_providers/Context";
@@ -9,19 +8,9 @@ import { ChatContactsInfo } from "../api/message/users/route";
 interface Props {
   setUser: React.Dispatch<React.SetStateAction<string | null>>;
   selectedUserId: string | null;
+  contactsInfo: ChatContactsInfo[];
 }
-const Users = ({ setUser, selectedUserId }: Props) => {
-  const [contactsInfo, setcontactsInfo] = useState<ChatContactsInfo[]>([]);
-  const { viewer } = useContext(Context);
-  useEffect(() => {
-    if (viewer?.id)
-      axios
-        .get<ChatContactsInfo[]>("/api/message/users", {
-          headers: { userId: viewer?.id },
-        })
-        .then((res) => setcontactsInfo(res.data));
-  }, [viewer]);
-
+const Users = ({ setUser, selectedUserId, contactsInfo }: Props) => {
   return (
     <Flex
       direction="column"
@@ -50,7 +39,7 @@ const Users = ({ setUser, selectedUserId }: Props) => {
           >
             {contact.user.name}
           </Text>
-          {contact.unseens && <Badge>{contact.unseens}</Badge>}
+          {!!contact.unseens && <Badge>{contact.unseens}</Badge>}
         </Flex>
       ))}
     </Flex>

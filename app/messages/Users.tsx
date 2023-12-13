@@ -9,19 +9,9 @@ import { ChatContactsInfo } from "../api/message/users/route";
 interface Props {
   setUser: React.Dispatch<React.SetStateAction<string | null>>;
   selectedUserId: string | null;
+  contactsInfo: ChatContactsInfo[];
 }
-const Users = ({ setUser, selectedUserId }: Props) => {
-  const [contactsInfo, setcontactsInfo] = useState<ChatContactsInfo[]>([]);
-  const { viewer } = useContext(Context);
-  useEffect(() => {
-    if (viewer?.id)
-      axios
-        .get<ChatContactsInfo[]>("/api/message/users", {
-          headers: { userId: viewer?.id },
-        })
-        .then((res) => setcontactsInfo(res.data));
-  }, [viewer]);
-
+const Users = ({ setUser, selectedUserId, contactsInfo }: Props) => {
   return (
     <Flex
       direction="column"
@@ -57,7 +47,7 @@ const Users = ({ setUser, selectedUserId }: Props) => {
               </Text>
             </Box>
           </Flex>
-          {contact.unseens && <Badge>{contact.unseens}</Badge>}
+          {!!contact.unseens && <Badge>{contact.unseens}</Badge>}
         </Flex>
       ))}
     </Flex>
