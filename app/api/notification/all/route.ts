@@ -9,7 +9,6 @@ export async function GET(request: NextRequest) {
     where: { toUserId: userId },
     orderBy: { date: "desc" },
     include: { fromUser: true },
-    take: 10,
   });
   return NextResponse.json(records);
 }

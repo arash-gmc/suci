@@ -4,7 +4,7 @@ import Link from "next/link";
 import Search from "./_components/Search";
 import { useContext } from "react";
 import { Context } from "./_providers/Context";
-import NotificationsList from "./Notifications";
+import NotificationsMenu from "./notifications/NotificationMenu";
 import { FaEnvelope } from "react-icons/fa6";
 
 const NavBar = () => {
@@ -19,7 +19,7 @@ const NavBar = () => {
               <FaEnvelope />
             </Text>
           </Link>
-          <NotificationsList userId={viewer.id} />
+          <NotificationsMenu userId={viewer.id} />
           <Link href="/api/auth/signout">Sign Out</Link>
         </>
       );
