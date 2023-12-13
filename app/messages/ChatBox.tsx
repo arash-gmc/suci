@@ -33,7 +33,7 @@ const ChatBox = ({ messages, viewerId }: Props) => {
               }
               p="3"
             >
-              <Text>{message.text}</Text>
+              <Text size={{ initial: "2", sm: "3" }}>{message.text}</Text>
             </Box>
           </Flex>
         ))}

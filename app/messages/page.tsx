@@ -10,6 +10,7 @@ import ChatBox from "./ChatBox";
 import { Context } from "../_providers/Context";
 import NewMessage from "./NewMessage";
 import axios from "axios";
+import TinyUsers from "./TinyUsers";
 
 const page = () => {
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
@@ -28,8 +29,20 @@ const page = () => {
   if (!viewer) return null;
   return (
     <Flex>
-      <Flex className="w-1/3 h-full">
+      <Flex
+        className="w-1/3 h-full"
+        display={{ initial: "none", md: "flex" }}
+      >
         <Users
+          setUser={setSelectedUserId}
+          selectedUserId={selectedUserId}
+        />
+      </Flex>
+      <Flex
+        display={{ initial: "flex", md: "none" }}
+        className="w-1/5"
+      >
+        <TinyUsers
           setUser={setSelectedUserId}
           selectedUserId={selectedUserId}
         />
