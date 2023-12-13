@@ -24,7 +24,10 @@ export async function POST(request: NextRequest) {
       { error: "no user with this id" },
       { status: 400 }
     );
-  const post = await prisma.posts.findUnique({ where: { id: postId } });
+  const post = await prisma.posts.findUnique({
+    where: { id: postId },
+    include: { author: true },
+  });
   if (!post)
     return NextResponse.json(
       { error: "no post with this id" },
@@ -33,6 +36,14 @@ export async function POST(request: NextRequest) {
 
   const res = await prisma.comment.create({
     data: { authorId, postRefId: postId, text },
+  });
+  await prisma.notification.create({
+    data: {
+      fromUserId: authorId,
+      toUserId: post.author.id,
+      type: "comment",
+      associated: postId,
+    },
   });
   return NextResponse.json(res);
 }

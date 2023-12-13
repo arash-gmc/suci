@@ -54,8 +54,12 @@ export async function POST(request: NextRequest) {
   const user = await prisma.user.findUnique({ where: { id: userId } });
   if (!user) NextResponse.json({ error: "user not found" }, { status: 404 });
 
-  const post = await prisma.posts.findUnique({ where: { id: postId } });
-  if (!post) NextResponse.json({ error: "post not found" }, { status: 404 });
+  const post = await prisma.posts.findUnique({
+    where: { id: postId },
+    include: { author: true },
+  });
+  if (!post)
+    return NextResponse.json({ error: "post not found" }, { status: 404 });
 
   const repRecords = await prisma.postsActions.findMany({
     where: { userId, postId, actionType },
@@ -65,6 +69,16 @@ export async function POST(request: NextRequest) {
   const res = await prisma.postsActions.create({
     data: { userId, postId, actionType },
   });
+  if (actionType === "like") {
+    await prisma.notification.create({
+      data: {
+        fromUserId: userId,
+        toUserId: post.author.id,
+        type: "like",
+        associated: postId,
+      },
+    });
+  }
   return NextResponse.json(res);
 }
 

@@ -45,6 +45,14 @@ export async function POST(request: NextRequest) {
   const followRecord = await prisma.follow.create({
     data: { followerId: follower.id, followingId: following.id },
   });
+  await prisma.notification.create({
+    data: {
+      fromUserId: followingId,
+      toUserId: followerId,
+      type: "follow",
+      associated: followingId,
+    },
+  });
   return NextResponse.json({ followRecord }, { status: 201 });
 }
 

@@ -60,27 +60,29 @@ model Follow {
 }
 
 model User {
-  id             String         @id @default(cuid())
-  name           String?
-  hashedPassword String
-  email          String?        @unique
-  username       String         @unique
-  emailVerified  DateTime?
-  image          String?
-  imagePublicId  String?
-  accounts       Account[]
-  sessions       Session[]
-  posts          Posts[]
-  ownedLists     List[]
-  brithYear      Int?
-  city           String?
-  gender         Gender?
-  following      Follow[]       @relation("Following")
-  follower       Follow[]       @relation("Follower")
-  fromMessages   Message[]      @relation("FromMessage")
-  toMessages     Message[]      @relation("ToMessage")
-  postActions    PostsActions[]
-  comments       Comment[]
+  id              String         @id @default(cuid())
+  name            String?
+  hashedPassword  String
+  email           String?        @unique
+  username        String         @unique
+  emailVerified   DateTime?
+  image           String?
+  imagePublicId   String?
+  accounts        Account[]
+  sessions        Session[]
+  posts           Posts[]
+  ownedLists      List[]
+  brithYear       Int?
+  city            String?
+  gender          Gender?
+  following       Follow[]       @relation("Following")
+  follower        Follow[]       @relation("Follower")
+  fromMessages    Message[]      @relation("FromMessage")
+  toMessages      Message[]      @relation("ToMessage")
+  fromNotifiction Notification[] @relation("FromNotifiction")
+  toNotifiction   Notification[] @relation("ToNotifiction")
+  postActions     PostsActions[]
+  comments        Comment[]
 }
 
 enum Gender {
@@ -105,6 +107,25 @@ model Message {
   text       String
   seen       Boolean  @default(false)
   date       DateTime @default(now())
+}
+
+model Notification {
+  id         String     @id @default(cuid())
+  fromUserId String
+  toUserId   String
+  fromUser   User       @relation("FromNotifiction", fields: [fromUserId], references: [id])
+  toUser     User       @relation("ToNotifiction", fields: [toUserId], references: [id])
+  type       NotifTypes
+  associated String
+  seen       Boolean    @default(false)
+  date       DateTime   @default(now())
+}
+
+enum NotifTypes {
+  like
+  comment
+  follow
+  repost
 }
 
 model Account {

@@ -15,8 +15,22 @@ export async function POST(request: NextRequest) {
   if (!validation.success)
     return NextResponse.json(validation.error.errors, { status: 400 });
   const { userId, postId } = body;
+  const post = await prisma.posts.findUnique({
+    where: { id: postId },
+    include: { author: true },
+  });
+  if (!post)
+    return NextResponse.json({ error: "post not found" }, { status: 404 });
   const newRecord = await prisma.posts.create({
     data: { authorId: userId, refId: postId },
+  });
+  await prisma.notification.create({
+    data: {
+      fromUserId: userId,
+      toUserId: post.author.id,
+      type: "repost",
+      associated: postId,
+    },
   });
   return NextResponse.json(newRecord);
 }

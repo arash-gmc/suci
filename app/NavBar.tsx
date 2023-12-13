@@ -4,6 +4,8 @@ import Link from "next/link";
 import Search from "./_components/Search";
 import { useContext } from "react";
 import { Context } from "./_providers/Context";
+import NotificationsList from "./Notifications";
+import { FaEnvelope } from "react-icons/fa6";
 
 const NavBar = () => {
   const { viewer } = useContext(Context);
@@ -12,7 +14,12 @@ const NavBar = () => {
       return (
         <>
           <Link href={"/profile/" + viewer?.username}>{viewer?.name}</Link>
-          <Link href="/messages">Messages</Link>
+          <Link href="/messages">
+            <Text size="5">
+              <FaEnvelope />
+            </Text>
+          </Link>
+          <NotificationsList userId={viewer.id} />
           <Link href="/api/auth/signout">Sign Out</Link>
         </>
       );

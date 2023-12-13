@@ -1,6 +1,3 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Context } from "../_providers/Context";
-import axios from "axios";
 import { Message } from "@prisma/client";
 import { Box, Flex, Text } from "@radix-ui/themes";
 interface Props {

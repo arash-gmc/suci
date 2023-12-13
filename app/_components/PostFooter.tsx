@@ -179,7 +179,7 @@ const PostFooter = ({ postId }: { postId: string }) => {
     <Flex
       justify="center"
       className="text-2xl text-gray-500"
-      gap={{ initial: "5", xs: "8" }}
+      gap={{ initial: "5", sm: "8" }}
       align="center"
     >
       {items.map((item) => (
@@ -192,7 +192,7 @@ const PostFooter = ({ postId }: { postId: string }) => {
           onClick={(e) => item.onClick()}
         >
           <Text
-            className="w-4 whitespace-nowrap"
+            className="w-3 whitespace-nowrap"
             size="2"
           >
             {item.count ? item.count : null}
