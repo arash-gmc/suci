@@ -1,11 +1,11 @@
 import React from "react";
 import SinglePost from "./SinglePost";
 import { Flex, Heading } from "@radix-ui/themes";
-import { PostAndRef } from "@/app/interfaces";
+import { PostAndAuthor, PostAndRef } from "@/app/interfaces";
 import Spinner from "@/app/_components/Spinner";
 
 interface Props {
-  posts: PostAndRef[];
+  posts: PostAndRef[] | PostAndAuthor[];
   isLoading: boolean;
 }
 
@@ -33,6 +33,7 @@ const PostsGrid = ({ posts, isLoading }: Props) => {
     <Flex
       direction="column"
       gap="3"
+      mt="5"
     >
       {posts.map((post) => (
         <SinglePost

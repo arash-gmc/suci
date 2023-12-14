@@ -1,9 +1,13 @@
 import prisma from "@/prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(request: NextRequest) {
-  const searched = request.headers.get("searchText");
-  if (!searched) return NextResponse.json(null);
+interface Props {
+  params: { searched: string };
+}
+
+export async function GET(request: NextRequest, { params }: Props) {
+  const { searched } = params;
+  if (!searched) return NextResponse.json([]);
   const findedUsers = await prisma.user.findMany({
     where: { name: { contains: searched } },
   });

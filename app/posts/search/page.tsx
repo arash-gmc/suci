@@ -1,6 +1,6 @@
-import PostsGrid from "@/app/_components/PostsGrid";
 import prisma from "@/prisma/client";
 import React from "react";
+import PostsGrid from "../_components/PostsGrid";
 
 interface Props {
   searchParams: { searched: string };
@@ -11,7 +11,12 @@ const page = async ({ searchParams }: Props) => {
     where: { text: { contains: searchParams.searched } },
     include: { author: true },
   });
-  return <PostsGrid posts={posts} />;
+  return (
+    <PostsGrid
+      posts={posts}
+      isLoading={false}
+    />
+  );
 };
 
 export default page;

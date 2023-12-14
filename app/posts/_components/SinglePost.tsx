@@ -1,13 +1,17 @@
 import { Box, Container, Flex, Text } from "@radix-ui/themes";
 import Link from "next/link";
-import { PostAndRef } from "../../interfaces";
+import { PostAndAuthor, PostAndRef } from "../../interfaces";
 import PostFooter from "./PostFooter";
 import ProfilePicture from "../../_components/ProfilePicture";
 import { FaRetweet } from "react-icons/fa6";
 
-const SinglePost = ({ rawPost }: { rawPost: PostAndRef }) => {
+interface Props {
+  rawPost: PostAndRef | PostAndAuthor;
+}
+
+const SinglePost = ({ rawPost }: Props) => {
   let post;
-  if (rawPost.refId) {
+  if (rawPost.refId && "postRef" in rawPost) {
     post = rawPost.postRef;
   } else {
     post = rawPost;

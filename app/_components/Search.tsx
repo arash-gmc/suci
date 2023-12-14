@@ -14,9 +14,7 @@ const Search = () => {
     const searchText = e.currentTarget.value;
     if (searchText) {
       axios
-        .get<User[]>("/api/user/search", {
-          headers: { searchText },
-        })
+        .get<User[]>("/api/user/search/" + searchText)
         .then((res) => setSearchedUsers(res.data));
     } else {
       setSearchedUsers([]);
@@ -32,11 +30,17 @@ const Search = () => {
           ref={searchRef}
         />
         <TextField.Slot>
-          <MagnifyingGlassIcon height="16" width="16" />
+          <MagnifyingGlassIcon
+            height="16"
+            width="16"
+          />
         </TextField.Slot>
       </TextField.Root>
       {searched && (
-        <Flex className="absolute bg-white w-full z-10" direction="column">
+        <Flex
+          className="absolute bg-white w-full z-10"
+          direction="column"
+        >
           {searchedUsers.map((user) => (
             <Link href={"/profile/" + user.username}>
               <Flex
@@ -45,7 +49,10 @@ const Search = () => {
                 align="center"
                 className="border-b-2 py-3"
               >
-                <ProfilePicture user={user} size="sm" />
+                <ProfilePicture
+                  user={user}
+                  size="sm"
+                />
                 <Text>{user.name}</Text>
               </Flex>
             </Link>

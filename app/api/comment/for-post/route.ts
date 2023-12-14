@@ -36,6 +36,7 @@ export async function POST(request: NextRequest) {
 
   const res = await prisma.comment.create({
     data: { authorId, postRefId: postId, text },
+    include: { author: true },
   });
   await prisma.notification.create({
     data: {

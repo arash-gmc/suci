@@ -5,6 +5,7 @@ import React, { useContext, useState } from "react";
 import axios from "axios";
 import { Context } from "@/app/_providers/Context";
 import ProfilePicture from "@/app/_components/ProfilePicture";
+import Link from "next/link";
 
 interface Props {
   profileId: string;
@@ -60,10 +61,20 @@ const SendMessage = ({ profileId, profileName }: Props) => {
               <Popover.Close>
                 <Button
                   size="1"
+                  variant="outline"
+                >
+                  <Link href={"/messages?contactId=" + profileId}>
+                    Go to Chat
+                  </Link>
+                </Button>
+              </Popover.Close>
+              <Popover.Close>
+                <Button
+                  size="1"
                   onClick={() => sendMessage()}
                   disabled={!messageText}
                 >
-                  Send Message
+                  Send
                 </Button>
               </Popover.Close>
             </Flex>

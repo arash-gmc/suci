@@ -1,13 +1,17 @@
-import { Notification, Posts, Prisma, User } from "@prisma/client";
+import { Comment, Notification, Posts, Prisma, User } from "@prisma/client";
 import React from "react";
 
-interface PostAndAuthor extends Posts {
+export interface PostAndAuthor extends Posts {
   author: User;
 }
 
 export interface PostAndRef extends Posts {
   author: User;
   postRef: PostAndAuthor;
+}
+
+export interface CommentAndAuthor extends Comment {
+  author: User;
 }
 
 export interface Notif extends Notification {
