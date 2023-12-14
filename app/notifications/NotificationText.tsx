@@ -1,33 +1,34 @@
-import { Notification } from "@prisma/client";
+"use client";
 import { Text } from "@radix-ui/themes";
-import Link from "next/link";
 import React from "react";
 import { Notif } from "../interfaces";
+import { useRouter } from "next/navigation";
 
 const NotificationText = ({ notif }: { notif: Notif }) => {
+  const router = useRouter();
   if (notif.type === "like")
     return (
-      <Link href={"posts/" + notif.associated}>
+      <button onClick={() => router.push("/posts/" + notif.associated)}>
         <Text>{notif.fromUser.name} liked your post.</Text>
-      </Link>
+      </button>
     );
   if (notif.type === "comment")
     return (
-      <Link href={"posts/" + notif.associated}>
+      <button onClick={() => router.push("posts/" + notif.associated)}>
         <Text>{notif.fromUser.name} commented on your post.</Text>
-      </Link>
+      </button>
     );
   if (notif.type === "follow")
     return (
-      <Link href={"profile/" + notif.associated}>
+      <button onClick={() => router.push("profile/" + notif.associated)}>
         <Text>{notif.fromUser.name} followed you.</Text>
-      </Link>
+      </button>
     );
   if (notif.type === "repost")
     return (
-      <Link href={"posts/" + notif.associated}>
+      <button onClick={() => router.push("posts/" + notif.associated)}>
         <Text>{notif.fromUser.name} reposted your post.</Text>
-      </Link>
+      </button>
     );
   return;
   null;

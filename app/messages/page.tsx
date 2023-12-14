@@ -1,8 +1,5 @@
 "use client";
-import { getServerSession } from "next-auth";
 import React, { useContext, useEffect, useState } from "react";
-import { nextauthConfig } from "../api/auth/[...nextauth]/route";
-import prisma from "@/prisma/client";
 import { Message, User } from "@prisma/client";
 import Users from "./Users";
 import { Flex, Grid } from "@radix-ui/themes";
@@ -13,13 +10,20 @@ import axios from "axios";
 import TinyUsers from "./TinyUsers";
 import { ChatContactsInfo } from "../api/message/users/route";
 
-const page = () => {
+interface Props {
+  searchParams: { contactId: string };
+}
+
+const page = ({ searchParams }: Props) => {
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
   const { viewer } = useContext(Context);
   const [messages, setMessages] = useState<Message[]>([]);
   const [contactsInfo, setContactsInfo] = useState<ChatContactsInfo[]>([]);
   const [refreshs, setRefreshs] = useState(0);
   //setInterval(() => setRefreshs((prev) => prev + 1), 5000);
+  useEffect(() => {
+    if (searchParams.contactId) setSelectedUserId(searchParams.contactId);
+  }, []);
   useEffect(() => {
     if (viewer && selectedUserId)
       axios

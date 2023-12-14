@@ -6,6 +6,7 @@ import { useContext } from "react";
 import { Context } from "./_providers/Context";
 import NotificationsMenu from "./notifications/NotificationMenu";
 import { FaEnvelope } from "react-icons/fa6";
+import MessageMenu from "./messages/MessageMenue";
 
 const NavBar = () => {
   const { viewer } = useContext(Context);
@@ -14,11 +15,7 @@ const NavBar = () => {
       return (
         <>
           <Link href={"/profile/" + viewer?.username}>{viewer?.name}</Link>
-          <Link href="/messages">
-            <Text size="5">
-              <FaEnvelope />
-            </Text>
-          </Link>
+          <MessageMenu userId={viewer.id} />
           <NotificationsMenu userId={viewer.id} />
           <Link href="/api/auth/signout">Sign Out</Link>
         </>

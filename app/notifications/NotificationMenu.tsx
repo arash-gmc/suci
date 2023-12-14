@@ -7,6 +7,7 @@ import axios from "axios";
 import { Notif } from "../interfaces";
 import NotificationText from "./NotificationText";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 interface Props {
   userId: string;
@@ -14,6 +15,7 @@ interface Props {
 const NotificationsMenu = ({ userId }: Props) => {
   const [items, setItems] = useState<Notif[]>([]);
   const [count, setCount] = useState(0);
+  const router = useRouter();
   useEffect(() => {
     if (userId)
       axios
@@ -63,7 +65,9 @@ const NotificationsMenu = ({ userId }: Props) => {
                   size="sm"
                   user={item.fromUser}
                 />
-                <NotificationText notif={item} />
+                <Popover.Close>
+                  <NotificationText notif={item} />
+                </Popover.Close>
               </Flex>
             ))}
             {items.length === 0 ? (
@@ -75,13 +79,14 @@ const NotificationsMenu = ({ userId }: Props) => {
                 There are no new notifications
               </Flex>
             ) : null}
-            <Flex
-              justify="center"
-              py="1"
-              className="font-bold"
-            >
-              <Link href="/notifications">Go to Notifications Archive</Link>
-            </Flex>
+            <Popover.Close>
+              <button
+                onClick={() => router.push("/notifications")}
+                className="font-bold justify-center py-1"
+              >
+                Go to Notifications Archive
+              </button>
+            </Popover.Close>
           </Flex>
         </Popover.Content>
       </Popover.Root>
