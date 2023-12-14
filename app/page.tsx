@@ -1,5 +1,5 @@
 import { Container } from "@radix-ui/themes";
-import TimeLine from "./TimeLine";
+import TimeLine from "./Timeline";
 
 export default async function Home() {
   return (

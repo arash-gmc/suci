@@ -1,11 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
-import { CreateListBody, createListSchema } from "./schema";
 import prisma from "@/prisma/client";
+import { z } from "zod";
+
+type Body = z.infer<typeof schema>;
+
+const schema = z.object({
+  name: z.string(),
+  ownerId: z.string(),
+  members: z.array(z.string()),
+});
 
 export async function POST(request: NextRequest) {
-  const body: CreateListBody = await request.json();
+  const body: Body = await request.json();
   console.log(body);
-  const validation = createListSchema.safeParse(body);
+  const validation = schema.safeParse(body);
   if (!validation.success) return NextResponse.json({}, { status: 400 });
   const { ownerId, name, members } = body;
   const res = await prisma.list.create({

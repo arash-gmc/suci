@@ -1,5 +1,5 @@
 import ProfilePicture from "@/app/_components/ProfilePicture";
-import SinglePost from "@/app/_components/SinglePost";
+import SinglePost from "@/app/posts/_components/SinglePost";
 import { PostAndRef } from "@/app/interfaces";
 import prisma from "@/prisma/client";
 import { Flex, Text } from "@radix-ui/themes";

@@ -2,9 +2,9 @@
 import { Popover, Button, Flex, Box, TextArea } from "@radix-ui/themes";
 import React, { useContext, useState } from "react";
 import { FaRegComment } from "react-icons/fa6";
-import ProfilePicture from "./ProfilePicture";
-import { Context } from "../_providers/Context";
 import axios from "axios";
+import ProfilePicture from "@/app/_components/ProfilePicture";
+import { Context } from "@/app/_providers/Context";
 
 interface Props {
   postId: string;

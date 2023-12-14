@@ -1,8 +1,8 @@
 import React from "react";
-import { PostAndRef } from "../interfaces";
 import SinglePost from "./SinglePost";
 import { Flex, Heading } from "@radix-ui/themes";
-import Spinner from "./Spinner";
+import { PostAndRef } from "@/app/interfaces";
+import Spinner from "@/app/_components/Spinner";
 
 interface Props {
   posts: PostAndRef[];

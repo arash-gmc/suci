@@ -1,11 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
-import { AddPostBody, newPostSchema } from "./schema";
 import prisma from "@/prisma/client";
+import { z } from "zod";
+
+export type Body = z.infer<typeof schema>;
+
+export const schema = z.object({
+  authorId: z.string().min(1).max(255),
+  text: z.string().min(1).max(300),
+});
 
 // Add a new post
 export async function POST(request: NextRequest) {
-  const body: AddPostBody = await request.json();
-  const validation = newPostSchema.safeParse(body);
+  const body: Body = await request.json();
+  const validation = schema.safeParse(body);
 
   if (!validation.success)
     return NextResponse.json(
@@ -25,10 +32,4 @@ export async function POST(request: NextRequest) {
     include: { author: true },
   });
   return NextResponse.json(newPost);
-}
-
-//get all post with authors
-export async function GET(request: NextRequest) {
-  const posts = await prisma.posts.findMany({ include: { author: true } });
-  return NextResponse.json([...posts]);
 }

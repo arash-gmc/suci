@@ -1,6 +1,6 @@
 import { Table } from "@radix-ui/themes";
 import Link from "next/link";
-import { PostAndRef } from "../interfaces";
+import { PostAndRef } from "../../interfaces";
 
 const PostTable = ({ posts }: { posts: PostAndRef[] }) => {
   return (

@@ -3,10 +3,10 @@ import { Prisma } from "@prisma/client";
 import { Box, Flex } from "@radix-ui/themes";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import NewPost from "./NewPost";
-import PostsGrid from "./_components/PostsGrid";
+import NewPost from "./posts/_components/NewPost";
 import Filter from "./filter/Filter";
 import { PostAndRef } from "./interfaces";
+import PostsGrid from "./posts/_components/PostsGrid";
 
 const TimeLine = () => {
   const [posts, setPosts] = useState<PostAndRef[]>([]);
@@ -15,7 +15,7 @@ const TimeLine = () => {
 
   useEffect(() => {
     axios
-      .post<PostAndRef[]>("/api/post/complex", where)
+      .post<PostAndRef[]>("/api/post/get-all", where)
       .then((res) => {
         setPosts(res.data);
       })

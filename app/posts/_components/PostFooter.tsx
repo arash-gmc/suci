@@ -4,10 +4,10 @@ import { Flex, Grid, Text } from "@radix-ui/themes";
 import { BiLike, BiDislike, BiSolidLike, BiSolidDislike } from "react-icons/bi";
 import { GoBookmark, GoBookmarkFill } from "react-icons/go";
 import { FaRetweet } from "react-icons/fa6";
-import { Context } from "../_providers/Context";
 import axios from "axios";
 import { ActionType } from "@prisma/client";
 import AddComment from "./AddComment";
+import { Context } from "@/app/_providers/Context";
 
 interface Counts {
   likes: number;

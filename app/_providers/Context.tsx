@@ -3,12 +3,7 @@
 import { User } from "@prisma/client";
 import axios from "axios";
 import { Session } from "next-auth";
-import React, {
-  PropsWithChildren,
-  ReactNode,
-  useEffect,
-  useState,
-} from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 
 interface Context {
   viewer: User | null;
