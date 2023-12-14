@@ -42,9 +42,11 @@ const Search = () => {
           direction="column"
         >
           {searchedUsers.map((user) => (
-            <Link href={"/profile/" + user.username}>
+            <Link
+              href={"/profile/" + user.username}
+              key={user.id}
+            >
               <Flex
-                key={user.id}
                 gap="2"
                 align="center"
                 className="border-b-2 py-3"

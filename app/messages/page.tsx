@@ -2,7 +2,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Message, User } from "@prisma/client";
 import Users from "./Users";
-import { Flex, Grid } from "@radix-ui/themes";
+import { Flex } from "@radix-ui/themes";
 import ChatBox from "./ChatBox";
 import { Context } from "../_providers/Context";
 import NewMessage from "./NewMessage";
@@ -18,6 +18,7 @@ const page = ({ searchParams }: Props) => {
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
   const { viewer } = useContext(Context);
   const [messages, setMessages] = useState<Message[]>([]);
+  const [gotUsers, setGotUsers] = useState(false);
   const [contactsInfo, setContactsInfo] = useState<ChatContactsInfo[]>([]);
   const [refreshs, setRefreshs] = useState(0);
   //setInterval(() => setRefreshs((prev) => prev + 1), 5000);
@@ -38,8 +39,33 @@ const page = ({ searchParams }: Props) => {
         .get<ChatContactsInfo[]>("/api/message/users", {
           headers: { userId: viewer?.id },
         })
-        .then((res) => setContactsInfo(res.data));
+        .then(async (res) => {
+          setContactsInfo(res.data);
+          setGotUsers(true);
+        });
   }, [viewer]);
+  useEffect(() => {
+    if (selectedUserId && gotUsers) {
+      const searched = contactsInfo.find(
+        (contact) => contact.user.id === selectedUserId
+      );
+      if (!searched) {
+        axios
+          .get<User>("/api/user/getOne", {
+            headers: { userId: selectedUserId },
+          })
+          .then((res) => {
+            const user = res.data;
+            if (user) {
+              setContactsInfo((prev) => [
+                { unseens: 0, lastMessage: "", user },
+                ...prev,
+              ]);
+            }
+          });
+      }
+    }
+  }, [gotUsers, selectedUserId]);
   useEffect(() => {
     if (viewer?.id && selectedUserId)
       axios

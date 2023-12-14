@@ -23,9 +23,8 @@ const NewPost = ({ setPosts }: Props) => {
   if (viewer)
     return (
       <Flex
-        mx="5"
-        mb="5"
-        gap="5"
+        m="5"
+        gap="4"
         align="center"
       >
         <TextArea

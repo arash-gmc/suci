@@ -60,6 +60,7 @@ const NotificationsMenu = ({ userId }: Props) => {
                 gap="2"
                 py="2"
                 className="border-b-2"
+                key={item.id}
               >
                 <ProfilePicture
                   size="sm"
