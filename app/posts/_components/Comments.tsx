@@ -10,10 +10,11 @@ import NewComment from "./NewComment";
 const Comments = ({ postId }: { postId: string }) => {
   const [comments, setComments] = useState<CommentAndAuthor[]>([]);
   useEffect(() => {
-    axios
-      .get<CommentAndAuthor[]>("/api/comment/" + postId)
-      .then((res) => setComments(res.data));
-  }, []);
+    if (postId)
+      axios
+        .get<CommentAndAuthor[]>("/api/comment/" + postId)
+        .then((res) => setComments(res.data));
+  }, [postId]);
   return (
     <>
       <Flex

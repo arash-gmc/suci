@@ -77,7 +77,7 @@ const NotificationsMenu = ({ userId }: Props) => {
                 pb="3"
                 className="border-b-2"
               >
-                There are no new notifications
+                There are no new notifications.
               </Flex>
             ) : null}
             <Popover.Close>

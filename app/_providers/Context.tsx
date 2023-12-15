@@ -24,7 +24,7 @@ const ContextProvider = ({ children, session }: Props) => {
         })
         .then((res) => setViewer(res.data));
     }
-  }, []);
+  }, [session]);
   return <Context.Provider value={{ viewer }}>{children}</Context.Provider>;
 };
 

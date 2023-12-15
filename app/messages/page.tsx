@@ -14,17 +14,17 @@ interface Props {
   searchParams: { contactId: string };
 }
 
-const page = ({ searchParams }: Props) => {
-  const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
+const Messanger = ({ searchParams }: Props) => {
+  const [selectedUserId, setSelectedUserId] = useState<string | null>(
+    searchParams.contactId || null
+  );
   const { viewer } = useContext(Context);
   const [messages, setMessages] = useState<Message[]>([]);
   const [gotUsers, setGotUsers] = useState(false);
   const [contactsInfo, setContactsInfo] = useState<ChatContactsInfo[]>([]);
   const [refreshs, setRefreshs] = useState(0);
   //setInterval(() => setRefreshs((prev) => prev + 1), 5000);
-  useEffect(() => {
-    if (searchParams.contactId) setSelectedUserId(searchParams.contactId);
-  }, []);
+
   useEffect(() => {
     if (viewer && selectedUserId)
       axios
@@ -45,7 +45,7 @@ const page = ({ searchParams }: Props) => {
         });
   }, [viewer]);
   useEffect(() => {
-    if (selectedUserId && gotUsers) {
+    if (selectedUserId && gotUsers && contactsInfo) {
       const searched = contactsInfo.find(
         (contact) => contact.user.id === selectedUserId
       );
@@ -65,7 +65,7 @@ const page = ({ searchParams }: Props) => {
           });
       }
     }
-  }, [gotUsers, selectedUserId]);
+  }, [gotUsers, selectedUserId, contactsInfo]);
   useEffect(() => {
     if (viewer?.id && selectedUserId)
       axios
@@ -82,7 +82,7 @@ const page = ({ searchParams }: Props) => {
             )
           );
         });
-  }, [selectedUserId, refreshs]);
+  }, [viewer, selectedUserId, refreshs]);
   if (!viewer) return null;
   return (
     <Flex>
@@ -127,4 +127,4 @@ const page = ({ searchParams }: Props) => {
   );
 };
 
-export default page;
+export default Messanger;

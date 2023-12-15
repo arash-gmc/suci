@@ -25,7 +25,7 @@ const DefaultFilters = ({ setWhere, user }: Props) => {
         })
         .then((res) => setFollowers(res.data));
     }
-  }, []);
+  }, [user]);
   const filters: ButtonGroupProps[] = [
     { label: "All", value: "all", onClick: () => setWhere({}) },
     {

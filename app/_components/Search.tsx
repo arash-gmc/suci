@@ -64,7 +64,7 @@ const Search = () => {
             color="blue"
             className="py-3 text-center"
           >
-            Search for "{searched}" in posts
+            Search for &qout;{searched}&qout; in posts
           </Link>
         </Flex>
       )}

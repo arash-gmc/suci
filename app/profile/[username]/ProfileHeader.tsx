@@ -25,10 +25,11 @@ const ProfileHeader = ({ user, session }: Props) => {
   const [counts, setCounts] = useState<Counts>({} as Counts);
 
   useEffect(() => {
-    axios.get<Counts>("/api/user/counts/" + user.id).then((res) => {
-      setCounts(res.data);
-    });
-  }, []);
+    if (user.id)
+      axios.get<Counts>("/api/user/counts/" + user.id).then((res) => {
+        setCounts(res.data);
+      });
+  }, [user]);
 
   const getStatus = () => {
     let status = "";

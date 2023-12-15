@@ -32,7 +32,7 @@ const PostFooter = ({ postId }: { postId: string }) => {
     {} as Interactions
   );
   useEffect(() => {
-    if (viewer)
+    if (viewer && postId)
       axios
         .get<Interactions>("/api/post/actions", {
           headers: { postId, userId: viewer?.id },
@@ -41,59 +41,62 @@ const PostFooter = ({ postId }: { postId: string }) => {
         .catch((e) =>
           console.log("error during fetch user interactions".toUpperCase(), e)
         );
-  }, [viewer]);
+  }, [viewer, postId]);
   useEffect(() => {
-    axios
-      .get<Counts>("/api/post/actions/counts", { headers: { postId } })
-      .then((res) => setCounts(res.data));
-  }, []);
+    if (postId)
+      axios
+        .get<Counts>("/api/post/actions/counts", { headers: { postId } })
+        .then((res) => setCounts(res.data));
+  }, [postId]);
 
   const doAction = (action: ActionType) => {
-    axios
-      .post("/api/post/actions", {
-        userId: viewer?.id,
-        postId,
-        actionType: action,
-      })
-      .then((res) => {
-        setCounts((prev) => ({
-          ...prev,
-          [action + "s"]:
-            action === "like"
-              ? prev.likes + 1
-              : action === "dislike"
-              ? prev.dislikes + 1
-              : action === "bookmark"
-              ? prev.bookmarks + 1
-              : null,
-        }));
-        setInteractions((prev) => ({ ...prev, [action]: true }));
-      });
-  };
-
-  const undoAction = (action: ActionType) => {
-    axios
-      .delete("/api/post/actions", {
-        headers: {
+    if (viewer)
+      axios
+        .post("/api/post/actions", {
           userId: viewer?.id,
           postId,
           actionType: action,
-        },
-      })
-      .then((res) => {
-        setCounts((prev) => ({
-          ...prev,
-          [action + "s"]:
-            action === "like"
-              ? prev.likes - 1
-              : action === "dislike"
-              ? prev.dislikes - 1
-              : action === "bookmark"
-              ? prev.bookmarks - 1
-              : null,
-        }));
-        setInteractions((prev) => ({ ...prev, [action]: false }));
-      });
+        })
+        .then((res) => {
+          setCounts((prev) => ({
+            ...prev,
+            [action + "s"]:
+              action === "like"
+                ? prev.likes + 1
+                : action === "dislike"
+                ? prev.dislikes + 1
+                : action === "bookmark"
+                ? prev.bookmarks + 1
+                : null,
+          }));
+          setInteractions((prev) => ({ ...prev, [action]: true }));
+        });
+  };
+
+  const undoAction = (action: ActionType) => {
+    if (viewer)
+      axios
+        .delete("/api/post/actions", {
+          headers: {
+            userId: viewer?.id,
+            postId,
+            actionType: action,
+          },
+        })
+        .then((res) => {
+          setCounts((prev) => ({
+            ...prev,
+            [action + "s"]:
+              action === "like"
+                ? prev.likes - 1
+                : action === "dislike"
+                ? prev.dislikes - 1
+                : action === "bookmark"
+                ? prev.bookmarks - 1
+                : null,
+          }));
+          setInteractions((prev) => ({ ...prev, [action]: false }));
+        });
   };
   const repost = () => {
     axios

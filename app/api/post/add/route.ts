@@ -2,9 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/prisma/client";
 import { z } from "zod";
 
-export type Body = z.infer<typeof schema>;
+type Body = z.infer<typeof schema>;
 
-export const schema = z.object({
+const schema = z.object({
   authorId: z.string().min(1).max(255),
   text: z.string().min(1).max(300),
 });

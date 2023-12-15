@@ -46,7 +46,7 @@ const MessageMenu = ({ userId }: Props) => {
         <Popover.Content style={{ width: 320 }}>
           <Flex direction="column">
             {items.map((item) => (
-              <Popover.Close>
+              <Popover.Close key={item.user.id}>
                 <button
                   onClick={() => {
                     router.push("/messages?contactId=" + item.user.id);
@@ -89,7 +89,7 @@ const MessageMenu = ({ userId }: Props) => {
                 pb="3"
                 className="border-b-2"
               >
-                You don't have any new messages.
+                You have no new messages.
               </Flex>
             ) : null}
             <Popover.Close>
