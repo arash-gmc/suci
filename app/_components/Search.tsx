@@ -6,12 +6,14 @@ import axios from "axios";
 import React, { useRef, useState } from "react";
 import ProfilePicture from "./ProfilePicture";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const Search = () => {
   const [searchedUsers, setSearchedUsers] = useState<User[]>([]);
-  const searchRef = useRef<HTMLInputElement>(null);
+  const [searchText, setSearchText] = useState("");
+  const router = useRouter();
   const onSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const searchText = e.currentTarget.value;
+    setSearchText(e.currentTarget.value);
     if (searchText) {
       axios
         .get<User[]>("/api/user/search/" + searchText)
@@ -20,14 +22,14 @@ const Search = () => {
       setSearchedUsers([]);
     }
   };
-  const searched = searchRef.current?.value;
   return (
     <Box className="relative">
       <TextField.Root>
         <TextField.Input
           placeholder="Search Users"
+          type="text"
           onChange={onSearch}
-          ref={searchRef}
+          value={searchText}
         />
         <TextField.Slot>
           <MagnifyingGlassIcon
@@ -36,36 +38,36 @@ const Search = () => {
           />
         </TextField.Slot>
       </TextField.Root>
-      {searched && (
+      {searchText && (
         <Flex
           className="absolute bg-white w-full z-10"
           direction="column"
         >
           {searchedUsers.map((user) => (
-            <Link
-              href={"/profile/" + user.username}
+            <Flex
               key={user.id}
+              gap="2"
+              align="center"
+              className="border-b-2 py-3 cursor-pointer"
+              onClick={() => {
+                router.push("/profile/" + user.username);
+                setSearchText("");
+              }}
             >
-              <Flex
-                gap="2"
-                align="center"
-                className="border-b-2 py-3"
-              >
-                <ProfilePicture
-                  user={user}
-                  size="sm"
-                />
-                <Text>{user.name}</Text>
-              </Flex>
-            </Link>
+              <ProfilePicture
+                user={user}
+                size="sm"
+              />
+              <Text>{user.name}</Text>
+            </Flex>
           ))}
-          <Link
-            href={"/posts/search?searched=" + searched}
+          <Text
             color="blue"
-            className="py-3 text-center"
+            className="py-3 text-center font-bold cursor-pointer"
+            onClick={() => router.push("/posts/search?searched=" + searchText)}
           >
-            Search for &qout;{searched}&qout; in posts
-          </Link>
+            Search for "{searchText}" in posts
+          </Text>
         </Flex>
       )}
     </Box>

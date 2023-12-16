@@ -55,6 +55,7 @@ const ProfileHeader = ({ user, session }: Props) => {
 
   return (
     <Flex
+      mt="5"
       align="center"
       justify="center"
       gap="5"

@@ -2,6 +2,7 @@ import prisma from "@/prisma/client";
 import { ActionType } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 import { PostActionBody, postActionSchema } from "./schema";
+import pushNotif from "../../notification/pushNotif";
 
 export async function GET(request: NextRequest) {
   const userId = request.headers.get("userId");
@@ -70,13 +71,11 @@ export async function POST(request: NextRequest) {
     data: { userId, postId, actionType },
   });
   if (actionType === "like") {
-    await prisma.notification.create({
-      data: {
-        fromUserId: userId,
-        toUserId: post.author.id,
-        type: "like",
-        associated: postId,
-      },
+    pushNotif({
+      fromUserId: userId,
+      toUserId: post.author.id,
+      type: "like",
+      associated: postId,
     });
   }
   return NextResponse.json(res);

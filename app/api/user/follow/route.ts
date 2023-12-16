@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { followSchema, BodyType } from "./schema";
 import prisma from "@/prisma/client";
+import pushNotif from "../../notification/pushNotif";
 
 export async function GET(request: NextRequest) {
   const header = request.headers;
@@ -45,13 +46,11 @@ export async function POST(request: NextRequest) {
   const followRecord = await prisma.follow.create({
     data: { followerId: follower.id, followingId: following.id },
   });
-  await prisma.notification.create({
-    data: {
-      fromUserId: followingId,
-      toUserId: followerId,
-      type: "follow",
-      associated: followingId,
-    },
+  pushNotif({
+    fromUserId: followingId,
+    toUserId: followerId,
+    type: "follow",
+    associated: followingId,
   });
   return NextResponse.json({ followRecord }, { status: 201 });
 }

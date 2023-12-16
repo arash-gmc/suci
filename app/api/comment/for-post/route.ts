@@ -1,6 +1,7 @@
 import prisma from "@/prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
+import pushNotif from "../../notification/pushNotif";
 
 const schema = z.object({
   authorId: z.string(),
@@ -38,13 +39,11 @@ export async function POST(request: NextRequest) {
     data: { authorId, postRefId: postId, text },
     include: { author: true },
   });
-  await prisma.notification.create({
-    data: {
-      fromUserId: authorId,
-      toUserId: post.author.id,
-      type: "comment",
-      associated: postId,
-    },
+  pushNotif({
+    fromUserId: authorId,
+    toUserId: post.author.id,
+    type: "comment",
+    associated: postId,
   });
   return NextResponse.json(res);
 }
