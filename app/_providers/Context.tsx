@@ -1,12 +1,13 @@
 "use client";
-
-import { User } from "@prisma/client";
+import { Prisma, User } from "@prisma/client";
 import axios from "axios";
 import { Session } from "next-auth";
 import React, { ReactNode, useEffect, useState } from "react";
 
 interface Context {
   viewer: User | null;
+  where: Prisma.PostsWhereInput;
+  setWhere: React.Dispatch<React.SetStateAction<Prisma.PostsWhereInput>>;
 }
 
 export const Context = React.createContext<Context>({} as Context);
@@ -16,6 +17,7 @@ interface Props {
 }
 const ContextProvider = ({ children, session }: Props) => {
   const [viewer, setViewer] = useState<User | null>(null);
+  const [where, setWhere] = useState<Prisma.PostsWhereInput>({});
   useEffect(() => {
     if (session) {
       axios
@@ -25,7 +27,11 @@ const ContextProvider = ({ children, session }: Props) => {
         .then((res) => setViewer(res.data));
     }
   }, [session]);
-  return <Context.Provider value={{ viewer }}>{children}</Context.Provider>;
+  return (
+    <Context.Provider value={{ viewer, where, setWhere }}>
+      {children}
+    </Context.Provider>
+  );
 };
 
 export default ContextProvider;

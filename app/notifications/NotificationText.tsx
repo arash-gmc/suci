@@ -8,7 +8,10 @@ const NotificationText = ({ notif }: { notif: Notif }) => {
   const router = useRouter();
   if (notif.type === "like")
     return (
-      <button onClick={() => router.push("/posts/" + notif.associated)}>
+      <button
+        className="text-start"
+        onClick={() => router.push("/posts/" + notif.associated)}
+      >
         <Text>{notif.fromUser.name} liked your post.</Text>
       </button>
     );
