@@ -40,7 +40,7 @@ export default async function RootLayout({
             <Box display={{ initial: "block", sm: "none" }}>
               <MiniNavbar />
             </Box>
-            <Box pt="8">{children}</Box>
+            {children}
           </ContextProvider>
         </Theme>
       </body>

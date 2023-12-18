@@ -11,12 +11,13 @@ interface Props {
   notifications: Notif[];
   close: () => void;
 }
-const NotifMini = ({ notifications }: Props) => {
+const NotifMini = ({ notifications, close }: Props) => {
   const router = useRouter();
   return (
     <Flex
       direction="column"
       gap="2"
+      width="100%"
     >
       {notifications.map((item) => (
         <Flex

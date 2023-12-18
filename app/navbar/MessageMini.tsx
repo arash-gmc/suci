@@ -12,7 +12,10 @@ interface Props {
 const MiniMessageMenu = ({ contacts, close }: Props) => {
   const router = useRouter();
   return (
-    <Flex direction="column">
+    <Flex
+      direction="column"
+      width="100%"
+    >
       {contacts.map((item) => (
         <button
           onClick={() => {
@@ -60,7 +63,7 @@ const MiniMessageMenu = ({ contacts, close }: Props) => {
           pb="3"
           className="border-b-2"
         >
-          You have no new messages.
+          You dont have any new masseges.
         </Flex>
       ) : null}
 

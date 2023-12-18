@@ -55,76 +55,81 @@ const MiniNavbar = () => {
   ];
   if (!viewer) return null;
   return (
-    <Flex
-      direction="column"
-      className="fixed z-10 bg-white opacity-95"
-      width="100%"
-    >
-      <Flex
-        justify="between"
-        py="2"
-        px="5"
-      >
-        <Text
-          className="font-extrabold"
-          size="6"
-        >
-          Suci
-        </Text>
-        <Text
-          className="border-2 border-slate-400 rounded-lg p-2 cursor-pointer"
-          onClick={() => setExpand((prev) => !prev)}
-        >
-          {expand && <FaArrowUp />}
-          {!expand && <HamburgerMenuIcon />}
-        </Text>
-      </Flex>
-      <Flex
-        grow="1"
-        width="100%"
-        px={{ initial: "3", xs: "8" }}
-        className={"overflow-hidden " + (expand ? "h-screen" : "h-0")}
-      >
+    <>
+      <nav className="fixed z-10 bg-slate-100 opacity-95 w-full">
         <Flex
           direction="column"
-          className="text-xl w-1/4 overflow-y-scroll min-w-max"
-          gap="5"
-          px={{ initial: "1", xs: "3" }}
-          pt="5"
-          align="start"
+          className=""
+          width="100%"
         >
-          {items.map((item) => (
-            <button
-              key={item.value}
-              onClick={() => setSelectedItem(item.value)}
+          <Flex
+            justify="between"
+            py="2"
+            px="5"
+          >
+            <Text
+              className="font-extrabold"
+              size="6"
             >
-              <Text
-                className={
-                  item.value === selectedItem ? "underline font-bold" : ""
-                }
-                size={{ initial: "3", xs: "4" }}
-              >
-                {item.label}
-                {!!item.count && <Badge>{item.count}</Badge>}
-              </Text>
-            </button>
-          ))}
+              Suci
+            </Text>
+            <Text
+              className="border-2 border-slate-400 rounded-lg p-2 cursor-pointer"
+              onClick={() => setExpand((prev) => !prev)}
+            >
+              {expand && <FaArrowUp />}
+              {!expand && <HamburgerMenuIcon />}
+            </Text>
+          </Flex>
+          <Flex
+            grow="1"
+            width="100%"
+            px={{ initial: "3", xs: "8" }}
+            className={"overflow-hidden " + (expand ? "h-screen" : "h-0")}
+          >
+            <Flex
+              direction="column"
+              className="text-xl w-1/4 overflow-y-scroll min-w-max"
+              gap="5"
+              px={{ initial: "1", xs: "3" }}
+              pt="5"
+              align="start"
+            >
+              {items.map((item) => (
+                <button
+                  key={item.value}
+                  onClick={() => setSelectedItem(item.value)}
+                >
+                  <Text
+                    className={
+                      item.value === selectedItem ? "underline font-bold" : ""
+                    }
+                    size={{ initial: "3", xs: "4" }}
+                  >
+                    {item.label}
+                    {!!item.count && <Badge>{item.count}</Badge>}
+                  </Text>
+                </button>
+              ))}
+            </Flex>
+            <Flex
+              className="w-3/4 border-l-2 h-5/6 overflow-y-scroll"
+              px="2"
+              pt="4"
+            >
+              <MiniNavbarRight
+                selected={selectedItem}
+                viewer={viewer}
+                contacts={contacts}
+                notifications={notifications}
+                close={() => setExpand(false)}
+              />
+            </Flex>
+          </Flex>
         </Flex>
-        <Flex
-          className="w-3/4 border-l-2 h-5/6 overflow-y-scroll"
-          px="2"
-          pt="4"
-        >
-          <MiniNavbarRight
-            selected={selectedItem}
-            viewer={viewer}
-            contacts={contacts}
-            notifications={notifications}
-            close={() => setExpand(false)}
-          />
-        </Flex>
-      </Flex>
-    </Flex>
+      </nav>
+      <div className="w-full h-14"></div>
+    </>
   );
 };
 

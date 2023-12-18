@@ -3,7 +3,6 @@ import { getServerSession } from "next-auth";
 import React from "react";
 import { nextauthConfig } from "../api/auth/[...nextauth]/route";
 import { Container, Flex } from "@radix-ui/themes";
-import Link from "next/link";
 import ProfilePicture from "../_components/ProfilePicture";
 import NotificationText from "./NotificationText";
 

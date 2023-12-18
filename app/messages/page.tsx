@@ -85,9 +85,9 @@ const Messanger = ({ searchParams }: Props) => {
   }, [viewer, selectedUserId, refreshs]);
   if (!viewer) return null;
   return (
-    <Flex>
+    <Flex className="fixed bg-white bottom-0 left-0 right-0 top-16">
       <Flex
-        className="w-1/3 h-full"
+        className="w-1/3"
         display={{ initial: "none", md: "flex" }}
       >
         <Users
@@ -108,7 +108,7 @@ const Messanger = ({ searchParams }: Props) => {
       </Flex>
       <Flex
         className="w-full"
-        style={{ height: "92vh", backgroundColor: "var(--accent-3)" }}
+        style={{ backgroundColor: "var(--accent-3)" }}
         direction="column"
       >
         <ChatBox

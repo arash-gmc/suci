@@ -14,89 +14,92 @@ const NavBar = () => {
   const [userMenu, setUserMenu] = useState(false);
   const router = useRouter();
   return (
-    <nav className="border-b-2 p-2">
-      <Container>
-        <Flex
-          justify="between"
-          className="text-sm text-gray-700"
-        >
-          <Flex>
-            <Link href="/">
-              <Text
-                size="6"
-                className="font-bold"
-              >
-                Suci
-              </Text>
-            </Link>
-          </Flex>
+    <>
+      <nav className="border-b-2 p-2 h-16 fixed w-full bg-slate-100 z-10 opacity-95 ">
+        <Container>
           <Flex
-            gap="5"
-            align="center"
+            justify="between"
+            className="text-sm text-gray-700"
           >
-            {viewer && (
-              <>
-                <MessageMenu userId={viewer.id} />
-                <NotificationsMenu userId={viewer.id} />
-              </>
-            )}
-            <Search
-              onUserClick={(user) => router.push("/profile/" + user.username)}
-              searchPosts={true}
-            />
-            {viewer && (
-              <Flex
-                onClick={() => setUserMenu((prev) => !prev)}
-                className="relative cursor-pointer"
-              >
-                <ProfilePicture
-                  size="sm"
-                  user={viewer}
-                />
-                <Flex
-                  direction="column"
-                  display={userMenu ? "flex" : "none"}
-                  gap="3"
-                  p="2"
-                  className="absolute top-12 left-0 w-48 bg-white text-lg min-w-max"
+            <Flex>
+              <Link href="/">
+                <Text
+                  size="6"
+                  className="font-bold"
                 >
+                  Suci
+                </Text>
+              </Link>
+            </Flex>
+            <Flex
+              gap="5"
+              align="center"
+            >
+              {viewer && (
+                <>
+                  <MessageMenu userId={viewer.id} />
+                  <NotificationsMenu userId={viewer.id} />
+                </>
+              )}
+              <Search
+                onUserClick={(user) => router.push("/profile/" + user.username)}
+                searchPosts={true}
+              />
+              {viewer && (
+                <Flex
+                  onClick={() => setUserMenu((prev) => !prev)}
+                  className="relative cursor-pointer"
+                >
+                  <ProfilePicture
+                    size="sm"
+                    user={viewer}
+                  />
                   <Flex
                     direction="column"
-                    className="border-b-2"
+                    display={userMenu ? "flex" : "none"}
+                    gap="3"
+                    p="2"
+                    className="absolute top-12 left-0 w-48 bg-white text-lg min-w-max"
                   >
-                    <Text>{viewer.name}</Text>
-                    <Text
-                      size="2"
-                      color="gray"
+                    <Flex
+                      direction="column"
+                      className="border-b-2"
                     >
-                      @{viewer.username}
-                    </Text>
+                      <Text>{viewer.name}</Text>
+                      <Text
+                        size="2"
+                        color="gray"
+                      >
+                        @{viewer.username}
+                      </Text>
+                    </Flex>
+                    <Link
+                      className="border-b-2"
+                      href={"/profile/" + viewer.username}
+                    >
+                      Profile
+                    </Link>
+                    <Link
+                      className="border-b-2"
+                      href={"/api/auth/signout"}
+                    >
+                      Sign Out
+                    </Link>
                   </Flex>
-                  <Link
-                    className="border-b-2"
-                    href={"/profile/" + viewer.username}
-                  >
-                    Profile
-                  </Link>
-                  <Link
-                    className="border-b-2"
-                    href={"/api/auth/signout"}
-                  >
-                    Sign Out
-                  </Link>
                 </Flex>
-              </Flex>
-            )}
-            {!viewer && (
-              <>
-                <Link href="/api/auth/signin">SignIn</Link>
-                <Link href="/register">Register</Link>
-              </>
-            )}
+              )}
+              {!viewer && (
+                <>
+                  <Link href="/api/auth/signin">SignIn</Link>
+                  <Link href="/register">Register</Link>
+                </>
+              )}
+            </Flex>
           </Flex>
-        </Flex>
-      </Container>
-    </nav>
+        </Container>
+      </nav>
+      <div className="h-20 w-full"></div>
+    </>
   );
 };
 
