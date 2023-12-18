@@ -33,11 +33,13 @@ const Search = ({
       setSearchedUsers([]);
     }
   };
+  let filteredUsers: User[] = [];
   if (hiddenUsersId) {
-    const filteredUsers = searchedUsers.filter(
+    filteredUsers = searchedUsers.filter(
       (user) => !hiddenUsersId.includes(user.id)
     );
-    setSearchedUsers(filteredUsers);
+  } else {
+    filteredUsers = searchedUsers;
   }
   return (
     <Box className="relative">
@@ -60,7 +62,7 @@ const Search = ({
           className="absolute bg-white w-full z-10"
           direction="column"
         >
-          {searchedUsers.map((user) => (
+          {filteredUsers.map((user) => (
             <Flex
               key={user.id}
               gap="2"

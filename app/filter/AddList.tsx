@@ -1,19 +1,16 @@
 import { PlusIcon } from "@radix-ui/react-icons";
 import { Dialog, Button, Flex, TextField, Text } from "@radix-ui/themes";
 import React, { useContext, useRef, useState } from "react";
-import Search from "./Search";
 import UsersField from "./UsersField";
 import { User } from "@prisma/client";
 import axios from "axios";
 import { Context } from "../_providers/Context";
+import Search from "../_components/Search";
 
 const AddList = () => {
   const [members, setMembers] = useState<User[]>([]);
   const [listName, setListName] = useState<string>("");
   const { viewer } = useContext(Context);
-  const addMember = (user: User) => {
-    setMembers((prev) => [...prev, user]);
-  };
 
   if (!viewer) return null;
   return (
@@ -61,9 +58,10 @@ const AddList = () => {
             >
               List Members
             </Text>
+
             <Search
-              addUser={addMember}
-              listUsers={members}
+              onUserClick={(user) => setMembers((prev) => [...prev, user])}
+              hiddenUsersId={members.map((user) => user.id)}
             />
             <UsersField users={members} />
           </label>
