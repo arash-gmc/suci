@@ -5,10 +5,21 @@ import { Box, TextField, Text, Flex } from "@radix-ui/themes";
 import axios from "axios";
 import React, { useRef, useState } from "react";
 import ProfilePicture from "./ProfilePicture";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-const Search = () => {
+interface Props {
+  onUserClick: (user: User) => void;
+  hiddenUsersId?: string[];
+  searchPosts?: boolean;
+  onSearchPosts?: () => void;
+}
+
+const Search = ({
+  onUserClick,
+  hiddenUsersId,
+  searchPosts,
+  onSearchPosts,
+}: Props) => {
   const [searchedUsers, setSearchedUsers] = useState<User[]>([]);
   const [searchText, setSearchText] = useState("");
   const router = useRouter();
@@ -22,6 +33,12 @@ const Search = () => {
       setSearchedUsers([]);
     }
   };
+  if (hiddenUsersId) {
+    const filteredUsers = searchedUsers.filter(
+      (user) => !hiddenUsersId.includes(user.id)
+    );
+    setSearchedUsers(filteredUsers);
+  }
   return (
     <Box className="relative">
       <TextField.Root>
@@ -50,7 +67,7 @@ const Search = () => {
               align="center"
               className="border-b-2 py-3 cursor-pointer"
               onClick={() => {
-                router.push("/profile/" + user.username);
+                onUserClick(user);
                 setSearchText("");
               }}
             >
@@ -61,13 +78,19 @@ const Search = () => {
               <Text>{user.name}</Text>
             </Flex>
           ))}
-          <Text
-            color="blue"
-            className="py-3 text-center font-bold cursor-pointer"
-            onClick={() => router.push("/posts/search?searched=" + searchText)}
-          >
-            Search for "{searchText}" in posts
-          </Text>
+          {searchPosts && (
+            <Text
+              color="blue"
+              className="py-3 text-center font-bold cursor-pointer"
+              onClick={() => {
+                router.push("/posts/search?searched=" + searchText);
+                setSearchText("");
+                if (onSearchPosts) onSearchPosts();
+              }}
+            >
+              Search for "{searchText}" in posts
+            </Text>
+          )}
         </Flex>
       )}
     </Box>

@@ -1,16 +1,18 @@
 "use client";
 import { Container, Flex, Text } from "@radix-ui/themes";
 import Link from "next/link";
-import Search from "./_components/Search";
+import { useRouter } from "next/navigation";
 import { useContext, useState } from "react";
-import { Context } from "./_providers/Context";
-import NotificationsMenu from "./notifications/NotificationMenu";
-import MessageMenu from "./messages/MessageMenue";
-import ProfilePicture from "./_components/ProfilePicture";
+import ProfilePicture from "../_components/ProfilePicture";
+import Search from "../_components/Search";
+import NotificationsMenu from "../notifications/NotificationMenu";
+import { Context } from "../_providers/Context";
+import MessageMenu from "../messages/MessageMenue";
 
 const NavBar = () => {
   const { viewer } = useContext(Context);
   const [userMenu, setUserMenu] = useState(false);
+  const router = useRouter();
   return (
     <nav className="border-b-2 p-2">
       <Container>
@@ -38,7 +40,10 @@ const NavBar = () => {
                 <NotificationsMenu userId={viewer.id} />
               </>
             )}
-            <Search />
+            <Search
+              onUserClick={(user) => router.push("/profile/" + user.username)}
+              searchPosts={true}
+            />
             {viewer && (
               <Flex
                 onClick={() => setUserMenu((prev) => !prev)}

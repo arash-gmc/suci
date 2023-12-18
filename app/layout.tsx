@@ -3,12 +3,12 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import "@radix-ui/themes/styles.css";
 import { Box, Container, Theme, ThemePanel } from "@radix-ui/themes";
-import NavBar from "./NavBar";
 import Session from "./_providers/Session";
 import ContextProvider from "./_providers/Context";
 import { getServerSession } from "next-auth";
 import { nextauthConfig } from "./api/auth/[...nextauth]/route";
-import MiniNavbar from "./MiniNavbar";
+import NavBar from "./navbar/NavBar";
+import MiniNavbar from "./navbar/MiniNavbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -40,7 +40,7 @@ export default async function RootLayout({
             <Box display={{ initial: "block", sm: "none" }}>
               <MiniNavbar />
             </Box>
-            <Box pt="6">{children}</Box>
+            <Box pt="8">{children}</Box>
           </ContextProvider>
         </Theme>
       </body>

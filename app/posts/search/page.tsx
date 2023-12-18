@@ -1,6 +1,7 @@
 import prisma from "@/prisma/client";
 import React from "react";
 import PostsGrid from "../_components/PostsGrid";
+import { Container, Text } from "@radix-ui/themes";
 
 interface Props {
   searchParams: { searched: string };
@@ -12,10 +13,18 @@ const page = async ({ searchParams }: Props) => {
     include: { author: true },
   });
   return (
-    <PostsGrid
-      posts={posts}
-      isLoading={false}
-    />
+    <Container>
+      <Text
+        size="5"
+        m="3"
+      >
+        Search for <strong>"{searchParams.searched}"</strong> in all posts.
+      </Text>
+      <PostsGrid
+        posts={posts}
+        isLoading={false}
+      />
+    </Container>
   );
 };
 

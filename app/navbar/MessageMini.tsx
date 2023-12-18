@@ -7,8 +7,9 @@ import { useRouter } from "next/navigation";
 
 interface Props {
   contacts: ChatContactsInfo[];
+  close: () => void;
 }
-const MessageMenu = ({ contacts }: Props) => {
+const MiniMessageMenu = ({ contacts, close }: Props) => {
   const router = useRouter();
   return (
     <Flex direction="column">
@@ -16,6 +17,7 @@ const MessageMenu = ({ contacts }: Props) => {
         <button
           onClick={() => {
             router.push("/messages?contactId=" + item.user.id);
+            close();
           }}
           key={item.user.id}
         >
@@ -64,7 +66,10 @@ const MessageMenu = ({ contacts }: Props) => {
 
       <button
         className="font-bold py-1 justify-center"
-        onClick={() => router.push("/messages")}
+        onClick={() => {
+          router.push("/messages");
+          close();
+        }}
       >
         Go to Message Box
       </button>
@@ -72,4 +77,4 @@ const MessageMenu = ({ contacts }: Props) => {
   );
 };
 
-export default MessageMenu;
+export default MiniMessageMenu;

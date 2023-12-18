@@ -1,22 +1,24 @@
 import React, { useContext } from "react";
 import { Selected } from "./MiniNavbar";
 import { Flex, Text } from "@radix-ui/themes";
-import ProfilePicture from "./_components/ProfilePicture";
 import { User } from "@prisma/client";
 import Link from "next/link";
-import Search from "./_components/Search";
-import { ChatContactsInfo } from "./api/message/users/route";
-import MessageMini from "./messages/MessageMini";
-import { Notif } from "./interfaces";
-import NotifMini from "./notifications/NotifMini";
-import Filter from "./filter/Filter";
-import { Context } from "./_providers/Context";
+import { useRouter } from "next/navigation";
+import ProfilePicture from "../_components/ProfilePicture";
+import Search from "../_components/Search";
+import { ChatContactsInfo } from "../api/message/users/route";
+import Filter from "../filter/Filter";
+import { Notif } from "../interfaces";
+import MessageMini from "./MessageMini";
+import NotifMini from "./NotifMini";
+import { Context } from "../_providers/Context";
 
 interface Props {
   selected: Selected;
   viewer: User;
   contacts: ChatContactsInfo[];
   notifications: Notif[];
+  close: () => void;
 }
 
 const MiniNavbarRight = ({
@@ -24,8 +26,10 @@ const MiniNavbarRight = ({
   viewer,
   contacts,
   notifications,
+  close,
 }: Props) => {
   const { setWhere } = useContext(Context);
+  const router = useRouter();
   if (selected === "profile")
     return (
       <Flex
@@ -55,8 +59,18 @@ const MiniNavbarRight = ({
               @{viewer.username}
             </Text>
           </Flex>
-          <Link href={"/profile/" + viewer.username}>Go to Profile</Link>
-          <Link href="#">Edit Profile</Link>
+          <Link
+            href={"/profile/" + viewer.username}
+            onClick={() => close()}
+          >
+            Go to Profile
+          </Link>
+          <Link
+            href="#"
+            onClick={() => close()}
+          >
+            Edit Profile
+          </Link>
           <Link href="/api/auth/signout">Sign Out</Link>
         </Flex>
       </Flex>
@@ -70,13 +84,31 @@ const MiniNavbarRight = ({
         <Filter setWhere={setWhere} />
       </Flex>
     );
-  if (selected === "message") return <MessageMini contacts={contacts} />;
+  if (selected === "message")
+    return (
+      <MessageMini
+        contacts={contacts}
+        close={close}
+      />
+    );
   if (selected === "notification")
-    return <NotifMini notifications={notifications} />;
+    return (
+      <NotifMini
+        notifications={notifications}
+        close={close}
+      />
+    );
   if (selected === "search")
     return (
       <Flex pt="4">
-        <Search />
+        <Search
+          onUserClick={(user) => {
+            router.push("/profile/" + user.username);
+            close();
+          }}
+          searchPosts={true}
+          onSearchPosts={() => close()}
+        />
       </Flex>
     );
   return null;

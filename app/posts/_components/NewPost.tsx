@@ -23,7 +23,7 @@ const NewPost = ({ setPosts }: Props) => {
   if (viewer)
     return (
       <Flex
-        m="5"
+        m="4"
         gap="4"
         align="center"
       >

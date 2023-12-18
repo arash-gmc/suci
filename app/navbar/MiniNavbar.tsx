@@ -2,12 +2,12 @@
 import { HamburgerMenuIcon } from "@radix-ui/react-icons";
 import { Badge, Flex, Grid, Text } from "@radix-ui/themes";
 import React, { useContext, useEffect, useState } from "react";
-import { Context } from "./_providers/Context";
-import MiniNavbarRight from "./MiniNavbarRight";
-import { ChatContactsInfo } from "./api/message/users/route";
 import axios from "axios";
-import { Notif } from "./interfaces";
 import { FaArrowUp } from "react-icons/fa6";
+import { Context } from "../_providers/Context";
+import { ChatContactsInfo } from "../api/message/users/route";
+import { Notif } from "../interfaces";
+import MiniNavbarRight from "./MiniNavbarRight";
 
 export type Selected =
   | "profile"
@@ -120,6 +120,7 @@ const MiniNavbar = () => {
             viewer={viewer}
             contacts={contacts}
             notifications={notifications}
+            close={() => setExpand(false)}
           />
         </Flex>
       </Flex>
