@@ -176,7 +176,7 @@ const PostFooter = ({ postId }: { postId: string }) => {
         : () => doAction("bookmark"),
     },
   ];
-  if (!viewer) return null;
+  if (!viewer) return <Flex height={{ initial: "4", sm: "5" }}></Flex>;
 
   return (
     <Flex
@@ -184,6 +184,7 @@ const PostFooter = ({ postId }: { postId: string }) => {
       className="text-2xl text-gray-500"
       gap={{ initial: "5", sm: "8" }}
       align="center"
+      height={{ initial: "4", sm: "5" }}
     >
       {items.map((item) => (
         <Flex

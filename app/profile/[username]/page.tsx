@@ -1,10 +1,10 @@
 import { nextauthConfig } from "@/app/api/auth/[...nextauth]/route";
 import prisma from "@/prisma/client";
-import { Flex, Grid, Heading, Text } from "@radix-ui/themes";
+import { Flex } from "@radix-ui/themes";
 import { getServerSession } from "next-auth";
 import { notFound } from "next/navigation";
 import React from "react";
-import ProfileHeader from "./ProfileHeader";
+import ProfileHeader from "../ProfileHeader";
 import { User } from "@prisma/client";
 import { PostAndRef } from "@/app/interfaces";
 import PostsGrid from "@/app/posts/_components/PostsGrid";

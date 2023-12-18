@@ -49,7 +49,7 @@ const FollowButton = ({ followerId, followingId, setFollowers }: Props) => {
   if (!followingId) return null;
   if (followerId === followingId) return null;
 
-  if (isFollowing === null) return null;
+  if (isFollowing === null) return <Button disabled={true}>Follow</Button>;
 
   if (isFollowing)
     return (

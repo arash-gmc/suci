@@ -1,6 +1,6 @@
 "use client";
 import { ChatBubbleIcon } from "@radix-ui/react-icons";
-import { Popover, Button, Flex, Box, TextArea } from "@radix-ui/themes";
+import { Popover, Button, Flex, Box, TextArea, Text } from "@radix-ui/themes";
 import React, { useContext, useState } from "react";
 import axios from "axios";
 import { Context } from "@/app/_providers/Context";
@@ -24,7 +24,7 @@ const SendMessage = ({ profileId, profileName }: Props) => {
       })
       .then((res) => null);
   };
-  if (!viewer) return null;
+  if (!viewer) return <Button disabled={true}>Message</Button>;
   if (viewer.id === profileId) return null;
   return (
     <Popover.Root>

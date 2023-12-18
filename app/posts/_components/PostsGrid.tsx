@@ -32,7 +32,7 @@ const PostsGrid = ({ posts, isLoading }: Props) => {
   return (
     <Flex
       direction="column"
-      gap="3"
+      gap={{ initial: "1", sm: "2" }}
       mt="5"
     >
       {posts.map((post) => (

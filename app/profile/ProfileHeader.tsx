@@ -8,6 +8,7 @@ import FollowButton from "./FollowButton";
 import ProfilePicture from "@/app/_components/ProfilePicture";
 import { getYear } from "date-fns";
 import SendMessage from "./SendMessage";
+import CountsComponent from "./Counts";
 
 interface Props {
   user: User;
@@ -15,7 +16,7 @@ interface Props {
   session: Session | null;
 }
 
-interface Counts {
+export interface Counts {
   follower: number;
   following: number;
   post: number;
@@ -101,21 +102,7 @@ const ProfileHeader = ({ user, session }: Props) => {
           </Grid>
         </Flex>
       </Flex>
-
-      {Object.keys(counts).length > 0 && (
-        <Flex
-          direction={{ initial: "row", sm: "column" }}
-          justify="center"
-          gap={{ initial: "8", sm: "3" }}
-          className="font-bold border-l-2 max-sm:border-0"
-          my="3"
-          p="2"
-        >
-          <Text>{counts.post} Posts</Text>
-          <Text>{counts.follower} followers</Text>
-          <Text>{counts.following} followings</Text>
-        </Flex>
-      )}
+      <CountsComponent counts={counts} />
     </Flex>
   );
 };
