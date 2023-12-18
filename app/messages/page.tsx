@@ -85,7 +85,7 @@ const Messanger = ({ searchParams }: Props) => {
   }, [viewer, selectedUserId, refreshs]);
   if (!viewer) return null;
   return (
-    <Flex className="fixed bg-white bottom-0 left-0 right-0 top-16">
+    <Flex className="fixed bg-white bottom-0 left-0 right-0 top-16 max-md:top-12">
       <Flex
         className="w-1/3"
         display={{ initial: "none", md: "flex" }}

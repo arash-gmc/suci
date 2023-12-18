@@ -14,7 +14,7 @@ const Users = ({ setUser, selectedUserId, contactsInfo }: Props) => {
   return (
     <Flex
       direction="column"
-      className="w-full"
+      className="w-full overflow-y-scroll"
     >
       {contactsInfo.map((contact) => (
         <Flex

@@ -1,10 +1,8 @@
-import { User } from "@prisma/client";
-import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
-import { Context } from "../_providers/Context";
-import { Badge, Box, Flex, Text } from "@radix-ui/themes";
+import { Badge, Box, Button, Flex, Text, TextField } from "@radix-ui/themes";
 import ProfilePicture from "../_components/ProfilePicture";
 import { ChatContactsInfo } from "../api/message/users/route";
+import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
+import { useEffect, useState } from "react";
 
 interface Props {
   setUser: React.Dispatch<React.SetStateAction<string | null>>;
@@ -12,44 +10,96 @@ interface Props {
   contactsInfo: ChatContactsInfo[];
 }
 const Users = ({ setUser, selectedUserId, contactsInfo }: Props) => {
+  const [searched, setSearched] = useState("");
+  const [contacts, setContacts] = useState<ChatContactsInfo[]>([]);
+  useEffect(() => {
+    if (searched) {
+      const filtered = contactsInfo.filter((contact) =>
+        contact.user.name?.toLowerCase().startsWith(searched.toLowerCase())
+      );
+      setContacts(filtered);
+    } else {
+      setContacts(contactsInfo);
+    }
+  }, [searched, contactsInfo]);
   return (
     <Flex
       direction="column"
-      className="w-full"
+      justify="between"
+      width="100%"
+      className="overflow-y-scroll"
     >
-      {contactsInfo.map((contact) => (
-        <Flex
-          key={contact.user.id}
-          p="2"
-          align="center"
-          justify="between"
-          className={
-            (contact.user.id === selectedUserId ? "bg-sky-200 " : "") +
-            "border-b-2 cursor-pointer px-3 mx-1 "
-          }
-          onClick={() => setUser(contact.user.id)}
+      <Box>
+        <Box
+          p="4"
+          shrink="0"
         >
-          <Flex
-            align="center"
-            gap="2"
-          >
-            <ProfilePicture
-              size="md"
-              user={contact.user}
+          <TextField.Root>
+            <TextField.Input
+              placeholder="Find..."
+              value={searched}
+              onChange={(e) => setSearched(e.currentTarget.value)}
             />
-            <Box>
-              <Text as="p">{contact.user.name}</Text>
-              <Text
-                color="gray"
-                size="2"
+            <TextField.Slot>
+              <MagnifyingGlassIcon
+                height="16"
+                width="16"
+              />
+            </TextField.Slot>
+          </TextField.Root>
+        </Box>
+        <Flex
+          direction="column"
+          className="w-full"
+        >
+          {contacts.map((contact) => (
+            <Flex
+              key={contact.user.id}
+              p="2"
+              align="center"
+              justify="between"
+              className={
+                (contact.user.id === selectedUserId ? "bg-sky-200 " : "") +
+                "border-b-2 cursor-pointer px-3 mx-1 "
+              }
+              onClick={() => setUser(contact.user.id)}
+            >
+              <Flex
+                align="center"
+                gap="2"
               >
-                {contact.lastMessage}
-              </Text>
-            </Box>
-          </Flex>
-          {!!contact.unseens && <Badge>{contact.unseens}</Badge>}
+                <ProfilePicture
+                  size="md"
+                  user={contact.user}
+                />
+                <Box>
+                  <Text as="p">{contact.user.name}</Text>
+                  <Text
+                    color="gray"
+                    size="2"
+                  >
+                    {contact.lastMessage}
+                  </Text>
+                </Box>
+              </Flex>
+              {!!contact.unseens && <Badge>{contact.unseens}</Badge>}
+            </Flex>
+          ))}
         </Flex>
-      ))}
+      </Box>
+      <Flex
+        p="4"
+        mb="2"
+        justify="center"
+        shrink="0"
+      >
+        <Button
+          size="3"
+          variant="surface"
+        >
+          + Add New Chat
+        </Button>
+      </Flex>
     </Flex>
   );
 };
