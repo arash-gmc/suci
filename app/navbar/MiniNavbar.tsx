@@ -8,6 +8,7 @@ import { Context } from "../_providers/Context";
 import { ChatContactsInfo } from "../api/message/users/route";
 import { Notif } from "../interfaces";
 import MiniNavbarRight from "./MiniNavbarRight";
+import Link from "next/link";
 
 export type Selected =
   | "profile"
@@ -67,12 +68,14 @@ const MiniNavbar = () => {
             py="2"
             px="5"
           >
-            <Text
-              className="font-extrabold"
-              size="6"
-            >
-              Suci
-            </Text>
+            <Link href="/">
+              <Text
+                className="font-extrabold"
+                size="6"
+              >
+                Suci
+              </Text>
+            </Link>
             <Text
               className="border-2 border-slate-400 rounded-lg p-2 cursor-pointer"
               onClick={() => setExpand((prev) => !prev)}

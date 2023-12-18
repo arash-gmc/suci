@@ -10,7 +10,7 @@ interface Props {
   selectedUserId: string | null;
   contactsInfo: ChatContactsInfo[];
 }
-const Users = ({ setUser, selectedUserId, contactsInfo }: Props) => {
+const TinyContacts = ({ setUser, selectedUserId, contactsInfo }: Props) => {
   return (
     <Flex
       direction="column"
@@ -46,4 +46,4 @@ const Users = ({ setUser, selectedUserId, contactsInfo }: Props) => {
   );
 };
 
-export default Users;
+export default TinyContacts;

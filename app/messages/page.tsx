@@ -1,13 +1,13 @@
 "use client";
 import React, { useContext, useEffect, useState } from "react";
 import { Message, User } from "@prisma/client";
-import Users from "./Users";
+import ContactsList from "./ContactsList";
 import { Flex } from "@radix-ui/themes";
 import ChatBox from "./ChatBox";
 import { Context } from "../_providers/Context";
 import NewMessage from "./NewMessage";
 import axios from "axios";
-import TinyUsers from "./TinyUsers";
+import TinyUsers from "./TinyContacts";
 import { ChatContactsInfo } from "../api/message/users/route";
 
 interface Props {
@@ -90,7 +90,7 @@ const Messanger = ({ searchParams }: Props) => {
         className="w-1/3"
         display={{ initial: "none", md: "flex" }}
       >
-        <Users
+        <ContactsList
           setUser={setSelectedUserId}
           selectedUserId={selectedUserId}
           contactsInfo={contactsInfo}

@@ -3,13 +3,14 @@ import ProfilePicture from "../_components/ProfilePicture";
 import { ChatContactsInfo } from "../api/message/users/route";
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { useEffect, useState } from "react";
+import AddContact from "./AddContact";
 
 interface Props {
   setUser: React.Dispatch<React.SetStateAction<string | null>>;
   selectedUserId: string | null;
   contactsInfo: ChatContactsInfo[];
 }
-const Users = ({ setUser, selectedUserId, contactsInfo }: Props) => {
+const ContactsList = ({ setUser, selectedUserId, contactsInfo }: Props) => {
   const [searched, setSearched] = useState("");
   const [contacts, setContacts] = useState<ChatContactsInfo[]>([]);
   useEffect(() => {
@@ -93,15 +94,10 @@ const Users = ({ setUser, selectedUserId, contactsInfo }: Props) => {
         justify="center"
         shrink="0"
       >
-        <Button
-          size="3"
-          variant="surface"
-        >
-          + Add New Chat
-        </Button>
+        <AddContact setUser={(userId: string) => setUser(userId)} />
       </Flex>
     </Flex>
   );
 };
 
-export default Users;
+export default ContactsList;

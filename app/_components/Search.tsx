@@ -63,22 +63,26 @@ const Search = ({
           direction="column"
         >
           {filteredUsers.map((user) => (
-            <Flex
+            <button
               key={user.id}
-              gap="2"
-              align="center"
-              className="border-b-2 py-3 cursor-pointer"
               onClick={() => {
                 onUserClick(user);
                 setSearchText("");
               }}
+              className="p-2 border-b-2 "
             >
-              <ProfilePicture
-                user={user}
-                size="sm"
-              />
-              <Text>{user.name}</Text>
-            </Flex>
+              <Flex
+                gap="2"
+                align="center"
+                className=""
+              >
+                <ProfilePicture
+                  user={user}
+                  size="sm"
+                />
+                <Text>{user.name}</Text>
+              </Flex>
+            </button>
           ))}
           {searchPosts && (
             <Text
