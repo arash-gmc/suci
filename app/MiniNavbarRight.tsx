@@ -33,11 +33,13 @@ const MiniNavbarRight = ({
         gap="5"
         direction="column"
         pt="5"
+        width="100%"
       >
         <ProfilePicture
           size="lg"
           user={viewer}
         />
+
         <Flex
           direction="column"
           className="text-xl text-slate-600"

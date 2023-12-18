@@ -64,7 +64,7 @@ const SinglePost = ({ rawPost }: Props) => {
             <Link href={"/profile/" + author.username}>
               <Text
                 size="4"
-                className="font-bold"
+                className="font-bold whitespace-nowrap"
               >
                 {author.name}
               </Text>

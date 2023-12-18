@@ -7,6 +7,7 @@ import MiniNavbarRight from "./MiniNavbarRight";
 import { ChatContactsInfo } from "./api/message/users/route";
 import axios from "axios";
 import { Notif } from "./interfaces";
+import { FaArrowUp } from "react-icons/fa6";
 
 export type Selected =
   | "profile"
@@ -46,7 +47,7 @@ const MiniNavbar = () => {
     { label: "Filters", value: "filter" },
     { label: "Message", value: "message", count: contacts.length },
     {
-      label: "Notification",
+      label: "Notif",
       value: "notification",
       count: notifications.length,
     },
@@ -54,10 +55,14 @@ const MiniNavbar = () => {
   ];
   if (!viewer) return null;
   return (
-    <Flex direction="column">
+    <Flex
+      direction="column"
+      className="fixed z-10 bg-white opacity-95"
+      width="100%"
+    >
       <Flex
         justify="between"
-        py="3"
+        py="2"
         px="5"
       >
         <Text
@@ -67,26 +72,24 @@ const MiniNavbar = () => {
           Suci
         </Text>
         <Text
-          size="8"
           className="border-2 border-slate-400 rounded-lg p-2 cursor-pointer"
           onClick={() => setExpand((prev) => !prev)}
         >
-          <HamburgerMenuIcon />
+          {expand && <FaArrowUp />}
+          {!expand && <HamburgerMenuIcon />}
         </Text>
       </Flex>
       <Flex
         grow="1"
         width="100%"
         px={{ initial: "3", xs: "8" }}
-        className="overflow-hidden fixed bg-white opacity-90 z-10 mt-12"
-        style={{ animation: "ease height 1s" }}
-        height={expand ? "100%" : "0"}
+        className={"overflow-hidden " + (expand ? "h-screen" : "h-0")}
       >
         <Flex
           direction="column"
-          className="text-xl w-2/5"
+          className="text-xl w-1/4 overflow-y-scroll min-w-max"
           gap="5"
-          pl="3"
+          px={{ initial: "1", xs: "3" }}
           pt="5"
           align="start"
         >
@@ -99,6 +102,7 @@ const MiniNavbar = () => {
                 className={
                   item.value === selectedItem ? "underline font-bold" : ""
                 }
+                size={{ initial: "3", xs: "4" }}
               >
                 {item.label}
                 {!!item.count && <Badge>{item.count}</Badge>}
@@ -107,7 +111,7 @@ const MiniNavbar = () => {
           ))}
         </Flex>
         <Flex
-          className="w-3/5 border-l-2 h-5/6 overflow-y-scroll"
+          className="w-3/4 border-l-2 h-5/6 overflow-y-scroll"
           px="2"
           pt="4"
         >
