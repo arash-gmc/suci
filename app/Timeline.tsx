@@ -1,19 +1,18 @@
 "use client";
-import { Prisma } from "@prisma/client";
 import { Box, Flex } from "@radix-ui/themes";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import NewPost from "./posts/_components/NewPost";
-import Filter from "./filter/Filter";
 import { PostAndRef } from "./interfaces";
 import PostsGrid from "./posts/_components/PostsGrid";
 import { Context } from "./_providers/Context";
+import Filters from "./filter/Filters";
 
 const TimeLine = () => {
   const [posts, setPosts] = useState<PostAndRef[]>([]);
 
   const [isLoading, setLoading] = useState<boolean>(true);
-  const { where, setWhere } = useContext(Context);
+  const { where } = useContext(Context);
 
   useEffect(() => {
     axios
@@ -36,7 +35,7 @@ const TimeLine = () => {
         />
       </Box>
       <Box display={{ initial: "none", sm: "block" }}>
-        <Filter setWhere={setWhere} />
+        <Filters />
       </Box>
     </Flex>
   );

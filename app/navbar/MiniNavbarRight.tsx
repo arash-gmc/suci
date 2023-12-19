@@ -7,11 +7,11 @@ import { useRouter } from "next/navigation";
 import ProfilePicture from "../_components/ProfilePicture";
 import Search from "../_components/Search";
 import { ChatContactsInfo } from "../api/message/users/route";
-import Filter from "../filter/Filter";
 import { Notif } from "../interfaces";
 import MessageMini from "./MessageMini";
 import NotifMini from "./NotifMini";
 import { Context } from "../_providers/Context";
+import Filters from "../filter/Filters";
 
 interface Props {
   selected: Selected;
@@ -71,6 +71,12 @@ const MiniNavbarRight = ({
           >
             Edit Profile
           </Link>
+          <Link
+            href="#"
+            onClick={() => close()}
+          >
+            Bookmarks
+          </Link>
           <Link href="/api/auth/signout">Sign Out</Link>
         </Flex>
       </Flex>
@@ -81,7 +87,7 @@ const MiniNavbarRight = ({
         justify="center"
         width="100%"
       >
-        <Filter setWhere={setWhere} />
+        <Filters />
       </Flex>
     );
   if (selected === "message")
@@ -100,7 +106,11 @@ const MiniNavbarRight = ({
     );
   if (selected === "search")
     return (
-      <Flex pt="4">
+      <Flex
+        pt="4"
+        width="100%"
+        justify="center"
+      >
         <Search
           onUserClick={(user) => {
             router.push("/profile/" + user.username);

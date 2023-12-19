@@ -9,6 +9,7 @@ import { ChatContactsInfo } from "../api/message/users/route";
 import { Notif } from "../interfaces";
 import MiniNavbarRight from "./MiniNavbarRight";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export type Selected =
   | "profile"
@@ -19,6 +20,7 @@ export type Selected =
 
 const MiniNavbar = () => {
   const [expand, setExpand] = useState(false);
+  const path = usePathname();
   const [selectedItem, setSelectedItem] = useState<Selected>("profile");
   const { viewer } = useContext(Context);
   const [contacts, setContacts] = useState<ChatContactsInfo[]>([]);
@@ -45,7 +47,7 @@ const MiniNavbar = () => {
   }, [viewer]);
   const items: { label: string; value: Selected; count?: number }[] = [
     { label: "Profile", value: "profile" },
-    { label: "Filters", value: "filter" },
+
     { label: "Message", value: "message", count: contacts.length },
     {
       label: "Notif",
@@ -54,7 +56,9 @@ const MiniNavbar = () => {
     },
     { label: "Search", value: "search" },
   ];
+  if (path === "/") items.push({ label: "Filters", value: "filter" });
   if (!viewer) return null;
+
   return (
     <>
       <nav className="fixed z-10 bg-slate-100 opacity-95 w-full">
@@ -78,7 +82,10 @@ const MiniNavbar = () => {
             </Link>
             <Text
               className="border-2 border-slate-400 rounded-lg p-2 cursor-pointer"
-              onClick={() => setExpand((prev) => !prev)}
+              onClick={() => {
+                setExpand((prev) => !prev);
+                setSelectedItem("profile");
+              }}
             >
               {expand && <FaArrowUp />}
               {!expand && <HamburgerMenuIcon />}
