@@ -9,7 +9,7 @@ interface Props {
   toggleStatus: (filter: filters) => void;
 }
 
-const ActiveButtons = ({ options, status, toggleStatus }: Props) => {
+const MultiSelectingButtons = ({ options, status, toggleStatus }: Props) => {
   const collapseNumber = 10;
   const [collapse, setCollapse] = useState(true);
   if (options.length > collapseNumber && collapse) {
@@ -43,4 +43,4 @@ const ActiveButtons = ({ options, status, toggleStatus }: Props) => {
   );
 };
 
-export default ActiveButtons;
+export default MultiSelectingButtons;

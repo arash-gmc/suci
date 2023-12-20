@@ -1,13 +1,19 @@
 "use client";
 import { useContext, useEffect, useState } from "react";
-import ActiveButtons from "../_components/ActiveButtons";
+import MultiSelectingButtons from "../_components/MultiSelectingButtons";
 import { Context } from "../_providers/Context";
+import axios from "axios";
+
+import SingleSelectingButtons from "../_components/SingleSelectingButtons";
+import { Flex } from "@radix-ui/themes";
+import AddList, { FetchedList } from "./AddList";
 export type filters = "all" | "age" | "city" | "boys" | "girls" | "reposts";
 export type Statuses = Record<filters, boolean>;
 export interface ButtonsLabel {
   label: string;
   value: keyof Statuses;
 }
+
 const Filters = () => {
   const { viewer, setWhere } = useContext(Context);
   const options: ButtonsLabel[] = [
@@ -21,7 +27,7 @@ const Filters = () => {
     options.push({ label: "Live in " + viewer.city, value: "city" });
   options.push({ label: "Include Reposts", value: "reposts" });
 
-  const [status, setStatus] = useState<Statuses>({
+  const [selectedFilters, setSelectedFilters] = useState<Statuses>({
     all: true,
     age: false,
     city: false,
@@ -30,63 +36,130 @@ const Filters = () => {
     reposts: true,
   });
 
+  const [followings, setFollowings] = useState<string[]>([]);
+  const [followers, setFollowers] = useState<string[]>([]);
+  const [fetchedLists, setFetchedLists] = useState<FetchedList[]>([]);
+  const [selectedList, setSelectedList] = useState("all");
+  useEffect(() => {
+    if (viewer) {
+      axios
+        .get<string[]>("/api/user/followings", {
+          headers: { userId: viewer.id, relation: "following" },
+        })
+        .then((res) => {
+          setFollowings(res.data);
+        });
+      axios
+        .get<string[]>("/api/user/followings", {
+          headers: { userId: viewer.id, relation: "follower" },
+        })
+        .then((res) => setFollowers(res.data));
+      axios
+        .get<FetchedList[]>("/api/list", { headers: { userId: viewer?.id } })
+        .then((res) => setFetchedLists(res.data));
+    }
+  }, [viewer]);
+
+  const listsOptions: { label: string; value: string }[] = [
+    { label: "All", value: "all" },
+    { label: "Following", value: "following" },
+    { label: "Followers", value: "follower" },
+  ];
+  fetchedLists.forEach((list) =>
+    listsOptions.push({ label: list.name, value: list.id })
+  );
+
   useEffect(() => {
     setWhere({
       author: {
         AND: [
           {
             brithYear:
-              status.age && viewer?.brithYear
+              selectedFilters.age && viewer?.brithYear
                 ? { gt: viewer?.brithYear - 5, lt: viewer?.brithYear + 5 }
                 : undefined,
           },
-          { city: status.city && viewer?.city ? viewer.city : undefined },
           {
-            gender: status.boys ? "male" : status.girls ? "female" : undefined,
+            city:
+              selectedFilters.city && viewer?.city ? viewer.city : undefined,
+          },
+          {
+            gender: selectedFilters.boys
+              ? "male"
+              : selectedFilters.girls
+              ? "female"
+              : undefined,
+          },
+          {
+            id:
+              selectedList === "all"
+                ? undefined
+                : {
+                    in:
+                      selectedList === "following"
+                        ? followings
+                        : selectedList === "follower"
+                        ? followers
+                        : fetchedLists.find((list) => list.id === selectedList)
+                        ? fetchedLists.find((list) => list.id === selectedList)
+                            ?.members
+                        : undefined,
+                  },
           },
         ],
       },
-      refId: status.reposts ? undefined : null,
+      refId: selectedFilters.reposts ? undefined : null,
     });
-  }, [status]);
+  }, [selectedFilters, selectedList]);
+
+  const toggleStatus = (filter: filters) =>
+    filter === "all"
+      ? setSelectedFilters({
+          all: true,
+          age: false,
+          city: false,
+          boys: false,
+          girls: false,
+          reposts: true,
+        })
+      : filter === "boys"
+      ? setSelectedFilters((prev) => ({
+          ...prev,
+          boys: !prev.boys,
+          girls: false,
+          all: false,
+        }))
+      : filter === "girls"
+      ? setSelectedFilters((prev) => ({
+          ...prev,
+          boys: false,
+          girls: !prev.girls,
+          all: false,
+        }))
+      : setSelectedFilters((prev) => ({
+          ...prev,
+          [filter]: !prev[filter],
+          all: false,
+        }));
+
   if (!viewer) return null;
   return (
-    <>
-      <ActiveButtons
+    <Flex
+      direction="column"
+      gap="2"
+    >
+      <MultiSelectingButtons
         options={options}
-        status={status}
-        toggleStatus={(filter) =>
-          filter === "all"
-            ? setStatus({
-                all: true,
-                age: false,
-                city: false,
-                boys: false,
-                girls: false,
-                reposts: true,
-              })
-            : filter === "boys"
-            ? setStatus((prev) => ({
-                ...prev,
-                boys: !prev.boys,
-                girls: false,
-                all: false,
-              }))
-            : filter === "girls"
-            ? setStatus((prev) => ({
-                ...prev,
-                boys: false,
-                girls: !prev.girls,
-                all: false,
-              }))
-            : setStatus((prev) => ({
-                ...prev,
-                [filter]: !prev[filter],
-                all: false,
-              }))
-        }
+        status={selectedFilters}
+        toggleStatus={toggleStatus}
       />
-    </>
+      <SingleSelectingButtons
+        options={listsOptions}
+        selectedValue={selectedList}
+        toggleSelected={(selected) => setSelectedList(selected)}
+      />
+      <AddList add={(list) => setFetchedLists((prev) => [...prev, list])} />
+    </Flex>
   );
 };
 

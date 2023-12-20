@@ -12,18 +12,17 @@ const schema = z.object({
 
 export async function POST(request: NextRequest) {
   const body: Body = await request.json();
-  console.log(body);
   const validation = schema.safeParse(body);
   if (!validation.success) return NextResponse.json({}, { status: 400 });
   const { ownerId, name, members } = body;
-  const res = await prisma.list.create({
+  const newList = await prisma.list.create({
     data: {
       name,
       ownerId,
       members: JSON.stringify(members),
     },
   });
-  return NextResponse.json(res, { status: 201 });
+  return NextResponse.json({ id: newList.id, name, members }, { status: 201 });
 }
 
 export async function GET(request: NextRequest) {

@@ -7,7 +7,17 @@ import axios from "axios";
 import { Context } from "../_providers/Context";
 import Search from "../_components/Search";
 
-const AddList = () => {
+export interface FetchedList {
+  id: string;
+  name: string;
+  members: string[];
+}
+
+interface Props {
+  add: (list: FetchedList) => void;
+}
+
+const AddList = ({ add }: Props) => {
   const [members, setMembers] = useState<User[]>([]);
   const [listName, setListName] = useState<string>("");
   const { viewer } = useContext(Context);
@@ -85,11 +95,12 @@ const AddList = () => {
             <Button
               disabled={members.length === 0 || !listName}
               onClick={async () => {
-                await axios.post("/api/list", {
+                const res = await axios.post<FetchedList>("/api/list", {
                   name: listName,
                   ownerId: viewer?.id,
                   members: members.map((m) => m.id),
                 });
+                add(res.data);
                 setMembers([]);
               }}
             >
