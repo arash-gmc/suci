@@ -25,9 +25,9 @@ const NewComment = ({ setComments: setComments, postId }: Props) => {
   if (viewer)
     return (
       <Flex
-        mx="5"
+        mx={{ initial: "2", sm: "5" }}
         mb="5"
-        gap="5"
+        gap={{ initial: "2", sm: "5" }}
         align="center"
       >
         <TextArea

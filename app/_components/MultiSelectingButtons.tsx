@@ -4,7 +4,7 @@ import { ButtonsLabel, Statuses, filters } from "../filter/Filters";
 import { useState } from "react";
 
 interface Props {
-  options: ButtonsLabel[];
+  options: { label: string; value: filters }[];
   status: Statuses;
   toggleStatus: (filter: filters) => void;
 }

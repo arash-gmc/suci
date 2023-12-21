@@ -28,7 +28,6 @@ const Filter = ({ setWhere }: Props) => {
         setWhere={setWhere}
         user={viewer}
       />
-      <AddList />
     </Flex>
   );
 };

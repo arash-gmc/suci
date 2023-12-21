@@ -50,7 +50,7 @@ const MiniNavbar = () => {
 
     { label: "Message", value: "message", count: contacts.length },
     {
-      label: "Notif",
+      label: "Notification",
       value: "notification",
       count: notifications.length,
     },

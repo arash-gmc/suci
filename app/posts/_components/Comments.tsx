@@ -21,31 +21,37 @@ const Comments = ({ postId }: { postId: string }) => {
         direction="column"
         gap="2"
         mx="6"
-        mt="5"
-        className="bg-cyan-50 rounded-xl"
+        my="5"
+        style={{ background: "var(--accent-3)" }}
+        className="rounded-xl"
       >
         {comments.map((comment) => (
           <Flex
             key={comment.id}
             gap="2"
-            py="4"
+            py="2"
             px="3"
-            align="center"
+            align="start"
             className="border-b-4 border-white"
           >
             <ProfilePicture
               size="sm"
               user={comment.author}
             />
-            <Flex gap="2">
-              <Text className="font-bold">{comment.author.name}:</Text>{" "}
+            <Flex direction="column">
+              <Text
+                className="font-bold"
+                size="2"
+              >
+                {comment.author.name}
+              </Text>{" "}
               <Text>{comment.text}</Text>
             </Flex>
           </Flex>
         ))}
         <Box
-          mt="5"
-          px="5"
+          mt="4"
+          px={{ initial: "1", sm: "3" }}
         >
           <NewComment
             postId={postId}
