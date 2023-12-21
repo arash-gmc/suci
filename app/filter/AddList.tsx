@@ -1,7 +1,7 @@
 import { PlusIcon } from "@radix-ui/react-icons";
 import { Dialog, Button, Flex, TextField, Text } from "@radix-ui/themes";
 import React, { useContext, useRef, useState } from "react";
-import UsersField from "./UsersField";
+import UsersField from "../_components/UsersField";
 import { User } from "@prisma/client";
 import axios from "axios";
 import { Context } from "../_providers/Context";
@@ -59,22 +59,28 @@ const AddList = ({ add }: Props) => {
               onChange={(e) => setListName(e.currentTarget.value)}
             />
           </label>
-          <label>
-            <Text
-              as="div"
-              size="2"
-              mb="1"
-              weight="bold"
-            >
-              List Members
-            </Text>
 
-            <Search
-              onUserClick={(user) => setMembers((prev) => [...prev, user])}
-              hiddenUsersId={members.map((user) => user.id)}
-            />
-            <UsersField users={members} />
-          </label>
+          <Text
+            as="div"
+            size="2"
+            mb="1"
+            weight="bold"
+          >
+            List Members
+          </Text>
+
+          <Search
+            onUserClick={(user) => setMembers((prev) => [...prev, user])}
+            hiddenUsersId={members.map((user) => user.id)}
+          />
+          <UsersField
+            users={members}
+            onUserClick={(user) =>
+              setMembers((prev) =>
+                prev.filter((member) => member.id !== user.id)
+              )
+            }
+          />
         </Flex>
 
         <Flex

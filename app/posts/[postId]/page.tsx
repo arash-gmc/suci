@@ -6,6 +6,8 @@ import { Container, Flex, Text } from "@radix-ui/themes";
 import { notFound } from "next/navigation";
 import React from "react";
 import Comments from "../_components/Comments";
+import UserFieldPopover from "@/app/_components/UserFieldPopover";
+import InteractedUsers from "./InteractedUsers";
 
 interface Props {
   params: { postId: string };
@@ -17,11 +19,23 @@ const PostDetails = async ({ params }: Props) => {
     include: { author: true },
   });
 
+  const comments = await prisma.comment.findMany({
+    where: { postRefId: params.postId },
+    include: { author: true },
+  });
+
   if (!post) notFound();
   return (
     <Container mt={{ initial: "3", sm: "8" }}>
       <SinglePost rawPost={post} />
-      <Comments postId={params.postId} />
+      <InteractedUsers
+        postId={params.postId}
+        comments={comments}
+      />
+      <Comments
+        postId={params.postId}
+        initialComments={comments}
+      />
     </Container>
   );
 };
