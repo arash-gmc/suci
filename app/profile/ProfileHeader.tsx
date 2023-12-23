@@ -24,12 +24,25 @@ export interface Counts {
 
 const ProfileHeader = ({ user, session }: Props) => {
   const [counts, setCounts] = useState<Counts>({} as Counts);
+  const [followings, setFollowings] = useState<User[]>([]);
+  const [followers, setFollowers] = useState<User[]>([]);
 
   useEffect(() => {
-    if (user.id)
+    if (user.id) {
       axios.get<Counts>("/api/user/counts/" + user.id).then((res) => {
         setCounts(res.data);
       });
+      axios
+        .get<User[]>("/api/user/follow/list-user", {
+          headers: { userId: user.id, relation: "following" },
+        })
+        .then((res) => setFollowings(res.data));
+      axios
+        .get<User[]>("/api/user/follow/list-user", {
+          headers: { userId: user.id, relation: "follower" },
+        })
+        .then((res) => setFollowers(res.data));
+    }
   }, [user]);
 
   const getStatus = () => {
@@ -102,7 +115,12 @@ const ProfileHeader = ({ user, session }: Props) => {
           </Grid>
         </Flex>
       </Flex>
-      <CountsComponent counts={counts} />
+      <CountsComponent
+        counts={counts}
+        followings={followings}
+        followers={followers}
+        userName={user.name}
+      />
     </Flex>
   );
 };

@@ -5,7 +5,7 @@ export async function GET(request: NextRequest) {
   const userId = request.headers.get("userId");
   const relation = request.headers.get("relation");
 
-  if (!userId || !relation)
+  if (!userId || !relation || !["following", "follower"].includes(relation))
     return NextResponse.json(
       { error: "userId or relation not provided" },
       { status: 400 }

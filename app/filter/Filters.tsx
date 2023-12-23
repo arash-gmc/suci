@@ -42,14 +42,14 @@ const Filters = () => {
   useEffect(() => {
     if (viewer) {
       axios
-        .get<string[]>("/api/user/followings", {
+        .get<string[]>("/api/user/follow/list-string", {
           headers: { userId: viewer.id, relation: "following" },
         })
         .then((res) => {
           setFollowings(res.data);
         });
       axios
-        .get<string[]>("/api/user/followings", {
+        .get<string[]>("/api/user/follow/list-string", {
           headers: { userId: viewer.id, relation: "follower" },
         })
         .then((res) => setFollowers(res.data));

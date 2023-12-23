@@ -1,7 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
-import { followSchema, BodyType } from "./schema";
 import prisma from "@/prisma/client";
 import pushNotif from "../../notification/pushNotif";
+import { z } from "zod";
+
+const followSchema = z.object({
+  followingId: z.string().min(1),
+  followerId: z.string().min(1),
+});
+
+type BodyType = z.infer<typeof followSchema>;
 
 export async function GET(request: NextRequest) {
   const header = request.headers;

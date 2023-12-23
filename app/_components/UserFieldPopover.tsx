@@ -19,23 +19,25 @@ const UserFieldPopover = ({ label, title, users }: Props) => {
         <button>{label}</button>
       </Dialog.Trigger>
 
-      <Dialog.Content style={{ maxWidth: 550 }}>
-        <Dialog.Title>{title}</Dialog.Title>
+      {users.length > 0 && (
+        <Dialog.Content style={{ maxWidth: 550 }}>
+          <Dialog.Title>{title}</Dialog.Title>
 
-        <UsersField
-          users={users}
-          onUserClick={(user) => router.push("/profile/" + user.username)}
-        />
-        <Flex
-          width="100%"
-          justify="end"
-          mt="4"
-        >
-          <Dialog.Close>
-            <Button>Close</Button>
-          </Dialog.Close>
-        </Flex>
-      </Dialog.Content>
+          <UsersField
+            users={users}
+            onUserClick={(user) => router.push("/profile/" + user.username)}
+          />
+          <Flex
+            width="100%"
+            justify="end"
+            mt="4"
+          >
+            <Dialog.Close>
+              <Button>Close</Button>
+            </Dialog.Close>
+          </Flex>
+        </Dialog.Content>
+      )}
     </Dialog.Root>
   );
 };
