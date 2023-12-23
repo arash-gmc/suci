@@ -1,10 +1,18 @@
+"use client";
 import { Message } from "@prisma/client";
 import { Box, Flex, Text } from "@radix-ui/themes";
+import { useEffect, useRef } from "react";
 interface Props {
   messages: Message[];
   viewerId: string | null;
+  contactId: string | null;
 }
-const ChatBox = ({ messages, viewerId }: Props) => {
+
+const ChatBox = ({ messages, viewerId, contactId }: Props) => {
+  const scrollDiv = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    scrollDiv.current?.scrollIntoView();
+  }, [messages, contactId]);
   return (
     <Box
       height="100%"
@@ -35,6 +43,7 @@ const ChatBox = ({ messages, viewerId }: Props) => {
           </Flex>
         ))}
       </Flex>
+      <div ref={scrollDiv}></div>
     </Box>
   );
 };

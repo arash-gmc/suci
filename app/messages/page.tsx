@@ -23,7 +23,7 @@ const Messanger = ({ searchParams }: Props) => {
   const [gotUsers, setGotUsers] = useState(false);
   const [contactsInfo, setContactsInfo] = useState<ChatContactsInfo[]>([]);
   const [refreshs, setRefreshs] = useState(0);
-  //setInterval(() => setRefreshs((prev) => prev + 1), 5000);
+  //setInterval(() => setRefreshs((prev) => prev + 1), 10000);
 
   useEffect(() => {
     if (viewer && selectedUserId)
@@ -114,6 +114,7 @@ const Messanger = ({ searchParams }: Props) => {
         <ChatBox
           messages={messages}
           viewerId={viewer.id}
+          contactId={selectedUserId}
         />
         <NewMessage
           fromId={viewer.id}
