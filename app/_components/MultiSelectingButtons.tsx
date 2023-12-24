@@ -1,6 +1,6 @@
 "use client";
 import { CheckIcon } from "@radix-ui/react-icons";
-import { ButtonsLabel, Statuses, filters } from "../filter/Filters";
+import { ButtonsLabel, Statuses, filters } from "../(main)/filter/Filters";
 import { useState } from "react";
 
 interface Props {

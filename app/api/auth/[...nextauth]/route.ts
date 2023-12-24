@@ -13,9 +13,15 @@ export const nextauthConfig: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credential, req) {
-        const user = await prisma.user.findUnique({
+        let user = await prisma.user.findUnique({
           where: { email: credential?.email },
         });
+        if (!user) {
+          user = await prisma.user.findUnique({
+            where: { username: credential?.email },
+          });
+        }
+
         if (!user) return null;
         const isPasswordMatch = await bcrypt.compare(
           credential!.password,
@@ -26,6 +32,9 @@ export const nextauthConfig: NextAuthOptions = {
       },
     }),
   ],
+  pages: {
+    signIn: "/login",
+  },
   adapter: PrismaAdapter(prisma),
   session: { strategy: "jwt" },
   callbacks: {

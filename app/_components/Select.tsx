@@ -23,7 +23,10 @@ const SelectComponent = ({ name, control, label, items }: Props) => {
           <Select.Trigger placeholder={label} />
           <Select.Content>
             {items.map((item) => (
-              <Select.Item value={item.value} key={item.value}>
+              <Select.Item
+                value={item.value}
+                key={item.value}
+              >
                 {item.label}
               </Select.Item>
             ))}
