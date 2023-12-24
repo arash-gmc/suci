@@ -1,9 +1,10 @@
 "use client";
-import { Button, Flex, TextArea } from "@radix-ui/themes";
+import { Box, Button, Flex, TextArea } from "@radix-ui/themes";
 import axios from "axios";
 import React, { Dispatch, SetStateAction, useContext, useState } from "react";
 import { PostAndRef } from "../../interfaces";
 import { Context } from "../../_providers/Context";
+import Spinner from "@/app/_components/Spinner";
 
 interface Props {
   setPosts: Dispatch<SetStateAction<PostAndRef[]>>;
@@ -12,11 +13,15 @@ interface Props {
 const NewPost = ({ setPosts }: Props) => {
   const { viewer } = useContext(Context);
   const [postText, setPostText] = useState<string>("");
+  const [loading, setLoading] = useState(false);
   const addPost = async () => {
-    const res = await axios.post<PostAndRef>("/api/post/add", {
-      authorId: viewer?.id,
-      text: postText,
-    });
+    setLoading(true);
+    const res = await axios
+      .post<PostAndRef>("/api/post/add", {
+        authorId: viewer?.id,
+        text: postText,
+      })
+      .finally(() => setLoading(false));
     setPosts((prev) => [res.data, ...prev]);
     setPostText("");
   };
@@ -35,11 +40,12 @@ const NewPost = ({ setPosts }: Props) => {
           value={postText}
         />
         <Button
-          disabled={!postText}
+          disabled={!postText || loading}
           onClick={addPost}
           size="3"
         >
           POST
+          {loading && <Spinner />}
         </Button>
       </Flex>
     );

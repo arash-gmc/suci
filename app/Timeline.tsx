@@ -15,6 +15,7 @@ const TimeLine = () => {
   const { where } = useContext(Context);
 
   useEffect(() => {
+    setLoading(true);
     axios
       .post<PostAndRef[]>("/api/post/get-all", where)
       .then((res) => {

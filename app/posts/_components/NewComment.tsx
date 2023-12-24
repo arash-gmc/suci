@@ -4,6 +4,7 @@ import axios from "axios";
 import React, { Dispatch, SetStateAction, useContext, useState } from "react";
 import { CommentAndAuthor, PostAndRef } from "../../interfaces";
 import { Context } from "../../_providers/Context";
+import Spinner from "@/app/_components/Spinner";
 
 interface Props {
   setComments: Dispatch<SetStateAction<CommentAndAuthor[]>>;
@@ -12,13 +13,17 @@ interface Props {
 
 const NewComment = ({ setComments: setComments, postId }: Props) => {
   const { viewer } = useContext(Context);
+  const [loading, setLoading] = useState(false);
   const [commentText, setCommentText] = useState<string>("");
   const addComment = async () => {
-    const res = await axios.post<CommentAndAuthor>("/api/comment/for-post", {
-      authorId: viewer?.id,
-      postId,
-      text: commentText,
-    });
+    setLoading(true);
+    const res = await axios
+      .post<CommentAndAuthor>("/api/comment/for-post", {
+        authorId: viewer?.id,
+        postId,
+        text: commentText,
+      })
+      .finally(() => setLoading(false));
     setComments((prev) => [...prev, res.data]);
     setCommentText("");
   };
@@ -38,11 +43,12 @@ const NewComment = ({ setComments: setComments, postId }: Props) => {
           value={commentText}
         />
         <Button
-          disabled={!commentText}
+          disabled={!commentText || loading}
           onClick={addComment}
           size="2"
         >
           Send
+          {loading && <Spinner />}
         </Button>
       </Flex>
     );

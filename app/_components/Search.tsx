@@ -6,6 +6,7 @@ import axios from "axios";
 import React, { useRef, useState } from "react";
 import ProfilePicture from "./ProfilePicture";
 import { useRouter } from "next/navigation";
+import Spinner from "./Spinner";
 
 interface Props {
   onUserClick: (user: User) => void;
@@ -22,13 +23,16 @@ const Search = ({
 }: Props) => {
   const [searchedUsers, setSearchedUsers] = useState<User[]>([]);
   const [searchText, setSearchText] = useState("");
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   const onSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.currentTarget.value);
     if (searchText) {
+      setLoading(true);
       axios
         .get<User[]>("/api/user/search/" + searchText)
-        .then((res) => setSearchedUsers(res.data));
+        .then((res) => setSearchedUsers(res.data))
+        .finally(() => setLoading(false));
     } else {
       setSearchedUsers([]);
     }
@@ -62,6 +66,15 @@ const Search = ({
           className="absolute bg-white w-full z-10"
           direction="column"
         >
+          {loading && (
+            <Flex
+              justify="center"
+              py="3"
+              color="blue"
+            >
+              <Spinner />
+            </Flex>
+          )}
           {filteredUsers.map((user) => (
             <button
               key={user.id}
