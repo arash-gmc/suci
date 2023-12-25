@@ -13,7 +13,7 @@ interface Props {
   items: { label: string; value: string }[];
 }
 
-const SelectComponent = ({ name, control, label, items }: Props) => {
+const SelectController = ({ name, control, label, items }: Props) => {
   return (
     <Controller
       name={name}
@@ -37,4 +37,4 @@ const SelectComponent = ({ name, control, label, items }: Props) => {
   );
 };
 
-export default SelectComponent;
+export default SelectController;

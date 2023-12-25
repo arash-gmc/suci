@@ -14,7 +14,7 @@ import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { newUserSchema } from "../../api/user/register/schema";
-import SelectComponent from "@/app/_components/Select";
+import SelectController from "@/app/_components/SelectController";
 import { CldUploadWidget } from "next-cloudinary";
 import { CheckCircledIcon } from "@radix-ui/react-icons";
 import Logo from "@/app/_components/Logo";
@@ -88,7 +88,7 @@ const RegisterPage = () => {
             {...register(field.value)}
           />
         ))}
-        <SelectComponent
+        <SelectController
           name="gender"
           label="Gender"
           control={control}
@@ -97,7 +97,7 @@ const RegisterPage = () => {
             { label: "Female", value: "female" },
           ]}
         />
-        <SelectComponent
+        <SelectController
           name="brithYear"
           label="Year of Brith"
           control={control}
