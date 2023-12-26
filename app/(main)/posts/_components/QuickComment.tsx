@@ -12,7 +12,7 @@ interface Props {
   setStatus: () => void;
 }
 
-const AddComment = ({ postId, addCount, setStatus }: Props) => {
+const QuickComment = ({ postId, addCount, setStatus }: Props) => {
   const { viewer } = useContext(Context);
   const [commentText, setCommentText] = useState("");
   const sendComment = () => {
@@ -37,7 +37,7 @@ const AddComment = ({ postId, addCount, setStatus }: Props) => {
       </Popover.Trigger>
       <Popover.Content style={{ width: 360 }}>
         <Flex gap="3">
-          <Flex>
+          <Flex align="start">
             <ProfilePicture
               user={viewer}
               size="sm"
@@ -79,4 +79,4 @@ const AddComment = ({ postId, addCount, setStatus }: Props) => {
   );
 };
 
-export default AddComment;
+export default QuickComment;

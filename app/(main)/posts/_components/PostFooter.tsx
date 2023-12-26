@@ -6,7 +6,7 @@ import { GoBookmark, GoBookmarkFill } from "react-icons/go";
 import { FaRetweet } from "react-icons/fa6";
 import axios from "axios";
 import { ActionType } from "@prisma/client";
-import AddComment from "./AddComment";
+import QuickComment from "./QuickComment";
 import { Context } from "@/app/_providers/Context";
 
 interface Counts {
@@ -150,7 +150,7 @@ const PostFooter = ({ postId }: { postId: string }) => {
     {
       value: "comment",
       icon: (
-        <AddComment
+        <QuickComment
           postId={postId}
           addCount={() =>
             setCounts((prev) => ({ ...prev, comments: prev.comments + 1 }))

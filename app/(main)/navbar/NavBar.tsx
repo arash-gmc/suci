@@ -55,7 +55,7 @@ const NavBar = () => {
                     direction="column"
                     display={userMenu ? "flex" : "none"}
                     p="2"
-                    className="absolute top-12 -left-40 w-48 bg-white text-md min-w-max font-bold"
+                    className="absolute top-12 -left-40 w-48 bg-slate-50 rounded-md text-md min-w-max font-bold"
                   >
                     <Flex
                       direction="column"
@@ -83,7 +83,7 @@ const NavBar = () => {
                       Bookmarks
                     </Link>
                     <button
-                      className="border-b-2 text-left py-2"
+                      className="text-left py-2"
                       onClick={() => signOut()}
                     >
                       Sign Out

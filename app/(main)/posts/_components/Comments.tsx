@@ -4,7 +4,7 @@ import { CommentAndAuthor } from "@/app/(main)/interfaces";
 import { Box, Flex, Text } from "@radix-ui/themes";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import AddComment from "./AddComment";
+import QuickComment from "./QuickComment";
 import NewComment from "./NewComment";
 
 const Comments = ({

@@ -4,6 +4,7 @@ import { PostAndAuthor, PostAndRef } from "../../interfaces";
 import PostFooter from "./PostFooter";
 import ProfilePicture from "../../../_components/ProfilePicture";
 import { FaRetweet } from "react-icons/fa6";
+import TextCompress from "@/app/_components/TextCompress";
 
 interface Props {
   rawPost: PostAndRef | PostAndAuthor;
@@ -85,7 +86,7 @@ const SinglePost = ({ rawPost }: Props) => {
           </Flex>
           <Link href={"/posts/" + post.id}>
             <Box width="100%">
-              <Text>{post.text}</Text>
+              <TextCompress compressSize={200}>{post.text}</TextCompress>
             </Box>
           </Link>
           <PostFooter postId={post.id} />

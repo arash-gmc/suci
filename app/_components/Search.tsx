@@ -27,10 +27,11 @@ const Search = ({
   const router = useRouter();
   const onSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.currentTarget.value);
-    if (searchText) {
+    if (e.currentTarget.value) {
       setLoading(true);
+      setSearchedUsers([]);
       axios
-        .get<User[]>("/api/user/search/" + searchText)
+        .get<User[]>("/api/user/search/" + e.currentTarget.value)
         .then((res) => setSearchedUsers(res.data))
         .finally(() => setLoading(false));
     } else {

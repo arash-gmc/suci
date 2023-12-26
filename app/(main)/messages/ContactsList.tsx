@@ -4,6 +4,7 @@ import { ChatContactsInfo } from "../../api/message/users/route";
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { useEffect, useState } from "react";
 import AddContact from "./AddContact";
+import TextCompress from "@/app/_components/TextCompress";
 
 interface Props {
   setUser: React.Dispatch<React.SetStateAction<string | null>>;
@@ -79,7 +80,9 @@ const ContactsList = ({ setUser, selectedUserId, contactsInfo }: Props) => {
                     color="gray"
                     size="2"
                   >
-                    {contact.lastMessage}
+                    <TextCompress compressSize={40}>
+                      {contact.lastMessage}
+                    </TextCompress>
                   </Text>
                 </Box>
               </Flex>

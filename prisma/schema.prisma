@@ -9,7 +9,7 @@ datasource db {
 
 model Posts {
   id           String         @id @default(cuid())
-  text         String?        @db.VarChar(300)
+  text         String?        @db.Text
   date         DateTime       @default(now())
   authorId     String
   author       User           @relation(fields: [authorId], references: [id])
@@ -40,7 +40,7 @@ model Comment {
   id              String    @id @default(cuid())
   authorId        String
   author          User      @relation(fields: [authorId], references: [id])
-  text            String
+  text            String    @db.Text
   postRefId       String?
   postRef         Posts?    @relation(fields: [postRefId], references: [id])
   commentRefId    String?
@@ -104,7 +104,7 @@ model Message {
   toUserId   String
   fromUser   User     @relation("FromMessage", fields: [fromUserId], references: [id])
   toUser     User     @relation("ToMessage", fields: [toUserId], references: [id])
-  text       String
+  text       String   @db.Text
   seen       Boolean  @default(false)
   date       DateTime @default(now())
 }

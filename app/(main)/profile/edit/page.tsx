@@ -173,6 +173,7 @@ const page = () => {
                 gap="5"
               >
                 <UploadProfile passPublicId={(pId) => setPublicId(pId)} />
+
                 {publicId && (
                   <CldImage
                     src={publicId}
@@ -182,6 +183,14 @@ const page = () => {
                     className="rounded-full"
                     alt="profile-picture"
                   />
+                )}
+                {publicId && (
+                  <Button
+                    variant="soft"
+                    onClick={() => setPublicId(null)}
+                  >
+                    Remove
+                  </Button>
                 )}
               </Flex>
             </Flex>
@@ -201,7 +210,7 @@ const page = () => {
                 onClick={updateUser}
                 disabled={loading}
               >
-                Update {loading && <Spinner />}
+                Apply {loading && <Spinner />}
               </Button>
             </Flex>
             <Box ref={calloutRef}>
