@@ -22,12 +22,12 @@ const NavBar = () => {
           <Flex
             justify="between"
             className="text-sm text-gray-700"
+            align="center"
           >
-            <Flex>
-              <Link href="/">
-                <Logo size="6" />
-              </Link>
-            </Flex>
+            <Link href="/">
+              <Logo size="6" />
+            </Link>
+
             <Flex
               gap="5"
               align="center"
@@ -54,30 +54,36 @@ const NavBar = () => {
                   <Flex
                     direction="column"
                     display={userMenu ? "flex" : "none"}
-                    gap="3"
                     p="2"
-                    className="absolute top-12 -left-40 w-48 bg-white text-md min-w-max"
+                    className="absolute top-12 -left-40 w-48 bg-white text-md min-w-max font-bold"
                   >
                     <Flex
                       direction="column"
-                      className="border-b-2"
+                      className="border-b-2 py-2"
                     >
                       <Text>{viewer.name}</Text>
                       <Text
                         size="2"
                         color="gray"
+                        className="font-normal"
                       >
                         @{viewer.username}
                       </Text>
                     </Flex>
                     <Link
-                      className="border-b-2"
+                      className="border-b-2 py-2"
                       href={"/profile/" + viewer.username}
                     >
                       Profile
                     </Link>
+                    <Link
+                      className="border-b-2 py-2"
+                      href="/posts/bookmarks"
+                    >
+                      Bookmarks
+                    </Link>
                     <button
-                      className="border-b-2"
+                      className="border-b-2 text-left py-2"
                       onClick={() => signOut()}
                     >
                       Sign Out

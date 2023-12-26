@@ -1,6 +1,6 @@
 "use client";
 import { HamburgerMenuIcon } from "@radix-ui/react-icons";
-import { Badge, Flex, Grid, Text } from "@radix-ui/themes";
+import { Badge, Flex, Grid, Heading, Text } from "@radix-ui/themes";
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { FaArrowUp } from "react-icons/fa6";
@@ -58,7 +58,6 @@ const MiniNavbar = () => {
     { label: "Search", value: "search" },
   ];
   if (path === "/") items.push({ label: "Filters", value: "filter" });
-  if (!viewer) return null;
 
   return (
     <>
@@ -93,44 +92,69 @@ const MiniNavbar = () => {
             px={{ initial: "3", xs: "8" }}
             className={"overflow-hidden " + (expand ? "h-screen" : "h-0")}
           >
-            <Flex
-              direction="column"
-              className="text-xl w-1/4 overflow-y-scroll min-w-max"
-              gap="5"
-              px={{ initial: "1", xs: "3" }}
-              pt="5"
-              align="start"
-            >
-              {items.map((item) => (
-                <button
-                  key={item.value}
-                  onClick={() => setSelectedItem(item.value)}
+            {viewer && (
+              <>
+                <Flex
+                  direction="column"
+                  className="text-xl w-1/4 overflow-y-scroll min-w-max"
+                  gap="5"
+                  px={{ initial: "1", xs: "3" }}
+                  pt="5"
+                  align="start"
                 >
-                  <Text
-                    className={
-                      item.value === selectedItem ? "underline font-bold" : ""
-                    }
-                    size={{ initial: "3", xs: "4" }}
-                  >
-                    {item.label}
-                    {!!item.count && <Badge>{item.count}</Badge>}
-                  </Text>
-                </button>
-              ))}
-            </Flex>
-            <Flex
-              className="w-3/4 border-l-2 h-5/6 overflow-y-scroll"
-              px="2"
-              pt="4"
-            >
-              <MiniNavbarRight
-                selected={selectedItem}
-                viewer={viewer}
-                contacts={contacts}
-                notifications={notifications}
-                close={() => setExpand(false)}
-              />
-            </Flex>
+                  {items.map((item) => (
+                    <button
+                      key={item.value}
+                      onClick={() => setSelectedItem(item.value)}
+                    >
+                      <Text
+                        className={
+                          item.value === selectedItem
+                            ? "underline font-bold"
+                            : ""
+                        }
+                        size={{ initial: "3", xs: "4" }}
+                      >
+                        {item.label}
+                        {!!item.count && <Badge>{item.count}</Badge>}
+                      </Text>
+                    </button>
+                  ))}
+                </Flex>
+                <Flex
+                  className="w-3/4 border-l-2 h-5/6 overflow-y-scroll"
+                  px="2"
+                  pt="4"
+                >
+                  <MiniNavbarRight
+                    selected={selectedItem}
+                    viewer={viewer}
+                    contacts={contacts}
+                    notifications={notifications}
+                    close={() => setExpand(false)}
+                  />
+                </Flex>
+              </>
+            )}
+            {!viewer && (
+              <Flex
+                align="center"
+                my="5"
+                direction="column"
+                gap="5"
+                p="4"
+                width="100%"
+                className="font-bold text-xl"
+              >
+                <Heading>Guest User</Heading>
+                <Link href="/login">
+                  <Text>Sign in</Text>
+                </Link>
+                <Link href="/register">
+                  <Text>Register</Text>
+                </Link>
+              </Flex>
+            )}
           </Flex>
         </Flex>
       </nav>
