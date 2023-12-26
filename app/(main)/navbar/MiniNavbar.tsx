@@ -10,6 +10,7 @@ import { Notif } from "../interfaces";
 import MiniNavbarRight from "./MiniNavbarRight";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Logo from "@/app/_components/Logo";
 
 export type Selected =
   | "profile"
@@ -73,12 +74,7 @@ const MiniNavbar = () => {
             px="5"
           >
             <Link href="/">
-              <Text
-                className="font-extrabold"
-                size="6"
-              >
-                Suci
-              </Text>
+              <Logo size="6" />
             </Link>
             <Text
               className="border-2 border-slate-400 rounded-lg p-2 cursor-pointer"

@@ -1,7 +1,7 @@
 import UserFieldPopover from "@/app/_components/UserFieldPopover";
-import { CommentAndAuthor } from "@/app/interfaces";
+import { CommentAndAuthor } from "@/app/(main)/interfaces";
 import prisma from "@/prisma/client";
-import { Flex } from "@radix-ui/themes";
+import { Flex, Text } from "@radix-ui/themes";
 import React from "react";
 
 interface Props {
@@ -38,13 +38,7 @@ const InteractedUsers = async ({ postId, comments }: Props) => {
           title="People who liked this post."
         />
       )}
-      {commenters.length > 0 && (
-        <UserFieldPopover
-          label={comments.length + " comments"}
-          users={commenters}
-          title="People who comment on this post."
-        />
-      )}
+      {commenters.length > 0 && <Text>{comments.length + " comments"}</Text>}
       {reposters.length > 0 && (
         <UserFieldPopover
           label={reposters.length + " reposts"}

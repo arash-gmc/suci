@@ -21,15 +21,15 @@ const Counts = ({ counts, followings, followers, userName }: Props) => {
       my="3"
       p="2"
     >
-      <Text>{counts?.post} Posts</Text>
+      <Text>{counts?.post || "0"} Posts</Text>
 
       <UserFieldPopover
-        label={(counts?.follower || "") + " Followers"}
+        label={(counts?.follower || "0") + " Followers"}
         users={followers}
         title={"People who followed " + userName}
       />
       <UserFieldPopover
-        label={(counts?.following || "") + " Followings"}
+        label={(counts?.following || "0") + " Followings"}
         users={followings}
         title={"people who " + userName + " is following"}
       />

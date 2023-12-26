@@ -2,13 +2,15 @@
 import { User } from "@prisma/client";
 import { Grid, Heading, Flex, Text, Button } from "@radix-ui/themes";
 import { Session } from "next-auth";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios, { AxiosError } from "axios";
 import FollowButton from "./FollowButton";
 import ProfilePicture from "@/app/_components/ProfilePicture";
 import { getYear } from "date-fns";
 import SendMessage from "./SendMessage";
 import CountsComponent from "./Counts";
+import { Context } from "@/app/_providers/Context";
+import Link from "next/link";
 
 interface Props {
   user: User;
@@ -26,6 +28,7 @@ const ProfileHeader = ({ user, session }: Props) => {
   const [counts, setCounts] = useState<Counts>({} as Counts);
   const [followings, setFollowings] = useState<User[]>([]);
   const [followers, setFollowers] = useState<User[]>([]);
+  const { viewer } = useContext(Context);
 
   useEffect(() => {
     if (user.id) {
@@ -103,15 +106,32 @@ const ProfileHeader = ({ user, session }: Props) => {
             my="3"
             columns="2"
           >
-            <FollowButton
-              followerId={user.id}
-              followingId={session?.user.id}
-              setFollowers={setFolllowes}
-            />
-            <SendMessage
-              profileId={user.id}
-              profileName={user.name}
-            />
+            {viewer && user && (
+              <>
+                {viewer?.id !== user.id ? (
+                  <>
+                    <FollowButton
+                      followerId={user.id}
+                      followingId={session?.user.id}
+                      setFollowers={setFolllowes}
+                    />
+                    <SendMessage
+                      profileId={user.id}
+                      profileName={user.name}
+                    />
+                  </>
+                ) : (
+                  <>
+                    <Link href="/profile/edit">
+                      <Button size="1">Edit Profile</Button>
+                    </Link>
+                    <Link href="/posts/bookmarks">
+                      <Button size="1">Bookmarks</Button>
+                    </Link>
+                  </>
+                )}
+              </>
+            )}
           </Grid>
         </Flex>
       </Flex>

@@ -19,6 +19,7 @@ import { CldUploadWidget } from "next-cloudinary";
 import { CheckCircledIcon } from "@radix-ui/react-icons";
 import Logo from "@/app/_components/Logo";
 import Link from "next/link";
+import UploadProfile from "@/app/_components/UploadProfile";
 
 const years: { label: string; value: string }[] = [];
 for (let i = 2010; i > 1950; i--) {
@@ -110,30 +111,8 @@ const RegisterPage = () => {
           justify="center"
         >
           <Text>Profile Picture</Text>
-          <CldUploadWidget
-            uploadPreset="qxnmut04"
-            options={{
-              sources: ["local"],
-              multiple: false,
-              cropping: true,
-              croppingAspectRatio: 1,
-            }}
-            onUpload={(result, widget) => {
-              if (result.event !== "success") return;
-              const info = result.info as { public_id: string };
-              setPublicId(info.public_id);
-            }}
-          >
-            {({ open }) => (
-              <Button
-                type="button"
-                variant="soft"
-                onClick={() => open()}
-              >
-                Upload
-              </Button>
-            )}
-          </CldUploadWidget>
+
+          <UploadProfile passPublicId={(pId) => setPublicId(pId)} />
           {publicId && <CheckCircledIcon />}
         </Flex>
         <Flex justify="center">

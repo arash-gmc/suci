@@ -6,10 +6,11 @@ const schema = z.object({
   id: z.string(),
   name: z.string().min(5).max(255),
   email: z.string().email(),
-  username: z.string(),
-  city: z.string(),
-  brithYear: z.string(),
+  username: z.string().min(3).max(255),
+  city: z.string().max(255),
+  brithYear: z.string().max(255),
   gender: z.enum(["male", "female", "none"]),
+  publicId: z.string().nullable(),
 });
 
 type Body = z.infer<typeof schema>;
@@ -27,7 +28,21 @@ export async function PATCH(request: NextRequest) {
     city: rawCity,
     brithYear: year,
     email,
+    publicId,
   } = body;
+  const repeatetiveUsers = await prisma.user.findMany({
+    where: {
+      OR: [
+        { username, id: { not: id } },
+        { email, id: { not: id } },
+      ],
+    },
+  });
+  if (repeatetiveUsers.length > 0)
+    return NextResponse.json(
+      "This email or username is already exists. try another one.",
+      { status: 400 }
+    );
   const brithYear = year === "0" ? null : parseInt(year);
   const gender = rawGender === "none" ? null : rawGender;
   const city = rawCity === "" ? null : rawCity;
@@ -40,7 +55,8 @@ export async function PATCH(request: NextRequest) {
       city,
       brithYear,
       email,
+      imagePublicId: publicId,
     },
   });
-  return NextResponse.json(res);
+  return NextResponse.json({ ...res, hashedPassword: "" });
 }

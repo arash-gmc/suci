@@ -1,5 +1,8 @@
 "use client";
+import CalloutComponent from "@/app/_components/Callout";
 import SelectComponent from "@/app/_components/SelectComponent";
+import Spinner from "@/app/_components/Spinner";
+import UploadProfile from "@/app/_components/UploadProfile";
 import { Context } from "@/app/_providers/Context";
 import {
   Box,
@@ -12,7 +15,10 @@ import {
   Text,
   TextField,
 } from "@radix-ui/themes";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
+import { error } from "console";
+import { CldImage } from "next-cloudinary";
+import Link from "next/link";
 import React, { Ref, useContext, useEffect, useRef, useState } from "react";
 
 const years: { label: string; value: string }[] = [];
@@ -27,12 +33,20 @@ const page = () => {
   const usernameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const cityRef = useRef<HTMLInputElement>(null);
+  const calloutRef = useRef<HTMLDivElement>(null);
   const [brithYear, setBrithYear] = useState<string>("0");
   const [gender, setGender] = useState<string>("none");
+  const [publicId, setPublicId] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [calloutMessage, setCalloutMessage] = useState("");
+  const [calloutColor, setCalloutColor] = useState<"blue" | "red" | "green">(
+    "blue"
+  );
   useEffect(() => {
     if (viewer) {
       setGender(viewer?.gender || "none");
       setBrithYear(viewer?.brithYear ? viewer?.brithYear + "" : "0");
+      setPublicId(viewer.imagePublicId);
     }
   }, [viewer]);
   const textFields: {
@@ -45,6 +59,52 @@ const page = () => {
     { label: "Email", value: "email", ref: emailRef },
     { label: "City", value: "city", ref: cityRef },
   ];
+
+  const showError = (message: string) => {
+    setCalloutColor("red");
+    setCalloutMessage(message);
+    calloutRef.current?.scrollIntoView();
+  };
+  const updateUser = () => {
+    if (viewer) {
+      if (nameRef.current?.value === "")
+        return showError("name field must have a value");
+      if (usernameRef.current?.value === "")
+        return showError("username field must have a value");
+      if (emailRef.current?.value === "")
+        return showError("email field must have a value");
+
+      setLoading(true);
+      axios
+        .patch("/api/user/update", {
+          id: viewer.id,
+          name: nameRef.current?.value,
+          username: usernameRef.current?.value,
+          email: emailRef.current?.value,
+          city: cityRef.current?.value,
+          brithYear,
+          gender,
+          publicId,
+        })
+        .then((res) => {
+          setCalloutColor("green");
+          setCalloutMessage("Your changes has successfully applied.");
+          setLoading(false);
+          console.log(res.data);
+        })
+        .catch((error: AxiosError) => {
+          setCalloutColor("red");
+          if (typeof error.response?.data === "string") {
+            setCalloutMessage(error.response?.data);
+          } else {
+            setCalloutMessage(
+              "There is a problem with changing your profile. Change values and try aggain."
+            );
+          }
+          setLoading(false);
+        });
+    }
+  };
   if (!viewer) return null;
   return (
     <div>
@@ -98,28 +158,60 @@ const page = () => {
               </Flex>
             </Flex>
             <Flex
+              className="mt-4"
+              align="center"
+            >
+              <Flex
+                className="w-1/3"
+                align="center"
+              >
+                Profile Picture
+              </Flex>
+              <Flex
+                className="w-full"
+                align="center"
+                gap="5"
+              >
+                <UploadProfile passPublicId={(pId) => setPublicId(pId)} />
+                {publicId && (
+                  <CldImage
+                    src={publicId}
+                    width={68}
+                    height={68}
+                    crop="thumb"
+                    className="rounded-full"
+                    alt="profile-picture"
+                  />
+                )}
+              </Flex>
+            </Flex>
+            <Flex
               justify="center"
               px="3"
               my="5"
+              gap="4"
             >
+              <Link href={"/profile/" + viewer?.username}>
+                <Button>Back to Profile</Button>
+              </Link>
+              <Link href="/profile/edit/reset-password">
+                <Button>Reset Password</Button>
+              </Link>
               <Button
-                onClick={() => {
-                  axios
-                    .patch("/api/user/update", {
-                      id: viewer.id,
-                      name: nameRef.current?.value,
-                      username: usernameRef.current?.value,
-                      email: emailRef.current?.value,
-                      city: cityRef.current?.value,
-                      brithYear: brithYear,
-                      gender: gender,
-                    })
-                    .then((res) => console.log(res.data));
-                }}
+                onClick={updateUser}
+                disabled={loading}
               >
-                Update
+                Update {loading && <Spinner />}
               </Button>
             </Flex>
+            <Box ref={calloutRef}>
+              {!!calloutMessage && (
+                <CalloutComponent
+                  color={calloutColor}
+                  message={calloutMessage}
+                />
+              )}
+            </Box>
           </Flex>
         </Box>
       </Container>

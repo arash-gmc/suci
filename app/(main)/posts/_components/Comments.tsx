@@ -1,6 +1,6 @@
 "use client";
 import ProfilePicture from "@/app/_components/ProfilePicture";
-import { CommentAndAuthor } from "@/app/interfaces";
+import { CommentAndAuthor } from "@/app/(main)/interfaces";
 import { Box, Flex, Text } from "@radix-ui/themes";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
@@ -21,8 +21,7 @@ const Comments = ({
       gap="2"
       mx="6"
       my="5"
-      style={{ background: "var(--accent-3)" }}
-      className="rounded-xl"
+      className="rounded-xl bg-slate-100"
     >
       {comments.map((comment) => (
         <Flex

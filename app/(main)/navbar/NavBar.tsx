@@ -17,10 +17,7 @@ const NavBar = () => {
   const router = useRouter();
   return (
     <>
-      <nav
-        className="border-b-2 p-2 h-16 fixed w-full z-10 opacity-95 "
-        style={{ background: "var(--accent-3)" }}
-      >
+      <nav className="border-b-2 p-2 h-16 fixed w-full z-10 opacity-95 bg-slate-100 px-5 ">
         <Container>
           <Flex
             justify="between"

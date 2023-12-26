@@ -12,6 +12,7 @@ import MessageMini from "./MessageMini";
 import NotifMini from "./NotifMini";
 import { Context } from "../../_providers/Context";
 import Filters from "../filter/Filters";
+import { signOut } from "next-auth/react";
 
 interface Props {
   selected: Selected;
@@ -66,18 +67,23 @@ const MiniNavbarRight = ({
             Go to Profile
           </Link>
           <Link
-            href="#"
+            href="/profile/edit"
             onClick={() => close()}
           >
             Edit Profile
           </Link>
           <Link
-            href="#"
+            href="/posts/bookmarks"
             onClick={() => close()}
           >
             Bookmarks
           </Link>
-          <Link href="/api/auth/signout">Sign Out</Link>
+          <button
+            onClick={() => signOut()}
+            className="text-left"
+          >
+            Sign Out
+          </button>
         </Flex>
       </Flex>
     );

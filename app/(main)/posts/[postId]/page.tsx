@@ -1,12 +1,9 @@
-import ProfilePicture from "@/app/_components/ProfilePicture";
 import SinglePost from "@/app/(main)/posts/_components/SinglePost";
-import { PostAndRef } from "@/app/interfaces";
 import prisma from "@/prisma/client";
-import { Container, Flex, Text } from "@radix-ui/themes";
+import { Container } from "@radix-ui/themes";
 import { notFound } from "next/navigation";
 import React from "react";
 import Comments from "../_components/Comments";
-import UserFieldPopover from "@/app/_components/UserFieldPopover";
 import InteractedUsers from "./InteractedUsers";
 
 interface Props {

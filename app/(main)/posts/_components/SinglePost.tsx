@@ -40,7 +40,7 @@ const SinglePost = ({ rawPost }: Props) => {
         gap="3"
         mx="3"
         px="3"
-        className="border-b-2 pb-6"
+        className="border-b-2 py-2"
       >
         <Flex direction="column">
           <Link href={"/profile/" + author.username}>
