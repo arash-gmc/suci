@@ -5,6 +5,7 @@ import { useEffect, useRef } from "react";
 import { MessageDeliver } from "../interfaces";
 import { FaCheck, FaCheckDouble, FaRegClock } from "react-icons/fa6";
 import { BiCheckDouble } from "react-icons/bi";
+import DisplayDate from "./DisplayDate";
 interface Props {
   messages: MessageDeliver[];
   viewerId: string | null;
@@ -28,11 +29,24 @@ const ChatBox = ({ messages, viewerId, contactId }: Props) => {
         gap="3"
         p="5"
       >
-        {messages.map((message) => (
+        {messages.map((message, index) => (
           <Flex
             key={message.id}
-            justify={message.fromUserId === viewerId ? "end" : "start"}
+            align={message.fromUserId === viewerId ? "end" : "start"}
+            direction="column"
           >
+            {index < messages.length - 1 && (
+              <DisplayDate
+                curr={message.date}
+                prev={messages[index + 1].date}
+              />
+            )}
+            {index === messages.length - 1 && (
+              <DisplayDate
+                curr={message.date}
+                prev={new Date(0)}
+              />
+            )}
             <Box
               className={
                 (message.fromUserId === viewerId
@@ -47,22 +61,28 @@ const ChatBox = ({ messages, viewerId, contactId }: Props) => {
               >
                 <Text size={{ initial: "2", sm: "4" }}>{message.text}</Text>
 
-                {message.fromUserId === viewerId && (
-                  <Flex
-                    justify="end"
-                    className="text-sm text-slate-400"
-                  >
-                    {message.deliver ? (
-                      message.seen ? (
-                        <BiCheckDouble />
+                <Flex
+                  justify="end"
+                  className="text-sm text-slate-400"
+                  gap="2"
+                  align="center"
+                >
+                  {new Date(message.date).getHours()}:
+                  {new Date(message.date).getMinutes()}
+                  {message.fromUserId === viewerId && (
+                    <>
+                      {message.deliver ? (
+                        message.seen ? (
+                          <BiCheckDouble />
+                        ) : (
+                          <FaCheck />
+                        )
                       ) : (
-                        <FaCheck />
-                      )
-                    ) : (
-                      <FaRegClock />
-                    )}
-                  </Flex>
-                )}
+                        <FaRegClock />
+                      )}
+                    </>
+                  )}
+                </Flex>
               </Flex>
             </Box>
           </Flex>

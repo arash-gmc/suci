@@ -5,6 +5,8 @@ import PostFooter from "./PostFooter";
 import ProfilePicture from "../../../_components/ProfilePicture";
 import { FaRetweet } from "react-icons/fa6";
 import TextCompress from "@/app/_components/TextCompress";
+// @ts-ignore
+import TimeDiff from "js-time-diff";
 
 interface Props {
   rawPost: PostAndRef | PostAndAuthor;
@@ -82,7 +84,7 @@ const SinglePost = ({ rawPost, postDetail }: Props) => {
               color="gray"
               ml="1"
             >
-              1h
+              {TimeDiff(post.date)}
             </Text>
           </Flex>
           <Link href={"/posts/" + post.id}>

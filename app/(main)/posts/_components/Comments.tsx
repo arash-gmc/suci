@@ -2,10 +2,10 @@
 import ProfilePicture from "@/app/_components/ProfilePicture";
 import { CommentAndAuthor } from "@/app/(main)/interfaces";
 import { Box, Flex, Text } from "@radix-ui/themes";
-import axios from "axios";
 import React, { useEffect, useState } from "react";
-import QuickComment from "./QuickComment";
 import NewComment from "./NewComment";
+// @ts-ignore
+import TimeDiff from "js-time-diff";
 
 const Comments = ({
   postId,
@@ -36,14 +36,23 @@ const Comments = ({
             size="sm"
             user={comment.author}
           />
-          <Flex direction="column">
+          <Flex
+            direction="column"
+            gap="2"
+          >
             <Text
               className="font-bold"
               size="2"
             >
               {comment.author.name}
-            </Text>{" "}
+            </Text>
             <Text>{comment.text}</Text>
+            <Text
+              color="gray"
+              size="1"
+            >
+              {TimeDiff(comment.date)}
+            </Text>
           </Flex>
         </Flex>
       ))}
