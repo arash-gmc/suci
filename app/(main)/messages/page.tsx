@@ -9,6 +9,7 @@ import NewMessage from "./NewMessage";
 import axios from "axios";
 import TinyUsers from "./TinyContacts";
 import { ChatContactsInfo } from "../../api/message/users/route";
+import { MessageDeliver } from "../interfaces";
 
 interface Props {
   searchParams: { contactId: string };
@@ -19,7 +20,7 @@ const Messanger = ({ searchParams }: Props) => {
     searchParams.contactId || null
   );
   const { viewer } = useContext(Context);
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<MessageDeliver[]>([]);
   const [gotUsers, setGotUsers] = useState(false);
   const [contactsInfo, setContactsInfo] = useState<ChatContactsInfo[]>([]);
   const [refreshs, setRefreshs] = useState(0);
@@ -31,7 +32,11 @@ const Messanger = ({ searchParams }: Props) => {
         .get<Message[]>("/api/message/chat", {
           headers: { userId: viewer.id, contactId: selectedUserId },
         })
-        .then((res) => setMessages(res.data));
+        .then((res) =>
+          setMessages(
+            res.data.map((message) => ({ ...message, deliver: true }))
+          )
+        );
   }, [viewer, selectedUserId, refreshs]);
   useEffect(() => {
     if (viewer?.id)
@@ -116,13 +121,24 @@ const Messanger = ({ searchParams }: Props) => {
           viewerId={viewer.id}
           contactId={selectedUserId}
         />
-        <NewMessage
-          fromId={viewer.id}
-          toId={selectedUserId}
-          addMessage={(newMessage: Message) => {
-            setMessages((prev) => [newMessage, ...prev]);
-          }}
-        />
+        {selectedUserId && (
+          <NewMessage
+            fromId={viewer.id}
+            toId={selectedUserId}
+            addMessage={(newMessage: MessageDeliver) => {
+              setMessages((prev) => [newMessage, ...prev]);
+            }}
+            replaceMessage={(tempId, dbMessage) => {
+              setMessages((prev) =>
+                prev.map((message) =>
+                  message.id === tempId
+                    ? { ...dbMessage, deliver: true }
+                    : message
+                )
+              );
+            }}
+          />
+        )}
       </Flex>
     </Flex>
   );

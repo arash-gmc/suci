@@ -2,8 +2,11 @@
 import { Message } from "@prisma/client";
 import { Box, Flex, Text } from "@radix-ui/themes";
 import { useEffect, useRef } from "react";
+import { MessageDeliver } from "../interfaces";
+import { FaCheck, FaCheckDouble, FaRegClock } from "react-icons/fa6";
+import { BiCheckDouble } from "react-icons/bi";
 interface Props {
-  messages: Message[];
+  messages: MessageDeliver[];
   viewerId: string | null;
   contactId: string | null;
 }
@@ -22,7 +25,7 @@ const ChatBox = ({ messages, viewerId, contactId }: Props) => {
     >
       <Flex
         direction="column-reverse"
-        gap="2"
+        gap="3"
         p="5"
       >
         {messages.map((message) => (
@@ -38,7 +41,29 @@ const ChatBox = ({ messages, viewerId, contactId }: Props) => {
               }
               p="3"
             >
-              <Text size={{ initial: "2", sm: "3" }}>{message.text}</Text>
+              <Flex
+                direction="column"
+                gap="1"
+              >
+                <Text size={{ initial: "2", sm: "4" }}>{message.text}</Text>
+
+                {message.fromUserId === viewerId && (
+                  <Flex
+                    justify="end"
+                    className="text-sm text-slate-400"
+                  >
+                    {message.deliver ? (
+                      message.seen ? (
+                        <BiCheckDouble />
+                      ) : (
+                        <FaCheck />
+                      )
+                    ) : (
+                      <FaRegClock />
+                    )}
+                  </Flex>
+                )}
+              </Flex>
             </Box>
           </Flex>
         ))}

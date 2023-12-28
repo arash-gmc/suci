@@ -8,9 +8,10 @@ import TextCompress from "@/app/_components/TextCompress";
 
 interface Props {
   rawPost: PostAndRef | PostAndAuthor;
+  postDetail?: boolean;
 }
 
-const SinglePost = ({ rawPost }: Props) => {
+const SinglePost = ({ rawPost, postDetail }: Props) => {
   let post;
   if (rawPost.refId && "postRef" in rawPost) {
     post = rawPost.postRef;
@@ -86,7 +87,11 @@ const SinglePost = ({ rawPost }: Props) => {
           </Flex>
           <Link href={"/posts/" + post.id}>
             <Box width="100%">
-              <TextCompress compressSize={200}>{post.text}</TextCompress>
+              {postDetail ? (
+                <Text>{post.text}</Text>
+              ) : (
+                <TextCompress compressSize={200}>{post.text}</TextCompress>
+              )}
             </Box>
           </Link>
           <PostFooter postId={post.id} />

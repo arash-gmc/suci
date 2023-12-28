@@ -6,7 +6,7 @@ type Body = z.infer<typeof schema>;
 
 const schema = z.object({
   authorId: z.string().min(1).max(255),
-  text: z.string().min(1).max(300),
+  text: z.string().min(1).max(16000),
 });
 
 // Add a new post

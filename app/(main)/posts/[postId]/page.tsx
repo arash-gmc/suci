@@ -24,7 +24,10 @@ const PostDetails = async ({ params }: Props) => {
   if (!post) notFound();
   return (
     <Container mt={{ initial: "3", sm: "8" }}>
-      <SinglePost rawPost={post} />
+      <SinglePost
+        rawPost={post}
+        postDetail={true}
+      />
       <InteractedUsers
         postId={params.postId}
         comments={comments}

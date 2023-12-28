@@ -1,4 +1,11 @@
-import { Comment, Notification, Posts, Prisma, User } from "@prisma/client";
+import {
+  Comment,
+  Message,
+  Notification,
+  Posts,
+  Prisma,
+  User,
+} from "@prisma/client";
 import React from "react";
 
 export interface PostAndAuthor extends Posts {
@@ -23,4 +30,8 @@ export interface ButtonGroupProps {
   labelIcon?: React.ReactNode;
   value: string;
   onClick: () => void;
+}
+
+export interface MessageDeliver extends Message {
+  deliver: boolean;
 }
