@@ -67,6 +67,7 @@ const QuickComment = ({ postId, addCount, setStatus }: Props) => {
                   size="1"
                   onClick={() => sendComment()}
                   disabled={!commentText}
+                  variant="outline"
                 >
                   Send Comment
                 </Button>

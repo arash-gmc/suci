@@ -33,7 +33,7 @@ const UserFieldPopover = ({ label, title, users }: Props) => {
             mt="4"
           >
             <Dialog.Close>
-              <Button>Close</Button>
+              <Button variant="outline">Close</Button>
             </Dialog.Close>
           </Flex>
         </Dialog.Content>

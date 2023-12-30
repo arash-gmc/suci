@@ -85,7 +85,7 @@ const LoginForm = ({ searchParams }: Props) => {
         align="center"
         gap="2"
       >
-        Don't have an account?
+        Don&#39;t have an account?
         <Link href="/register">
           <Button
             size="2"

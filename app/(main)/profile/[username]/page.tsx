@@ -6,8 +6,8 @@ import { notFound } from "next/navigation";
 import React from "react";
 import ProfileHeader from "../ProfileHeader";
 import { User } from "@prisma/client";
-import { PostAndRef } from "@/app/interfaces";
 import PostsGrid from "@/app/(main)/posts/_components/PostsGrid";
+import { PostAndRef } from "../../interfaces";
 
 const page = async ({ params }: { params: { username: string } }) => {
   const user: User | null = await prisma.user.findUnique({

@@ -32,7 +32,7 @@ const AddContact = ({ setUser }: Props) => {
               hiddenUsersId={viewer?.id ? [viewer.id] : []}
             />
             <Popover.Close>
-              <Button>Close</Button>
+              <Button variant="outline">Close</Button>
             </Popover.Close>
           </Flex>
         </Flex>

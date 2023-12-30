@@ -1,5 +1,5 @@
 "use client";
-import { ButtonGroupProps } from "@/app/interfaces";
+import { ButtonGroupProps } from "@/app/(main)/interfaces";
 import { useState } from "react";
 
 interface Props {

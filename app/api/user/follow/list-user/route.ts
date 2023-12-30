@@ -31,6 +31,7 @@ export async function GET(request: NextRequest) {
       hashedPassword: "",
     }));
     return NextResponse.json(users);
+  } else {
+    return NextResponse.json(null);
   }
-  return null;
 }

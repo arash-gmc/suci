@@ -69,47 +69,51 @@ const Filters = () => {
   );
 
   useEffect(() => {
-    setWhere({
-      author: {
-        AND: [
-          {
-            brithYear:
-              selectedFilters.age && viewer?.brithYear
-                ? { gt: viewer?.brithYear - 5, lt: viewer?.brithYear + 5 }
+    if (viewer)
+      setWhere({
+        author: {
+          AND: [
+            {
+              brithYear:
+                selectedFilters.age && viewer?.brithYear
+                  ? { gt: viewer?.brithYear - 5, lt: viewer?.brithYear + 5 }
+                  : undefined,
+            },
+            {
+              city:
+                selectedFilters.city && viewer?.city ? viewer.city : undefined,
+            },
+            {
+              gender: selectedFilters.boys
+                ? "male"
+                : selectedFilters.girls
+                ? "female"
                 : undefined,
-          },
-          {
-            city:
-              selectedFilters.city && viewer?.city ? viewer.city : undefined,
-          },
-          {
-            gender: selectedFilters.boys
-              ? "male"
-              : selectedFilters.girls
-              ? "female"
-              : undefined,
-          },
-          {
-            id:
-              selectedList === "all"
-                ? undefined
-                : {
-                    in:
-                      selectedList === "following"
-                        ? followings
-                        : selectedList === "follower"
-                        ? followers
-                        : fetchedLists.find((list) => list.id === selectedList)
-                        ? fetchedLists.find((list) => list.id === selectedList)
-                            ?.members
-                        : undefined,
-                  },
-          },
-        ],
-      },
-      refId: selectedFilters.reposts ? undefined : null,
-    });
-  }, [selectedFilters, selectedList]);
+            },
+            {
+              id:
+                selectedList === "all"
+                  ? undefined
+                  : {
+                      in:
+                        selectedList === "following"
+                          ? followings
+                          : selectedList === "follower"
+                          ? followers
+                          : fetchedLists.find(
+                              (list) => list.id === selectedList
+                            )
+                          ? fetchedLists.find(
+                              (list) => list.id === selectedList
+                            )?.members
+                          : undefined,
+                    },
+            },
+          ],
+        },
+        refId: selectedFilters.reposts ? undefined : null,
+      });
+  }, [selectedFilters, selectedList, viewer]);
 
   const toggleStatus = (filter: filters) =>
     filter === "all"

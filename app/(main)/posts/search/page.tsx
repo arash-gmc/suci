@@ -18,7 +18,8 @@ const page = async ({ searchParams }: Props) => {
         size="5"
         m="3"
       >
-        Search for <strong>"{searchParams.searched}"</strong> in all posts.
+        Search for <strong>&#34;{searchParams.searched}&#34;</strong> in all
+        posts.
       </Text>
       <PostsGrid
         posts={posts}

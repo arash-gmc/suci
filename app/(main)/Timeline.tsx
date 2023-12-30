@@ -16,15 +16,16 @@ const TimeLine = () => {
 
   useEffect(() => {
     setLoading(true);
-    axios
-      .post<PostAndRef[]>("/api/post/get-all", where)
-      .then((res) => {
-        setPosts(res.data);
-      })
-      .catch((e) =>
-        console.log("there is a problem with getting posts from api.", e)
-      )
-      .finally(() => setLoading(false));
+    if (where)
+      axios
+        .post<PostAndRef[]>("/api/post/get-all", where)
+        .then((res) => {
+          setPosts(res.data);
+        })
+        .catch((e) =>
+          console.log("there is a problem with getting posts from api.", e)
+        )
+        .finally(() => setLoading(false));
   }, [where]);
   return (
     <Flex gap="3">

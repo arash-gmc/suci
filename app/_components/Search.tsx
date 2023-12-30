@@ -108,7 +108,7 @@ const Search = ({
                 if (onSearchPosts) onSearchPosts();
               }}
             >
-              Search for "{searchText}" in posts
+              Search for &#34;{searchText}&#34; in posts
             </Text>
           )}
         </Flex>

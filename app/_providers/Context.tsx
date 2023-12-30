@@ -20,9 +20,11 @@ const ContextProvider = ({ children, session }: Props) => {
   const [where, setWhere] = useState<Prisma.PostsWhereInput>({});
   useEffect(() => {
     if (session) {
+      const controller = new AbortController();
       axios
         .get<User>("/api/user/getOne", {
           headers: { userId: session?.user.id },
+          signal: controller.signal,
         })
         .then((res) => setViewer(res.data));
     }

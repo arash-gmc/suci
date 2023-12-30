@@ -27,7 +27,7 @@ for (let i = 2010; i > 1950; i--) {
   years.push({ label: i.toString(), value: i.toString() });
 }
 
-const page = () => {
+const EditProfile = () => {
   const { viewer } = useContext(Context);
   const nameRef = useRef<HTMLInputElement>(null);
   const usernameRef = useRef<HTMLInputElement>(null);
@@ -228,4 +228,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default EditProfile;

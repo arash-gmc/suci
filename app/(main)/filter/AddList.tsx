@@ -26,7 +26,7 @@ const AddList = ({ add }: Props) => {
   return (
     <Dialog.Root>
       <Dialog.Trigger>
-        <Button>
+        <Button variant="outline">
           <PlusIcon />
           Add List
         </Button>
@@ -109,6 +109,7 @@ const AddList = ({ add }: Props) => {
                 add(res.data);
                 setMembers([]);
               }}
+              variant="outline"
             >
               Save
             </Button>

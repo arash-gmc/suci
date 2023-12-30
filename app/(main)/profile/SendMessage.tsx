@@ -29,7 +29,7 @@ const SendMessage = ({ profileId, profileName }: Props) => {
   return (
     <Popover.Root>
       <Popover.Trigger>
-        <Button>Message</Button>
+        <Button style={{ backgroundColor: "var(--accent-9)" }}>Message</Button>
       </Popover.Trigger>
       <Popover.Content style={{ width: 360 }}>
         <Flex gap="3">

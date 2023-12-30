@@ -15,7 +15,7 @@ import Link from "next/link";
 import React, { Ref, useContext, useRef, useState } from "react";
 import { BiArrowBack } from "react-icons/bi";
 
-const page = () => {
+const ResetPassword = () => {
   const oldPassword = useRef<HTMLInputElement>(null);
   const newPassword1 = useRef<HTMLInputElement>(null);
   const newPassword2 = useRef<HTMLInputElement>(null);
@@ -125,4 +125,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default ResetPassword;

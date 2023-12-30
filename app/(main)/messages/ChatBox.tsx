@@ -1,5 +1,4 @@
 "use client";
-import { Message } from "@prisma/client";
 import { Box, Flex, Text } from "@radix-ui/themes";
 import { useEffect, useRef } from "react";
 import { MessageDeliver } from "../interfaces";
