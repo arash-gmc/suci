@@ -6,6 +6,7 @@ import React, { useEffect, useState } from "react";
 import NewComment from "./NewComment";
 // @ts-ignore
 import TimeDiff from "js-time-diff";
+import CommentDeletion from "./CommentDeletion";
 
 const Comments = ({
   postId,
@@ -47,12 +48,26 @@ const Comments = ({
               {comment.author.name}
             </Text>
             <Text>{comment.text}</Text>
-            <Text
-              color="gray"
-              size="1"
+            <Flex
+              gap="3"
+              align="center"
             >
-              {TimeDiff(comment.date)}
-            </Text>
+              <Text
+                color="gray"
+                size="1"
+              >
+                {TimeDiff(comment.date)}
+              </Text>
+              <CommentDeletion
+                commentId={comment.id}
+                authorId={comment.authorId}
+                deleteComment={() => {
+                  setComments((prev) =>
+                    prev.filter((cmnt) => cmnt.id !== comment.id)
+                  );
+                }}
+              />
+            </Flex>
           </Flex>
         </Flex>
       ))}

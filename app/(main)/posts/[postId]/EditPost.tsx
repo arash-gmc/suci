@@ -22,6 +22,7 @@ const EditPost = ({ authorId, initialText, postId }: Props) => {
     if (initialText) setEditedText(initialText);
   }, [initialText]);
   const applyEdit = async () => {
+    if (initialText === editedText) return;
     await axios.patch("/api/post/edit", { postId, newText: editedText });
     router.refresh();
   };
