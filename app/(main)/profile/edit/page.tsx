@@ -1,5 +1,6 @@
 "use client";
 import CalloutComponent from "@/app/_components/Callout";
+import DeletionAlert from "@/app/_components/DeletionAlert";
 import SelectComponent from "@/app/_components/SelectComponent";
 import Spinner from "@/app/_components/Spinner";
 import UploadProfile from "@/app/_components/UploadProfile";
@@ -16,9 +17,9 @@ import {
   TextField,
 } from "@radix-ui/themes";
 import axios, { AxiosError } from "axios";
-import { error } from "console";
 import { CldImage } from "next-cloudinary";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { Ref, useContext, useEffect, useRef, useState } from "react";
 
 const years: { label: string; value: string }[] = [];
@@ -29,6 +30,7 @@ for (let i = 2010; i > 1950; i--) {
 
 const EditProfile = () => {
   const { viewer } = useContext(Context);
+  const router = useRouter();
   const nameRef = useRef<HTMLInputElement>(null);
   const usernameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
@@ -194,24 +196,45 @@ const EditProfile = () => {
                 )}
               </Flex>
             </Flex>
-            <Flex
-              justify="center"
-              px="3"
-              my="5"
-              gap="4"
-            >
-              <Link href={"/profile/" + viewer?.username}>
-                <Button>Back to Profile</Button>
-              </Link>
-              <Link href="/profile/edit/reset-password">
-                <Button>Reset Password</Button>
-              </Link>
-              <Button
-                onClick={updateUser}
-                disabled={loading}
+            <Flex>
+              <Flex className="w-1/3"></Flex>
+              <Flex
+                direction="column"
+                align="start"
+                className="w-full"
               >
-                Apply {loading && <Spinner />}
-              </Button>
+                <Flex
+                  className="w-full"
+                  my="5"
+                  gap="4"
+                >
+                  <Link href={"/profile/" + viewer?.username}>
+                    <Button>Back to Profile</Button>
+                  </Link>
+                  <Link href="/profile/edit/reset-password">
+                    <Button>Reset Password</Button>
+                  </Link>
+                  <Button
+                    onClick={updateUser}
+                    disabled={loading}
+                  >
+                    Apply {loading && <Spinner />}
+                  </Button>
+                </Flex>
+                <Flex>
+                  <DeletionAlert
+                    trigger={<Button color="red">Delete Your Account</Button>}
+                    action={() => {
+                      axios
+                        .delete("/api/user/delete", {
+                          headers: { userId: viewer.id },
+                        })
+                        .then((res) => router.push("/login"));
+                    }}
+                    label="your profile"
+                  />
+                </Flex>
+              </Flex>
             </Flex>
             <Box ref={calloutRef}>
               {!!calloutMessage && (
