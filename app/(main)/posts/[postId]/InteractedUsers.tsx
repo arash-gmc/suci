@@ -34,33 +34,42 @@ const InteractedUsers = async ({
   const reposters = repostRecords.map((record) => record.author);
   return (
     <Flex
-      justify="start"
-      gap="4"
+      justify="between"
       mt="3"
-      ml="8"
-      className="text-gray-600 text-sm"
+      mx="8"
+      className=" text-sm"
     >
-      {likers.length > 0 && (
-        <UserFieldPopover
-          label={likers.length + " likes"}
-          users={likers}
-          title="People who liked this post."
+      <Flex
+        gap="4"
+        className="text-gray-600"
+      >
+        {likers.length > 0 && (
+          <UserFieldPopover
+            label={likers.length + " likes"}
+            users={likers}
+            title="People who liked this post."
+          />
+        )}
+        {commenters.length > 0 && <Text>{comments.length + " comments"}</Text>}
+        {reposters.length > 0 && (
+          <UserFieldPopover
+            label={reposters.length + " reposts"}
+            users={reposters}
+            title="People who reposted this post."
+          />
+        )}
+      </Flex>
+      <Flex gap="4">
+        <EditPost
+          authorId={authorId}
+          initialText={postText}
+          postId={postId}
         />
-      )}
-      {commenters.length > 0 && <Text>{comments.length + " comments"}</Text>}
-      {reposters.length > 0 && (
-        <UserFieldPopover
-          label={reposters.length + " reposts"}
-          users={reposters}
-          title="People who reposted this post."
+        <DeletionAlert
+          authorId={authorId}
+          postId={postId}
         />
-      )}
-
-      <DeletionAlert authorId={authorId} />
-      <EditPost
-        authorId={authorId}
-        initialText={postText}
-      />
+      </Flex>
     </Flex>
   );
 };

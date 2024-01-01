@@ -13,6 +13,7 @@ model Posts {
   date         DateTime       @default(now())
   authorId     String
   author       User           @relation(fields: [authorId], references: [id])
+  isEdited     Boolean        @default(false)
   refId        String?
   postRef      Posts?         @relation("repostRef", fields: [refId], references: [id])
   referedPosts Posts[]        @relation("repostRef")

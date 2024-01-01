@@ -1,15 +1,27 @@
 "use client";
 import { Context } from "@/app/_providers/Context";
 import { AlertDialog, Button, Flex } from "@radix-ui/themes";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 import React, { useContext } from "react";
 
-const DeletionAlert = ({ authorId }: { authorId: string }) => {
+interface Props {
+  authorId: string;
+  postId: string;
+}
+
+const DeletionAlert = ({ authorId, postId }: Props) => {
   const { viewer } = useContext(Context);
+  const router = useRouter();
   if (!viewer || viewer.id !== authorId) return null;
+  const deletePost = async () => {
+    await axios.delete("/api/post/delete", { headers: { postId } });
+    router.back();
+  };
   return (
     <AlertDialog.Root>
       <AlertDialog.Trigger>
-        <button>Delete</button>
+        <button className="font-bold text-red-600">Delete</button>
       </AlertDialog.Trigger>
       <AlertDialog.Content style={{ maxWidth: 450 }}>
         <AlertDialog.Title>Revoke access</AlertDialog.Title>
@@ -34,6 +46,7 @@ const DeletionAlert = ({ authorId }: { authorId: string }) => {
             <Button
               variant="solid"
               color="red"
+              onClick={() => deletePost()}
             >
               Delete
             </Button>

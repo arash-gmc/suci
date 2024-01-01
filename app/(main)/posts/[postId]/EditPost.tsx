@@ -2,27 +2,34 @@
 import ProfilePicture from "@/app/_components/ProfilePicture";
 import { Context } from "@/app/_providers/Context";
 import { Popover, Flex, Box, TextArea, Button } from "@radix-ui/themes";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 import React, { useContext, useEffect, useState } from "react";
 import { FaRegComment } from "react-icons/fa6";
 
 interface Props {
   initialText: string | null;
   authorId: string;
+  postId: string;
 }
 
-const EditPost = ({ authorId, initialText }: Props) => {
+const EditPost = ({ authorId, initialText, postId }: Props) => {
   const { viewer } = useContext(Context);
   const [editedText, setEditedText] = useState("");
+  const router = useRouter();
 
   useEffect(() => {
     if (initialText) setEditedText(initialText);
   }, [initialText]);
-  const applyEdit = () => {};
+  const applyEdit = async () => {
+    await axios.patch("/api/post/edit", { postId, newText: editedText });
+    router.refresh();
+  };
   if (!viewer || viewer.id !== authorId) return null;
   return (
     <Popover.Root>
       <Popover.Trigger>
-        <button>Edit</button>
+        <button className="font-bold text-blue-600">Edit</button>
       </Popover.Trigger>
       <Popover.Content style={{ width: 360 }}>
         <Flex gap="3">

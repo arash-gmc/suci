@@ -1,4 +1,4 @@
-import { Box, Container, Flex, Text } from "@radix-ui/themes";
+import { Badge, Box, Container, Flex, Text } from "@radix-ui/themes";
 import Link from "next/link";
 import { PostAndAuthor, PostAndRef } from "../../interfaces";
 import PostFooter from "./PostFooter";
@@ -61,31 +61,36 @@ const SinglePost = ({ rawPost, postDetail }: Props) => {
           className="max-h-26 overflow-hidden"
           width="100%"
         >
-          <Flex
-            align="baseline"
-            gap="2"
-          >
-            <Link href={"/profile/" + author.username}>
+          <Flex justify="between">
+            <Flex
+              align="baseline"
+              gap="2"
+            >
+              <Link href={"/profile/" + author.username}>
+                <Text
+                  size="4"
+                  className="font-bold whitespace-nowrap"
+                >
+                  {author.name}
+                </Text>
+              </Link>
               <Text
-                size="4"
-                className="font-bold whitespace-nowrap"
+                size="1"
+                color="gray"
               >
-                {author.name}
+                @{author.username}
               </Text>
-            </Link>
-            <Text
-              size="1"
-              color="gray"
-            >
-              @{author.username}
-            </Text>
-            <Text
-              size="1"
-              color="gray"
-              ml="1"
-            >
-              {TimeDiff(post.date)}
-            </Text>
+            </Flex>
+            <Flex align="center">
+              {post.isEdited && <Badge>Edited</Badge>}
+              <Text
+                size="1"
+                color="gray"
+                ml="1"
+              >
+                {TimeDiff(post.date)}
+              </Text>
+            </Flex>
           </Flex>
           <Link href={"/posts/" + post.id}>
             <Box width="100%">
