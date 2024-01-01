@@ -3,13 +3,22 @@ import { CommentAndAuthor } from "@/app/(main)/interfaces";
 import prisma from "@/prisma/client";
 import { Flex, Text } from "@radix-ui/themes";
 import React from "react";
+import DeletionAlert from "./DeletionAlert";
+import EditPost from "./EditPost";
 
 interface Props {
   postId: string;
   comments: CommentAndAuthor[];
+  authorId: string;
+  postText: string | null;
 }
 
-const InteractedUsers = async ({ postId, comments }: Props) => {
+const InteractedUsers = async ({
+  postId,
+  comments,
+  authorId,
+  postText,
+}: Props) => {
   const likeRecords = await prisma.postsActions.findMany({
     where: { actionType: "like", postId: postId },
     include: { user: true },
@@ -46,6 +55,12 @@ const InteractedUsers = async ({ postId, comments }: Props) => {
           title="People who reposted this post."
         />
       )}
+
+      <DeletionAlert authorId={authorId} />
+      <EditPost
+        authorId={authorId}
+        initialText={postText}
+      />
     </Flex>
   );
 };

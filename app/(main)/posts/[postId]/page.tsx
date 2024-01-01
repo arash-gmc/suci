@@ -30,7 +30,9 @@ const PostDetails = async ({ params }: Props) => {
       />
       <InteractedUsers
         postId={params.postId}
+        authorId={post.authorId}
         comments={comments}
+        postText={post.text}
       />
       <Comments
         postId={params.postId}
