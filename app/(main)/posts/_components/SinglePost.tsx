@@ -81,7 +81,10 @@ const SinglePost = ({ rawPost, postDetail }: Props) => {
                 @{author.username}
               </Text>
             </Flex>
-            <Flex align="center">
+            <Flex
+              align="center"
+              mx={{ initial: "1", sm: "5" }}
+            >
               {post.isEdited && <Badge>Edited</Badge>}
               <Text
                 size="1"

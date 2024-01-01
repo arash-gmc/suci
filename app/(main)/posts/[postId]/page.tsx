@@ -4,7 +4,7 @@ import { Container } from "@radix-ui/themes";
 import { notFound } from "next/navigation";
 import React from "react";
 import Comments from "../_components/Comments";
-import InteractedUsers from "./InteractedUsers";
+import PostBottom from "./PostBottom";
 
 interface Props {
   params: { postId: string };
@@ -28,7 +28,7 @@ const PostDetails = async ({ params }: Props) => {
         rawPost={post}
         postDetail={true}
       />
-      <InteractedUsers
+      <PostBottom
         postId={params.postId}
         authorId={post.authorId}
         comments={comments}

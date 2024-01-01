@@ -13,12 +13,7 @@ interface Props {
   postText: string | null;
 }
 
-const InteractedUsers = async ({
-  postId,
-  comments,
-  authorId,
-  postText,
-}: Props) => {
+const PostBottom = async ({ postId, comments, authorId, postText }: Props) => {
   const likeRecords = await prisma.postsActions.findMany({
     where: { actionType: "like", postId: postId },
     include: { user: true },
@@ -74,4 +69,4 @@ const InteractedUsers = async ({
   );
 };
 
-export default InteractedUsers;
+export default PostBottom;

@@ -7,6 +7,7 @@ import {
   Callout,
   Container,
   Flex,
+  Heading,
   Text,
   TextField,
 } from "@radix-ui/themes";
@@ -42,7 +43,7 @@ const ResetPassword = () => {
       !newPassword1.current?.value ||
       !newPassword2.current?.value
     ) {
-      setMessage("Frist fill all fields.");
+      setMessage("One or some of the fields are empty.");
       setCalloutColor("red");
       return;
     }
@@ -84,8 +85,8 @@ const ResetPassword = () => {
         gap="4"
         px="4"
         className="md:w-2/3 min-w-fit"
-        mt="8"
       >
+        <Heading my="3">Reset Password</Heading>
         {fields.map((field) => (
           <Flex key={field.value}>
             <Text className="w-1/2">{field.label}</Text>
@@ -100,13 +101,8 @@ const ResetPassword = () => {
         <Flex
           gap="5"
           my="5"
-          justify={{ initial: "center", sm: "end" }}
+          justify="end"
         >
-          <Link href="/profile/edit">
-            <Button>
-              <BiArrowBack /> Edit Profile
-            </Button>
-          </Link>
           <Button
             onClick={() => resetPassword()}
             disabled={loading}
