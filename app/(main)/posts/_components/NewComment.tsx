@@ -31,7 +31,7 @@ const NewComment = ({ setComments: setComments, postId }: Props) => {
     return (
       <Flex
         mx={{ initial: "2", sm: "5" }}
-        mb="5"
+        my="4"
         gap={{ initial: "2", sm: "5" }}
         align="center"
       >

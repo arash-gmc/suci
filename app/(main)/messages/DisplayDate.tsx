@@ -43,7 +43,7 @@ const DisplayDate = ({ curr, prev }: Props) => {
         {current.getDate()} {months[current.getMonth()]}
       </span>
       {current.getFullYear() !== new Date().getFullYear() ? (
-        <span>current.getFullYear()</span>
+        <span>{current.getFullYear()}</span>
       ) : null}
     </Flex>
   );

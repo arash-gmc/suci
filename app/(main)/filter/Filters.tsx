@@ -19,12 +19,14 @@ const Filters = () => {
     { label: "All", value: "all" },
     { label: "Boys", value: "boys" },
     { label: "Girls", value: "girls" },
+    ...(viewer?.brithYear
+      ? [{ label: "Around My Age", value: "age" as filters }]
+      : []),
+    ...(viewer?.city
+      ? [{ label: "Live in " + viewer.city, value: "city" as filters }]
+      : []),
+    { label: "Include Reposts", value: "reposts" },
   ];
-
-  if (viewer?.brithYear) options.push({ label: "Around My Age", value: "age" });
-  if (viewer?.city)
-    options.push({ label: "Live in " + viewer.city, value: "city" });
-  options.push({ label: "Include Reposts", value: "reposts" });
 
   const [selectedFilters, setSelectedFilters] = useState<Statuses>({
     all: true,
@@ -141,7 +143,6 @@ const Filters = () => {
           all: false,
         }));
 
-  if (!viewer) return null;
   return (
     <Flex
       direction="column"
@@ -152,11 +153,13 @@ const Filters = () => {
         status={selectedFilters}
         toggleStatus={toggleStatus}
       />
-      <SingleSelectingButtons
-        options={listsOptions}
-        selectedValue={selectedList}
-        toggleSelected={(selected) => setSelectedList(selected)}
-      />
+      {viewer && (
+        <SingleSelectingButtons
+          options={listsOptions}
+          selectedValue={selectedList}
+          toggleSelected={(selected) => setSelectedList(selected)}
+        />
+      )}
       <AddList add={(list) => setFetchedLists((prev) => [...prev, list])} />
     </Flex>
   );

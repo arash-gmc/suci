@@ -36,7 +36,7 @@ const NewPost = ({ setPosts }: Props) => {
           placeholder="What's up?"
           onChange={(e) => setPostText(e.currentTarget.value)}
           rows={2}
-          className="w-full p-2 placeholder:text-center"
+          className="w-full"
           value={postText}
         />
         <Button

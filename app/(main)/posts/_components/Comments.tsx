@@ -20,7 +20,7 @@ const Comments = ({
     <Flex
       direction="column"
       gap="2"
-      mx="6"
+      mx={{ initial: "2", sm: "6" }}
       my="5"
       className="rounded-xl bg-slate-100"
     >
@@ -71,15 +71,11 @@ const Comments = ({
           </Flex>
         </Flex>
       ))}
-      <Box
-        mt="4"
-        px={{ initial: "1", sm: "3" }}
-      >
-        <NewComment
-          postId={postId}
-          setComments={setComments}
-        />
-      </Box>
+
+      <NewComment
+        postId={postId}
+        setComments={setComments}
+      />
     </Flex>
   );
 };

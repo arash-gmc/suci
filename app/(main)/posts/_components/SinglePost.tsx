@@ -5,6 +5,7 @@ import PostFooter from "./PostFooter";
 import ProfilePicture from "../../../_components/ProfilePicture";
 import { FaRetweet } from "react-icons/fa6";
 import TextCompress from "@/app/_components/TextCompress";
+import { HiDotsHorizontal, HiDotsVertical } from "react-icons/hi";
 // @ts-ignore
 import TimeDiff from "js-time-diff";
 
@@ -93,17 +94,25 @@ const SinglePost = ({ rawPost, postDetail }: Props) => {
               >
                 {TimeDiff(post.date)}
               </Text>
+              <Text
+                color="gray"
+                ml="3"
+              >
+                <Link href={"/posts/" + post.id}>
+                  <HiDotsHorizontal />
+                </Link>
+              </Text>
             </Flex>
           </Flex>
-          <Link href={"/posts/" + post.id}>
-            <Box width="100%">
-              {postDetail ? (
-                <Text>{post.text}</Text>
-              ) : (
-                <TextCompress compressSize={200}>{post.text}</TextCompress>
-              )}
-            </Box>
-          </Link>
+
+          <Box width="100%">
+            {postDetail ? (
+              <Text>{post.text}</Text>
+            ) : (
+              <TextCompress compressSize={200}>{post.text}</TextCompress>
+            )}
+          </Box>
+
           <PostFooter postId={post.id} />
         </Flex>
       </Flex>
