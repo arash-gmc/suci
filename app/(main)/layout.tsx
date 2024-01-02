@@ -33,15 +33,17 @@ export default async function RootLayout({
           radius="large"
           scaling="105%"
         >
-          <ContextProvider session={session}>
-            <Box display={{ initial: "none", sm: "block" }}>
-              <NavBar />
-            </Box>
-            <Box display={{ initial: "block", sm: "none" }}>
-              <MiniNavbar />
-            </Box>
-            {children}
-          </ContextProvider>
+          <Session>
+            <ContextProvider>
+              <Box display={{ initial: "none", sm: "block" }}>
+                <NavBar />
+              </Box>
+              <Box display={{ initial: "block", sm: "none" }}>
+                <MiniNavbar />
+              </Box>
+              {children}
+            </ContextProvider>
+          </Session>
         </Theme>
       </body>
     </html>

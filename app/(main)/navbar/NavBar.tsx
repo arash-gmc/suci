@@ -36,66 +36,77 @@ const NavBar = () => {
                 <>
                   <MessageMenu userId={viewer.id} />
                   <NotificationsMenu userId={viewer.id} />
-                </>
-              )}
-              <Search
-                onUserClick={(user) => router.push("/profile/" + user.username)}
-                searchPosts={true}
-              />
-              {viewer && (
-                <Flex
-                  onClick={() => setUserMenu((prev) => !prev)}
-                  className="relative cursor-pointer"
-                >
-                  <ProfilePicture
-                    size="sm"
-                    user={viewer}
+
+                  <Search
+                    onUserClick={(user) =>
+                      router.push("/profile/" + user.username)
+                    }
+                    searchPosts={true}
                   />
+
                   <Flex
-                    direction="column"
-                    display={userMenu ? "flex" : "none"}
-                    p="2"
-                    className="absolute top-12 -left-40 w-48 bg-slate-50 rounded-md text-md min-w-max font-bold"
+                    onClick={() => setUserMenu((prev) => !prev)}
+                    className="relative cursor-pointer"
                   >
+                    <ProfilePicture
+                      size="sm"
+                      user={viewer}
+                    />
                     <Flex
                       direction="column"
-                      className="border-b-2 py-2"
+                      display={userMenu ? "flex" : "none"}
+                      p="2"
+                      className="absolute top-12 -left-40 w-48 bg-slate-50 rounded-md text-md min-w-max font-bold"
                     >
-                      <Text>{viewer.name}</Text>
-                      <Text
-                        size="2"
-                        color="gray"
-                        className="font-normal"
+                      <Flex
+                        direction="column"
+                        className="border-b-2 py-2"
                       >
-                        @{viewer.username}
-                      </Text>
+                        <Text>{viewer.name}</Text>
+                        <Text
+                          size="2"
+                          color="gray"
+                          className="font-normal"
+                        >
+                          @{viewer.username}
+                        </Text>
+                      </Flex>
+                      <Link
+                        className="border-b-2 py-2"
+                        href={"/profile/" + viewer.username}
+                      >
+                        Profile
+                      </Link>
+                      <Link
+                        className="border-b-2 py-2"
+                        href="/posts/bookmarks"
+                      >
+                        Bookmarks
+                      </Link>
+                      <button
+                        className="text-left py-2"
+                        onClick={() => signOut()}
+                      >
+                        Sign Out
+                      </button>
                     </Flex>
-                    <Link
-                      className="border-b-2 py-2"
-                      href={"/profile/" + viewer.username}
-                    >
-                      Profile
-                    </Link>
-                    <Link
-                      className="border-b-2 py-2"
-                      href="/posts/bookmarks"
-                    >
-                      Bookmarks
-                    </Link>
-                    <button
-                      className="text-left py-2"
-                      onClick={() => signOut()}
-                    >
-                      Sign Out
-                    </button>
                   </Flex>
-                </Flex>
+                </>
               )}
-              {!viewer && (
-                <>
+              {viewer === null && (
+                <Flex
+                  align="center"
+                  gap="5"
+                >
+                  <Search
+                    onUserClick={(user) =>
+                      router.push("/profile/" + user.username)
+                    }
+                    searchPosts={true}
+                  />
                   <Link href="/api/auth/signin">SignIn</Link>
                   <Link href="/register">Register</Link>
-                </>
+                </Flex>
               )}
             </Flex>
           </Flex>

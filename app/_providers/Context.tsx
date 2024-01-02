@@ -2,10 +2,11 @@
 import { Prisma, User } from "@prisma/client";
 import axios from "axios";
 import { Session } from "next-auth";
+import { useSession } from "next-auth/react";
 import React, { ReactNode, useEffect, useState } from "react";
 
 interface Context {
-  viewer: User | null;
+  viewer: User | null | undefined;
   where: Prisma.PostsWhereInput;
   setWhere: React.Dispatch<React.SetStateAction<Prisma.PostsWhereInput>>;
 }
@@ -13,22 +14,23 @@ interface Context {
 export const Context = React.createContext<Context>({} as Context);
 interface Props {
   children: ReactNode;
-  session: Session | null;
 }
-const ContextProvider = ({ children, session }: Props) => {
-  const [viewer, setViewer] = useState<User | null>(null);
+const ContextProvider = ({ children }: Props) => {
+  const { data: rawUser, status } = useSession();
+  const [viewer, setViewer] = useState<User | null | undefined>(undefined);
   const [where, setWhere] = useState<Prisma.PostsWhereInput>({});
   useEffect(() => {
-    if (session) {
+    if (status === "authenticated") {
       const controller = new AbortController();
       axios
         .get<User>("/api/user/getOne", {
-          headers: { userId: session?.user.id },
+          headers: { userId: rawUser.user.id },
           signal: controller.signal,
         })
         .then((res) => setViewer(res.data));
     }
-  }, [session]);
+    if (status === "unauthenticated") setViewer(null);
+  }, [status]);
   return (
     <Context.Provider value={{ viewer, where, setWhere }}>
       {children}

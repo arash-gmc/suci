@@ -136,7 +136,7 @@ const MiniNavbar = () => {
                 </Flex>
               </>
             )}
-            {!viewer && (
+            {viewer === null && (
               <Flex
                 align="center"
                 my="5"

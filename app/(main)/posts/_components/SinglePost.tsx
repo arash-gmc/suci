@@ -85,7 +85,7 @@ const SinglePost = ({ rawPost, postDetail }: Props) => {
               align="center"
               mx={{ initial: "1", sm: "5" }}
             >
-              {post.isEdited && <Badge>Edited</Badge>}
+              {post.isEdited && <Badge variant="soft">Edited</Badge>}
               <Text
                 size="1"
                 color="gray"
