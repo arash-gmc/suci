@@ -16,7 +16,7 @@ const TimeLine = () => {
   const [isLoading, setLoading] = useState<boolean>(true);
   const [page, setPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
-  const pageSize = 20;
+  const pageSize = 10;
   const { where } = useContext(Context);
 
   useEffect(() => {

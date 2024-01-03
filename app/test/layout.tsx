@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import "./globals.css";
 import "@radix-ui/themes/styles.css";
 import { Theme } from "@radix-ui/themes";
 import ContextProvider from "../_providers/Context";
@@ -18,20 +19,9 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getServerSession(nextauthConfig);
-
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <Theme
-          accentColor="purple"
-          grayColor="gray"
-          radius="large"
-          scaling="105%"
-        >
-          <ContextProvider session={session}>{children}</ContextProvider>
-        </Theme>
-      </body>
+      <body className={inter.className}>{children}</body>
     </html>
   );
 }
