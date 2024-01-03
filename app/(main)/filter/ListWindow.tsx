@@ -1,6 +1,5 @@
-import { PlusIcon } from "@radix-ui/react-icons";
 import { Dialog, Button, Flex, TextField, Text } from "@radix-ui/themes";
-import React, { useContext, useRef, useState } from "react";
+import React, { ReactNode, useContext, useEffect, useState } from "react";
 import UsersField from "../../_components/UsersField";
 import { User } from "@prisma/client";
 import axios from "axios";
@@ -14,23 +13,54 @@ export interface FetchedList {
 }
 
 interface Props {
-  add: (list: FetchedList) => void;
+  trigger: ReactNode;
+  postAction: (list: FetchedList) => void;
+  initialName?: string;
+  stringMembers?: string[];
+  listId?: string;
 }
 
-const AddList = ({ add }: Props) => {
+const ListWindow = ({
+  trigger,
+  postAction,
+  stringMembers,
+  initialName,
+  listId,
+}: Props) => {
   const [members, setMembers] = useState<User[]>([]);
-  const [listName, setListName] = useState<string>("");
+  const [listName, setListName] = useState<string>(initialName || "");
   const { viewer } = useContext(Context);
+
+  const addOrUpdate = async () => {
+    if (listId) {
+      const res = await axios.patch<FetchedList>("/api/list", {
+        id: listId,
+        name: listName,
+        members: members.map((m) => m.id),
+      });
+      postAction(res.data);
+    } else {
+      const res = await axios.post<FetchedList>("/api/list", {
+        name: listName,
+        ownerId: viewer?.id,
+        members: members.map((m) => m.id),
+      });
+      postAction(res.data);
+      setMembers([]);
+    }
+  };
+
+  useEffect(() => {
+    if (stringMembers)
+      axios
+        .post<User[]>("/api/user/getSome", { userIds: stringMembers })
+        .then((res) => setMembers(res.data));
+  }, [stringMembers]);
 
   if (!viewer) return null;
   return (
     <Dialog.Root>
-      <Dialog.Trigger>
-        <Button variant="outline">
-          <PlusIcon />
-          Add List
-        </Button>
-      </Dialog.Trigger>
+      <Dialog.Trigger>{trigger}</Dialog.Trigger>
 
       <Dialog.Content style={{ maxWidth: 550, minHeight: 600 }}>
         <Dialog.Title>Create a New List</Dialog.Title>
@@ -57,6 +87,7 @@ const AddList = ({ add }: Props) => {
             <TextField.Input
               placeholder="Enter your List Name"
               onChange={(e) => setListName(e.currentTarget.value)}
+              value={listName}
             />
           </label>
 
@@ -92,7 +123,7 @@ const AddList = ({ add }: Props) => {
             <Button
               variant="soft"
               color="gray"
-              onClick={() => setMembers([])}
+              onClick={() => (listId ? null : setMembers([]))}
             >
               Cancel
             </Button>
@@ -100,15 +131,7 @@ const AddList = ({ add }: Props) => {
           <Dialog.Close>
             <Button
               disabled={members.length === 0 || !listName}
-              onClick={async () => {
-                const res = await axios.post<FetchedList>("/api/list", {
-                  name: listName,
-                  ownerId: viewer?.id,
-                  members: members.map((m) => m.id),
-                });
-                add(res.data);
-                setMembers([]);
-              }}
+              onClick={addOrUpdate}
               variant="outline"
             >
               Save
@@ -120,4 +143,4 @@ const AddList = ({ add }: Props) => {
   );
 };
 
-export default AddList;
+export default ListWindow;

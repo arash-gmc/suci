@@ -1,6 +1,6 @@
 import React, { SetStateAction, useContext } from "react";
 import { Prisma, User } from "@prisma/client";
-import AddList from "./AddList";
+import ListWindow from "./ListWindow";
 import { Flex } from "@radix-ui/themes";
 import DefaultFilters from "./DefaultFilters";
 import Lists from "./Lists";

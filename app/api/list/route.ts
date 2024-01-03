@@ -2,17 +2,24 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/prisma/client";
 import { z } from "zod";
 
-type Body = z.infer<typeof schema>;
+type PostBody = z.infer<typeof createSchema>;
+type UpdateBody = z.infer<typeof updateSchema>;
 
-const schema = z.object({
+const createSchema = z.object({
   name: z.string(),
   ownerId: z.string(),
   members: z.array(z.string()),
 });
 
+const updateSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  members: z.array(z.string()),
+});
+
 export async function POST(request: NextRequest) {
-  const body: Body = await request.json();
-  const validation = schema.safeParse(body);
+  const body: PostBody = await request.json();
+  const validation = createSchema.safeParse(body);
   if (!validation.success) return NextResponse.json({}, { status: 400 });
   const { ownerId, name, members } = body;
   const newList = await prisma.list.create({
@@ -36,4 +43,28 @@ export async function GET(request: NextRequest) {
     members: JSON.parse(record.members),
   }));
   return NextResponse.json(response);
+}
+
+export async function PATCH(request: NextRequest) {
+  const body: UpdateBody = await request.json();
+  const validation = updateSchema.safeParse(body);
+  if (!validation.success)
+    return NextResponse.json(validation.error.errors, { status: 400 });
+  const { name, members, id } = body;
+  const newList = await prisma.list.update({
+    where: { id },
+    data: {
+      name,
+      members: JSON.stringify(members),
+    },
+  });
+  return NextResponse.json({ id: newList.id, name, members });
+}
+
+export async function DELETE(request: NextRequest) {
+  const listId = request.headers.get("listId");
+  if (!listId)
+    return NextResponse.json({ error: "userId not provided" }, { status: 400 });
+  await prisma.list.delete({ where: { id: listId } });
+  return NextResponse.json({});
 }

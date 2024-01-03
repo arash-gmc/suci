@@ -4,8 +4,9 @@ import MultiSelectingButtons from "../../_components/MultiSelectingButtons";
 import { Context } from "../../_providers/Context";
 import axios from "axios";
 import SingleSelectingButtons from "../../_components/SingleSelectingButtons";
-import { Flex } from "@radix-ui/themes";
-import AddList, { FetchedList } from "./AddList";
+import { Flex, Button } from "@radix-ui/themes";
+import ListWindow, { FetchedList } from "./ListWindow";
+import { PlusIcon } from "@radix-ui/react-icons";
 export type filters = "all" | "age" | "city" | "boys" | "girls" | "reposts";
 export type Statuses = Record<filters, boolean>;
 export interface ButtonsLabel {
@@ -160,7 +161,15 @@ const Filters = () => {
           toggleSelected={(selected) => setSelectedList(selected)}
         />
       )}
-      <AddList add={(list) => setFetchedLists((prev) => [...prev, list])} />
+      <ListWindow
+        postAction={(list) => setFetchedLists((prev) => [...prev, list])}
+        trigger={
+          <Button variant="outline">
+            <PlusIcon />
+            Add List
+          </Button>
+        }
+      />
     </Flex>
   );
 };
