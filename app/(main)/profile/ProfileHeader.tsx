@@ -78,7 +78,10 @@ const ProfileHeader = ({ user, session }: Props) => {
       gap="5"
       direction={{ initial: "column", sm: "row" }}
     >
-      <Flex gap="6">
+      <Flex
+        gap={{ initial: "5", sm: "8" }}
+        align="start"
+      >
         <ProfilePicture
           user={user}
           size="lg"
@@ -87,7 +90,13 @@ const ProfileHeader = ({ user, session }: Props) => {
           direction="column"
           pt="3"
         >
-          <Heading my="2">{user.name}</Heading>
+          <Text
+            my="3"
+            size="8"
+            className="font-bold"
+          >
+            {user.name}
+          </Text>
           <Text
             size="2"
             color="gray"

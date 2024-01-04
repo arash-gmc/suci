@@ -17,7 +17,7 @@ const Counts = ({ counts, followings, followers, userName }: Props) => {
       direction={{ initial: "row", sm: "column" }}
       justify="center"
       gap={{ initial: "8", sm: "3" }}
-      className="font-bold border-l-2 max-sm:border-0"
+      className="font-bold md:border-l-2"
       my="3"
       p="2"
     >

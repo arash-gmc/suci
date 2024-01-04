@@ -1,16 +1,11 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import "@radix-ui/themes/styles.css";
-import { Box, Container, Theme, ThemePanel } from "@radix-ui/themes";
+import { Box, Theme } from "@radix-ui/themes";
 import Session from "../_providers/Session";
 import ContextProvider from "../_providers/Context";
-import { getServerSession } from "next-auth";
-import { nextauthConfig } from "../api/auth/[...nextauth]/route";
 import NavBar from "./navbar/NavBar";
 import MiniNavbar from "./navbar/MiniNavbar";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Suci",
@@ -22,16 +17,13 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getServerSession(nextauthConfig);
-
   return (
-    <html lang="en">
-      <body className={inter.className}>
+    <html>
+      <body>
         <Theme
           accentColor="purple"
           grayColor="gray"
           radius="large"
-          scaling="105%"
         >
           <Session>
             <ContextProvider>
@@ -41,7 +33,7 @@ export default async function RootLayout({
               <Box display={{ initial: "block", sm: "none" }}>
                 <MiniNavbar />
               </Box>
-              {children}
+              <div id="root-div">{children}</div>
             </ContextProvider>
           </Session>
         </Theme>

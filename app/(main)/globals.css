@@ -9,12 +9,26 @@
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
+@font-face {
+  font-family: 'vazir';
+  src: url('../../public/fonts/Vazir.woff2') format('woff2') ;
   
 }
 
-h1{
+@font-face {
+  font-family: 'ubuntu';
+  src: url('../../public/fonts/Ubuntu-R.woff2') format('woff2')  ;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+}
+
+#root-div{
+  font-family: ubuntu,vazir;
+}
+
+/* h1{
   @apply text-3xl font-bold my-4
 
-}
+} */

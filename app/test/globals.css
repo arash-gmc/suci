@@ -9,12 +9,9 @@
   }
 }
 
+
+
 body {
-  color: rgb(var(--foreground-rgb));
   
 }
 
-h1{
-  @apply text-3xl font-bold my-4
-
-}

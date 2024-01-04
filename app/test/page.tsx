@@ -1,61 +1,33 @@
-"use client";
-import { Box, Button, Flex, Text } from "@radix-ui/themes";
-import { useEffect, useState } from "react";
-import InfiniteScroll from "react-infinite-scroll-component";
-import Spinner from "../_components/Spinner";
+import { Box } from "@radix-ui/themes";
+import { Roboto, Ubuntu } from "next/font/google";
+import React from "react";
+import localFonts from "next/font/local";
 
-const allNumbers: number[] = [];
-for (let index = 0; index < 1000; index++) {
-  allNumbers.push(index);
-}
-
-const getNumbers = (c: number) =>
-  new Promise<number[]>((resolve, reject) => {
-    setTimeout(() => {
-      const jump = 20;
-      resolve(allNumbers.slice(c * jump, c * jump + jump));
-    }, 1000);
-  });
-
+const roboto = Roboto({
+  weight: ["300", "400", "500", "700"],
+  subsets: ["latin"],
+  display: "auto",
+});
+const ubuntu = Ubuntu({
+  weight: ["300", "400", "500", "700"],
+  subsets: ["latin"],
+  display: "auto",
+});
+const vazir = localFonts({
+  src: "../../public/Vazir.woff2",
+});
 const page = () => {
-  useEffect(() => {
-    loadNew();
-  }, []);
-  const [numbers, setNumbers] = useState<number[]>([]);
-  const [chuk, setchuk] = useState(0);
-
-  const loadNew = () => {
-    getNumbers(chuk)
-      .then((res) =>
-        setNumbers((prev) => (chuk === 0 ? [...res] : [...prev, ...res]))
-      )
-      .catch((e) => console.log("ERROR:", e));
-    setchuk((prev) => prev + 1);
-    console.log(chuk);
-  };
-
   return (
-    <Flex justify="center">
-      <Flex
-        className=" w-52 bg-green-400 h-48 overflow-auto mt-24 "
-        id="ss"
-        direction="column-reverse"
-      >
-        <InfiniteScroll
-          dataLength={numbers.length}
-          hasMore={true}
-          loader={<Spinner />}
-          next={loadNew}
-          style={{ display: "flex", flexDirection: "column-reverse" }}
-          scrollableTarget="ss"
-          inverse
-        >
-          {numbers.map((num) => (
-            <Text key={num}>{num}</Text>
-          ))}
-        </InfiniteScroll>
-      </Flex>
-    </Flex>
+    <Box
+      p="8"
+      className={" bg-green-400"}
+    >
+      <span className="font-bold">
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Id debitis
+        quia error beatae distinctio. Illum dolorum neque vel qui fugiat. این
+        یکی تست است
+      </span>
+    </Box>
   );
 };
 
