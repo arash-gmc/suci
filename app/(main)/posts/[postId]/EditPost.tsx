@@ -65,7 +65,6 @@ const EditPost = ({ authorId, initialText, postId }: Props) => {
                   size="1"
                   onClick={() => applyEdit()}
                   disabled={!editedText}
-                  variant="outline"
                 >
                   Save
                 </Button>

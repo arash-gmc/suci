@@ -11,7 +11,7 @@ const AddContact = ({ setUser }: Props) => {
   const { viewer } = useContext(Context);
   return (
     <Popover.Root>
-      <Popover.Trigger>
+      <Popover.Trigger className="bg-white">
         <Button
           size="3"
           variant="surface"

@@ -132,7 +132,6 @@ const ListWindow = ({
             <Button
               disabled={members.length === 0 || !listName}
               onClick={addOrUpdate}
-              variant="outline"
             >
               Save
             </Button>

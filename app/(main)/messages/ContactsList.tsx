@@ -29,7 +29,7 @@ const ContactsList = ({ setUser, selectedUserId, contactsInfo }: Props) => {
       direction="column"
       justify="between"
       width="100%"
-      className="overflow-y-scroll"
+      className="overflow-y-scroll bg-slate-100 border-r-2"
     >
       <Box>
         <Box
@@ -61,8 +61,9 @@ const ContactsList = ({ setUser, selectedUserId, contactsInfo }: Props) => {
               align="center"
               justify="between"
               className={
-                (contact.user.id === selectedUserId ? "bg-sky-200 " : "") +
-                "border-b-2 cursor-pointer px-3 mx-1 "
+                (contact.user.id === selectedUserId
+                  ? "bg-sky-200 "
+                  : "bg-white ") + "border-b-2 cursor-pointer px-3 mx-1 "
               }
               onClick={() => setUser(contact.user.id)}
             >

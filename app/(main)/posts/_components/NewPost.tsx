@@ -32,13 +32,14 @@ const NewPost = ({ setPosts }: Props) => {
         gap="4"
         align="center"
       >
-        <TextArea
-          placeholder="What's up?"
-          onChange={(e) => setPostText(e.currentTarget.value)}
-          rows={2}
-          className="w-full"
-          value={postText}
-        />
+        <Flex width="100%">
+          <TextArea
+            placeholder="What's up?"
+            onChange={(e) => setPostText(e.currentTarget.value)}
+            rows={2}
+            value={postText}
+          />
+        </Flex>
         <Button
           disabled={!postText || loading}
           onClick={addPost}

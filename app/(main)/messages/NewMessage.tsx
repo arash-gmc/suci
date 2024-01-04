@@ -52,18 +52,19 @@ const NewMessage = ({ toId, fromId, addMessage, replaceMessage }: Props) => {
     <Flex
       gap="3"
       align="center"
-      my="4"
+      py="4"
       px="3"
-      style={{ backgroundColor: "var(--accent-3)" }}
+      className="bg-slate-100"
     >
-      <TextArea
-        placeholder="Write your message..."
-        onChange={(e) => {
-          setMessage(e.currentTarget.value);
-        }}
-        value={message}
-        className="w-full"
-      />
+      <Flex width="100%">
+        <TextArea
+          placeholder="Write your message..."
+          onChange={(e) => {
+            setMessage(e.currentTarget.value);
+          }}
+          value={message}
+        />
+      </Flex>
       <Button onClick={() => sendMessage()}>Send</Button>
     </Flex>
   );

@@ -35,13 +35,15 @@ const NewComment = ({ setComments: setComments, postId }: Props) => {
         gap={{ initial: "2", sm: "5" }}
         align="center"
       >
-        <TextArea
-          placeholder="Leave a comment ..."
-          onChange={(e) => setCommentText(e.currentTarget.value)}
-          rows={2}
-          className="w-full p-2 placeholder:text-center"
-          value={commentText}
-        />
+        <Flex width="100%">
+          <TextArea
+            placeholder="Leave a comment ..."
+            onChange={(e) => setCommentText(e.currentTarget.value)}
+            rows={2}
+            className="p-2"
+            value={commentText}
+          />
+        </Flex>
         <Button
           disabled={!commentText || loading}
           onClick={addComment}

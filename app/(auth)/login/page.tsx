@@ -68,7 +68,6 @@ const LoginForm = ({ searchParams }: Props) => {
           type="button"
           disabled={loading}
           onClick={() => logIn()}
-          style={{ backgroundColor: "var(--accent-9)" }}
         >
           Login
           {loading && <Spinner />}
@@ -77,7 +76,6 @@ const LoginForm = ({ searchParams }: Props) => {
           <Button
             size="3"
             type="button"
-            style={{ backgroundColor: "var(--accent-9)" }}
           >
             Continue as Guest
           </Button>

@@ -113,7 +113,6 @@ const Messanger = ({ searchParams }: Props) => {
       </Flex>
       <Flex
         className="w-full"
-        style={{ backgroundColor: "var(--accent-3)" }}
         direction="column"
       >
         <ChatBox

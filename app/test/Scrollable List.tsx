@@ -17,7 +17,7 @@ const getNumbers = (c: number) =>
     }, 1000);
   });
 
-const page = () => {
+const Scrollpage = () => {
   useEffect(() => {
     loadNew();
   }, []);
@@ -59,4 +59,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Scrollpage;

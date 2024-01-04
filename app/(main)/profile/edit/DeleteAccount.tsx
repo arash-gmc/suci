@@ -36,10 +36,7 @@ const DeleteAccount = () => {
       <Text as="p">
         You are about to delete your account. This action is not reversible.
       </Text>
-      <Text
-        as="label"
-        size="2"
-      >
+      <Text size="2">
         <Flex
           gap="2"
           my="2"

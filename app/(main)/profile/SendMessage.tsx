@@ -29,7 +29,7 @@ const SendMessage = ({ profileId, profileName }: Props) => {
   return (
     <Popover.Root>
       <Popover.Trigger>
-        <Button style={{ backgroundColor: "var(--accent-9)" }}>Message</Button>
+        <Button>Message</Button>
       </Popover.Trigger>
       <Popover.Content style={{ width: 360 }}>
         <Flex gap="3">
@@ -46,28 +46,29 @@ const SendMessage = ({ profileId, profileName }: Props) => {
               onChange={(e) => setMessageText(e.currentTarget.value)}
             />
             <Flex
-              gap="3"
               mt="3"
               justify="between"
             >
-              <Popover.Close>
-                <Button
-                  size="1"
-                  variant="outline"
-                >
-                  Cancel
-                </Button>
-              </Popover.Close>
-              <Popover.Close>
-                <Button
-                  size="1"
-                  variant="outline"
-                >
-                  <Link href={"/messages?contactId=" + profileId}>
-                    Go to Chat
-                  </Link>
-                </Button>
-              </Popover.Close>
+              <Flex gap="3">
+                <Popover.Close>
+                  <Button
+                    size="1"
+                    variant="outline"
+                  >
+                    Cancel
+                  </Button>
+                </Popover.Close>
+                <Popover.Close>
+                  <Button
+                    size="1"
+                    variant="outline"
+                  >
+                    <Link href={"/messages?contactId=" + profileId}>
+                      Go to Chat
+                    </Link>
+                  </Button>
+                </Popover.Close>
+              </Flex>
               <Popover.Close>
                 <Button
                   size="1"

@@ -14,7 +14,7 @@ const TinyContacts = ({ setUser, selectedUserId, contactsInfo }: Props) => {
   return (
     <Flex
       direction="column"
-      className="w-full overflow-y-scroll"
+      className="w-full overflow-y-scroll bg-slate-100 border-r-2"
     >
       {contactsInfo.map((contact) => (
         <Flex
@@ -23,7 +23,7 @@ const TinyContacts = ({ setUser, selectedUserId, contactsInfo }: Props) => {
           justify="center"
           direction="column"
           className={
-            (contact.user.id === selectedUserId ? "bg-sky-200 " : "") +
+            (contact.user.id === selectedUserId ? "bg-sky-200 " : "bg-white ") +
             "border-b-2 cursor-pointer py-2 px-2 "
           }
           onClick={() => setUser(contact.user.id)}
