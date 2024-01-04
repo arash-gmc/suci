@@ -94,7 +94,7 @@ const UserInformations = () => {
       <Flex
         direction="column"
         gap="3"
-        px="4"
+        px={{ initial: "1", sm: "4" }}
       >
         <Heading my="3">Edit User Informations</Heading>
         {textFields.map((field) => (
@@ -111,7 +111,7 @@ const UserInformations = () => {
           </Flex>
         ))}
         <Flex>
-          <Text className="w-1/3">Year of brith</Text>
+          <Text className="w-1/3">Brith Year</Text>
           <Flex className="w-full">
             <SelectComponent
               defaultValue={viewer.brithYear + ""}

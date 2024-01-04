@@ -44,7 +44,7 @@ const SinglePost = ({ rawPost, postDetail }: Props) => {
       <Flex
         gap="3"
         mx="3"
-        px="3"
+        px="2"
         className="border-b-2 py-2"
       >
         <Flex direction="column">

@@ -5,9 +5,10 @@ import { Context } from "../../_providers/Context";
 
 interface Props {
   setUser: (userId: string) => void;
+  mini?: boolean;
 }
 
-const AddContact = ({ setUser }: Props) => {
+const AddContact = ({ setUser, mini }: Props) => {
   const { viewer } = useContext(Context);
   return (
     <Popover.Root>
@@ -17,7 +18,7 @@ const AddContact = ({ setUser }: Props) => {
           variant="outline"
           className="bg-white"
         >
-          + Add New Chat
+          {mini ? "+" : "+ Add New Chat"}
         </Button>
       </Popover.Trigger>
       <Popover.Content style={{ width: 360, height: 240 }}>

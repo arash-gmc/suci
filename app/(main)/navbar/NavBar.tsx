@@ -79,6 +79,12 @@ const NavBar = () => {
                       </Link>
                       <Link
                         className="border-b-2 py-2"
+                        href="profile/edit"
+                      >
+                        Edit Profile
+                      </Link>
+                      <Link
+                        className="border-b-2 py-2"
                         href="/posts/bookmarks"
                       >
                         Bookmarks

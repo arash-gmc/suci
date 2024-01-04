@@ -64,7 +64,7 @@ const ContactsList = ({ setUser, selectedUserId, contactsInfo }: Props) => {
               className={
                 (contact.user.id === selectedUserId
                   ? "bg-sky-200 "
-                  : "bg-white ") + "my-1 mx-2 rounded-2xl cursor-pointer px-3"
+                  : "bg-white ") + "m-1 rounded-2xl cursor-pointer px-3"
               }
               onClick={() => setUser(contact.user.id)}
             >

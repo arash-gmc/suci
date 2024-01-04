@@ -2,11 +2,20 @@ import prisma from "@/prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
+const usernameRegx = RegExp("^[a-zA-Z][a-zA-Z0-9_-]*$");
+
 const schema = z.object({
   id: z.string(),
   name: z.string().min(5).max(255),
   email: z.string().email(),
-  username: z.string().min(3).max(255),
+  username: z
+    .string()
+    .min(3)
+    .max(255)
+    .regex(
+      usernameRegx,
+      "username characters must be english letter or numbers or _ or - and starts with a letter "
+    ),
   city: z.string().max(255),
   brithYear: z.string().max(255),
   gender: z.enum(["male", "female", "none"]),

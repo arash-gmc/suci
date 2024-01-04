@@ -4,6 +4,7 @@ import { Context } from "../../_providers/Context";
 import { Badge, Box, Flex, Text } from "@radix-ui/themes";
 import ProfilePicture from "../../_components/ProfilePicture";
 import { ChatContactsInfo } from "../../api/message/users/route";
+import AddContact from "./AddContact";
 
 interface Props {
   setUser: React.Dispatch<React.SetStateAction<string | null>>;
@@ -42,6 +43,15 @@ const TinyContacts = ({ setUser, selectedUserId, contactsInfo }: Props) => {
           {!!contact.unseens && <Badge>{contact.unseens}</Badge>}
         </Flex>
       ))}
+      <Flex
+        justify="center"
+        my="5"
+      >
+        <AddContact
+          mini={true}
+          setUser={(userId: string) => setUser(userId)}
+        />
+      </Flex>
     </Flex>
   );
 };

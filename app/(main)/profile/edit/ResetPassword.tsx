@@ -89,7 +89,7 @@ const ResetPassword = () => {
         <Heading my="3">Reset Password</Heading>
         {fields.map((field) => (
           <Flex key={field.value}>
-            <Text className="w-1/2">{field.label}</Text>
+            <Text className="w-1/2 max-sm:w-3/4">{field.label}</Text>
             <TextField.Root className="w-full">
               <TextField.Input
                 type="password"
