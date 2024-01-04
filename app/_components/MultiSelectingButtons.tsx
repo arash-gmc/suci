@@ -1,12 +1,16 @@
 "use client";
 import { CheckIcon } from "@radix-ui/react-icons";
-import { ButtonsLabel, Statuses, filters } from "../(main)/filter/Filters";
+import {
+  ButtonsLabel,
+  PostFiltersObject,
+  PostFilters,
+} from "../(main)/filter/Filters";
 import { useState } from "react";
 
 interface Props {
-  options: { label: string; value: filters }[];
-  status: Statuses;
-  toggleStatus: (filter: filters) => void;
+  options: { label: string; value: PostFilters }[];
+  status: PostFiltersObject;
+  toggleStatus: (filter: PostFilters) => void;
 }
 
 const MultiSelectingButtons = ({ options, status, toggleStatus }: Props) => {

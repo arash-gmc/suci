@@ -7,41 +7,34 @@ import SingleSelectingButtons from "../../_components/SingleSelectingButtons";
 import { Flex, Button } from "@radix-ui/themes";
 import ListWindow, { FetchedList } from "./ListWindow";
 import { PlusIcon } from "@radix-ui/react-icons";
-export type filters = "all" | "age" | "city" | "boys" | "girls" | "reposts";
-export type Statuses = Record<filters, boolean>;
+export type PostFilters = "all" | "age" | "city" | "boys" | "girls" | "reposts";
+export type PostFiltersObject = Record<PostFilters, boolean>;
 export interface ButtonsLabel {
   label: string;
-  value: keyof Statuses;
+  value: keyof PostFiltersObject;
 }
 
 const Filters = () => {
-  const { viewer, setWhere } = useContext(Context);
+  const { viewer, setWhere, selectedFilters, setSelectedFilters } =
+    useContext(Context);
   const options: ButtonsLabel[] = [
     { label: "All", value: "all" },
     { label: "Boys", value: "boys" },
     { label: "Girls", value: "girls" },
     ...(viewer?.brithYear
-      ? [{ label: "Around My Age", value: "age" as filters }]
+      ? [{ label: "Around My Age", value: "age" as PostFilters }]
       : []),
     ...(viewer?.city
-      ? [{ label: "Live in " + viewer.city, value: "city" as filters }]
+      ? [{ label: "Live in " + viewer.city, value: "city" as PostFilters }]
       : []),
     { label: "Include Reposts", value: "reposts" },
   ];
-
-  const [selectedFilters, setSelectedFilters] = useState<Statuses>({
-    all: true,
-    age: false,
-    city: false,
-    boys: false,
-    girls: false,
-    reposts: true,
-  });
 
   const [followings, setFollowings] = useState<string[]>([]);
   const [followers, setFollowers] = useState<string[]>([]);
   const [fetchedLists, setFetchedLists] = useState<FetchedList[]>([]);
   const [selectedList, setSelectedList] = useState("all");
+  const [fristLoad, setFristLoad] = useState(true);
   useEffect(() => {
     if (viewer) {
       axios
@@ -72,6 +65,10 @@ const Filters = () => {
   );
 
   useEffect(() => {
+    if (fristLoad) {
+      setFristLoad(false);
+      return;
+    }
     setWhere({
       author: {
         AND: [
@@ -114,7 +111,7 @@ const Filters = () => {
     });
   }, [selectedFilters, selectedList]);
 
-  const toggleStatus = (filter: filters) =>
+  const toggleStatus = (filter: PostFilters) =>
     filter === "all"
       ? setSelectedFilters({
           all: true,
