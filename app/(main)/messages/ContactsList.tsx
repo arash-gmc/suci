@@ -35,6 +35,7 @@ const ContactsList = ({ setUser, selectedUserId, contactsInfo }: Props) => {
         <Box
           p="4"
           shrink="0"
+          className="bg-white"
         >
           <TextField.Root>
             <TextField.Input
@@ -63,7 +64,7 @@ const ContactsList = ({ setUser, selectedUserId, contactsInfo }: Props) => {
               className={
                 (contact.user.id === selectedUserId
                   ? "bg-sky-200 "
-                  : "bg-white ") + "border-b-2 cursor-pointer px-3 mx-1 "
+                  : "bg-white ") + "my-1 mx-2 rounded-2xl cursor-pointer px-3"
               }
               onClick={() => setUser(contact.user.id)}
             >

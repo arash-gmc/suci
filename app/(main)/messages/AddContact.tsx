@@ -11,10 +11,11 @@ const AddContact = ({ setUser }: Props) => {
   const { viewer } = useContext(Context);
   return (
     <Popover.Root>
-      <Popover.Trigger className="bg-white">
+      <Popover.Trigger>
         <Button
           size="3"
-          variant="surface"
+          variant="outline"
+          className="bg-white"
         >
           + Add New Chat
         </Button>

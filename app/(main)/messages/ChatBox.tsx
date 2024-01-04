@@ -52,7 +52,8 @@ const ChatBox = ({ messages, viewerId, contactId }: Props) => {
                   ? "bg-teal-200 "
                   : "bg-gray-50") + " rounded-2xl"
               }
-              p="3"
+              py="2"
+              px="5"
             >
               <Flex
                 direction="column"
