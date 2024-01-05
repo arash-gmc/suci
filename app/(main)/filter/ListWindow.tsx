@@ -86,7 +86,11 @@ const ListWindow = ({
             </Text>
             <TextField.Input
               placeholder="Enter your List Name"
-              onChange={(e) => setListName(e.currentTarget.value)}
+              onChange={(e) =>
+                e.currentTarget.value.length < 16
+                  ? setListName(e.currentTarget.value)
+                  : null
+              }
               value={listName}
             />
           </label>

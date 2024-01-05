@@ -15,6 +15,7 @@ const page = async () => {
     where: { toUserId: session?.user.id },
     orderBy: { date: "desc" },
     include: { fromUser: true },
+    take: 100,
   });
   return (
     <Container>
@@ -50,7 +51,12 @@ const page = async () => {
           </Flex>
         ))}
         {notifications.length === 0 ? (
-          <Flex justify="center">There is no notification.</Flex>
+          <Flex
+            justify="center"
+            my="6"
+          >
+            There is no notification yet.
+          </Flex>
         ) : null}
       </Flex>
     </Container>

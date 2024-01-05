@@ -52,32 +52,27 @@ const TimeLine = () => {
     setPage((prev) => prev + 1);
   };
   return (
-    <Flex gap="3">
-      <Box width="100%">
-        <NewPost setPosts={setPosts} />
-        <InfiniteScroll
-          dataLength={posts.length}
-          hasMore={page < totalPages}
-          loader={
-            <Flex
-              justify="center"
-              m="3"
-            >
-              {!isLoading && <Spinner />}
-            </Flex>
-          }
-          next={loadMore}
-        >
-          <PostsGrid
-            posts={posts}
-            isLoading={isLoading}
-          />
-        </InfiniteScroll>
-      </Box>
-      <Box display={{ initial: "none", sm: "block" }}>
-        <Filters />
-      </Box>
-    </Flex>
+    <Box width="100%">
+      <NewPost setPosts={setPosts} />
+      <InfiniteScroll
+        dataLength={posts.length}
+        hasMore={page < totalPages}
+        loader={
+          <Flex
+            justify="center"
+            m="3"
+          >
+            {!isLoading && <Spinner />}
+          </Flex>
+        }
+        next={loadMore}
+      >
+        <PostsGrid
+          posts={posts}
+          isLoading={isLoading}
+        />
+      </InfiniteScroll>
+    </Box>
   );
 };
 

@@ -48,7 +48,9 @@ const MiniNavbar = () => {
   }, [viewer]);
   const items: { label: string; value: Selected; count?: number }[] = [
     { label: "Profile", value: "profile" },
-
+    ...(path === "/"
+      ? [{ label: "Filters", value: "filter" as Selected }]
+      : []),
     { label: "Message", value: "message", count: contacts.length },
     {
       label: "Notification",
@@ -57,7 +59,6 @@ const MiniNavbar = () => {
     },
     { label: "Search", value: "search" },
   ];
-  if (path === "/") items.push({ label: "Filters", value: "filter" });
 
   return (
     <>
