@@ -64,8 +64,9 @@ const SinglePost = ({ rawPost, postDetail }: Props) => {
         >
           <Flex justify="between">
             <Flex
-              align="baseline"
-              gap="2"
+              align={{ initial: "start", xs: "baseline" }}
+              gap={{ initial: "0", xs: "2" }}
+              direction={{ initial: "column", xs: "row" }}
             >
               <Link href={"/profile/" + author.username}>
                 <Text
@@ -86,14 +87,19 @@ const SinglePost = ({ rawPost, postDetail }: Props) => {
               align="center"
               mx={{ initial: "1", sm: "5" }}
             >
-              {post.isEdited && <Badge variant="soft">Edited</Badge>}
-              <Text
-                size="1"
-                color="gray"
-                ml="1"
+              <Flex
+                direction={{ initial: "column-reverse", xs: "row" }}
+                align="start"
               >
-                {TimeDiff(post.date)}
-              </Text>
+                {post.isEdited && <Badge variant="soft">Edited</Badge>}
+                <Text
+                  size="1"
+                  color="gray"
+                  ml="1"
+                >
+                  {TimeDiff(post.date)}
+                </Text>
+              </Flex>
               <Text
                 color="gray"
                 ml="3"

@@ -28,14 +28,16 @@ const LoginForm = ({ searchParams }: Props) => {
     <Flex
       direction="column"
       align="center"
-      gap="7"
+      gap={{ initial: "5", sm: "7" }}
       className="w-full"
+      mt="6"
     >
       <Logo size="8" />
       <Flex
         direction="column"
         gap="5"
         className="w-full"
+        mt="5"
       >
         <TextField.Input
           id="username"
@@ -58,44 +60,38 @@ const LoginForm = ({ searchParams }: Props) => {
           )}
         </Flex>
       </Flex>
-      <Grid
-        columns="2"
-        gap="2"
-        px="2"
+
+      <Button
+        size="3"
+        type="button"
+        disabled={loading}
+        onClick={() => logIn()}
       >
-        <Button
-          size="3"
-          type="button"
-          disabled={loading}
-          onClick={() => logIn()}
-        >
-          Login
-          {loading && <Spinner />}
-        </Button>
-        <Link href="/">
-          <Button
-            size="3"
-            type="button"
-          >
-            Continue as Guest
-          </Button>
-        </Link>
-      </Grid>
-      <Flex
+        Login
+        {loading && <Spinner />}
+      </Button>
+
+      <Text
         align="center"
-        gap="2"
+        className="pt-10"
       >
-        Don&#39;t have an account?
-        <Link href="/register">
-          <Button
-            size="2"
-            variant="ghost"
-            type="button"
-          >
-            Signup
-          </Button>
+        Don&#39;t have an account?{" "}
+        <Link
+          href="/register"
+          style={{ color: "var(--accent-9)" }}
+        >
+          Signup
         </Link>
-      </Flex>
+      </Text>
+      <Text align="center">
+        Or you can{" "}
+        <Link
+          href="/"
+          style={{ color: "var(--accent-9)" }}
+        >
+          Continue as a guest
+        </Link>
+      </Text>
     </Flex>
   );
 };
