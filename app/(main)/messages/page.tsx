@@ -11,6 +11,7 @@ import TinyUsers from "./TinyContacts";
 import { ChatContactsInfo } from "../../api/message/users/route";
 import { MessageDeliver } from "../interfaces";
 import AddContact from "./AddContact";
+import Spinner from "@/app/_components/Spinner";
 
 interface Props {
   searchParams: { contactId: string };
@@ -22,7 +23,7 @@ const Messanger = ({ searchParams }: Props) => {
   );
   const { viewer } = useContext(Context);
   const [messages, setMessages] = useState<MessageDeliver[]>([]);
-  const [gotUsers, setGotUsers] = useState(false);
+  const [IsContactsFetched, setFetchedContacts] = useState(false);
   const [contactsInfo, setContactsInfo] = useState<ChatContactsInfo[]>([]);
 
   useEffect(() => {
@@ -43,13 +44,13 @@ const Messanger = ({ searchParams }: Props) => {
         .get<ChatContactsInfo[]>("/api/message/users", {
           headers: { userId: viewer?.id },
         })
-        .then(async (res) => {
+        .then((res) => {
           setContactsInfo(res.data);
-          setGotUsers(true);
+          setFetchedContacts(true);
         });
   }, [viewer]);
   useEffect(() => {
-    if (selectedUserId && gotUsers && contactsInfo) {
+    if (selectedUserId && IsContactsFetched) {
       const searched = contactsInfo.find(
         (contact) => contact.user.id === selectedUserId
       );
@@ -69,7 +70,7 @@ const Messanger = ({ searchParams }: Props) => {
           });
       }
     }
-  }, [gotUsers, selectedUserId, contactsInfo]);
+  }, [IsContactsFetched, selectedUserId]);
   useEffect(() => {
     if (viewer?.id && selectedUserId)
       axios
@@ -87,7 +88,23 @@ const Messanger = ({ searchParams }: Props) => {
           );
         });
   }, [viewer, selectedUserId]);
-  if (!viewer) return null;
+  const replaceMessage = (tempId: string, dbMessage: Message) => {
+    setMessages((prev) =>
+      prev.map((message) =>
+        message.id === tempId ? { ...dbMessage, deliver: true } : message
+      )
+    );
+  };
+
+  if (!viewer || !IsContactsFetched)
+    return (
+      <Flex
+        justify="center"
+        m="6"
+      >
+        <Spinner />
+      </Flex>
+    );
   if (contactsInfo.length === 0)
     return (
       <Flex
@@ -123,7 +140,8 @@ const Messanger = ({ searchParams }: Props) => {
       </Flex>
       <Flex
         display={{ initial: "flex", md: "none" }}
-        className="w-1/5"
+        className="w-fit"
+        style={{ maxWidth: "6rem" }}
       >
         <TinyUsers
           setUser={setSelectedUserId}
@@ -147,15 +165,7 @@ const Messanger = ({ searchParams }: Props) => {
             addMessage={(newMessage: MessageDeliver) => {
               setMessages((prev) => [newMessage, ...prev]);
             }}
-            replaceMessage={(tempId, dbMessage) => {
-              setMessages((prev) =>
-                prev.map((message) =>
-                  message.id === tempId
-                    ? { ...dbMessage, deliver: true }
-                    : message
-                )
-              );
-            }}
+            replaceMessage={replaceMessage}
           />
         )}
       </Flex>

@@ -111,7 +111,10 @@ const SinglePost = ({ rawPost, postDetail }: Props) => {
             </Flex>
           </Flex>
 
-          <Box width="100%">
+          <Box
+            width="100%"
+            pb="2"
+          >
             {postDetail ? (
               <Text>{post.text}</Text>
             ) : (

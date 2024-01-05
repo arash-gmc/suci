@@ -25,7 +25,7 @@ const TinyContacts = ({ setUser, selectedUserId, contactsInfo }: Props) => {
           direction="column"
           className={
             (contact.user.id === selectedUserId ? "bg-sky-200 " : "bg-white ") +
-            "border-b-2 cursor-pointer py-2 px-2 "
+            "border-b-2 cursor-pointer py-2 px-3 "
           }
           onClick={() => setUser(contact.user.id)}
         >
@@ -36,9 +36,9 @@ const TinyContacts = ({ setUser, selectedUserId, contactsInfo }: Props) => {
 
           <Text
             size={{ initial: "1", sm: "2" }}
-            className="text-center whitespace-nowrap"
+            className="text-center"
           >
-            {contact.user.name}
+            {contact.user.name?.split(" ")[0]}
           </Text>
           {!!contact.unseens && <Badge>{contact.unseens}</Badge>}
         </Flex>

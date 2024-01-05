@@ -89,6 +89,7 @@ const ProfileHeader = ({ user, session }: Props) => {
         <Flex
           direction="column"
           pt="3"
+          mr={{ initial: "2", sm: "0" }}
         >
           <Text
             my="3"
