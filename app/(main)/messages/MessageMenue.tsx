@@ -27,10 +27,7 @@ const MessageMenu = ({ userId }: Props) => {
     <div className="relative">
       {!!count && (
         <div className="absolute -right-3 -top-3">
-          <Badge
-            color="red"
-            className="rounded-full"
-          >
+          <Badge color="red" className="rounded-full">
             {count}
           </Badge>
         </div>
@@ -60,20 +57,11 @@ const MessageMenu = ({ userId }: Props) => {
                     justify="between"
                     className="border-b-2"
                   >
-                    <Flex
-                      gap="2"
-                      align="center"
-                    >
-                      <ProfilePicture
-                        size="sm"
-                        user={item.user}
-                      />
+                    <Flex gap="2" align="center">
+                      <ProfilePicture size="sm" user={item.user} />
                       <Flex direction="column">
                         <Text className="font-bold">{item.user.name}</Text>
-                        <Text
-                          color="gray"
-                          size="2"
-                        >
+                        <Text color="gray" size="2">
                           {item.lastMessage}
                         </Text>
                       </Flex>
@@ -84,12 +72,8 @@ const MessageMenu = ({ userId }: Props) => {
               </Popover.Close>
             ))}
             {count === 0 ? (
-              <Flex
-                justify="center"
-                pb="3"
-                className="border-b-2"
-              >
-                You have no new messages.
+              <Flex justify="center" pb="3" className="border-b-2">
+                You dont have any new messages.
               </Flex>
             ) : null}
             <Popover.Close>

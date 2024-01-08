@@ -20,11 +20,7 @@ export default async function RootLayout({
   return (
     <html>
       <body>
-        <Theme
-          accentColor="purple"
-          grayColor="gray"
-          radius="large"
-        >
+        <Theme accentColor="purple" grayColor="gray" radius="large">
           <Session>
             <ContextProvider>
               <Box display={{ initial: "none", sm: "block" }}>

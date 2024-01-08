@@ -63,16 +63,8 @@ const MiniNavbar = () => {
   return (
     <>
       <nav className="fixed z-10 bg-slate-100 opacity-95 w-full">
-        <Flex
-          direction="column"
-          className=""
-          width="100%"
-        >
-          <Flex
-            justify="between"
-            py="2"
-            px="5"
-          >
+        <Flex direction="column" className="" width="100%">
+          <Flex justify="between" py="2" px="5">
             <Link href="/">
               <Logo size="6" />
             </Link>
@@ -97,7 +89,7 @@ const MiniNavbar = () => {
               <>
                 <Flex
                   direction="column"
-                  className="text-xl w-1/4 overflow-y-scroll min-w-max"
+                  className="text-xl w-1/4 overflow-y-auto min-w-max"
                   gap="5"
                   px={{ initial: "1", xs: "3" }}
                   pt="5"
@@ -123,7 +115,7 @@ const MiniNavbar = () => {
                   ))}
                 </Flex>
                 <Flex
-                  className="w-3/4 border-l-2 h-5/6 overflow-y-scroll"
+                  className="w-3/4 border-l-2 h-5/6 overflow-y-auto"
                   px="2"
                   pt="4"
                 >

@@ -21,6 +21,7 @@
 body {
   color: rgb(var(--foreground-rgb));
   user-select: none;
+  background-color: blue;
 }
 
 #root-div {
