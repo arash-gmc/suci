@@ -1,6 +1,6 @@
 "use client";
 import { User } from "@prisma/client";
-import { Grid, Heading, Flex, Text, Button } from "@radix-ui/themes";
+import { Grid, Heading, Flex, Text, Button, Box } from "@radix-ui/themes";
 import { Session } from "next-auth";
 import React, { useContext, useEffect, useState } from "react";
 import axios, { AxiosError } from "axios";
@@ -71,87 +71,72 @@ const ProfileHeader = ({ user, session }: Props) => {
   };
 
   return (
-    <Flex
-      mt="5"
-      align="center"
-      justify="center"
-      gap="5"
-      direction={{ initial: "column", sm: "row" }}
-    >
+    <>
       <Flex
-        gap={{ initial: "5", sm: "8" }}
-        align="start"
+        mt="5"
+        align="center"
+        justify="center"
+        gap="5"
+        direction={{ initial: "column", sm: "row" }}
       >
-        <ProfilePicture
-          user={user}
-          size="lg"
-        />
-        <Flex
-          direction="column"
-          pt="3"
-          mr={{ initial: "2", sm: "0" }}
-        >
-          <Text
-            my="3"
-            size="8"
-            className="font-bold"
-          >
-            {user.name}
-          </Text>
-          <Text
-            size="2"
-            color="gray"
-          >
-            @{user.username}
-          </Text>
-          <Text
-            size="2"
-            color="gray"
-          >
-            {user.email}
-          </Text>
-          <Text size="2">{getStatus()}</Text>
-          <Grid
-            gap="2"
-            my="3"
-            columns="2"
-          >
-            {viewer && user && (
-              <>
-                {viewer?.id !== user.id ? (
-                  <>
-                    <FollowButton
-                      followerId={user.id}
-                      followingId={session?.user.id}
-                      setFollowers={setFolllowes}
-                    />
-                    <SendMessage
-                      profileId={user.id}
-                      profileName={user.name}
-                    />
-                  </>
-                ) : (
-                  <>
-                    <Link href="/profile/edit">
-                      <Button size="1">Edit Profile</Button>
-                    </Link>
-                    <Link href="/posts/bookmarks">
-                      <Button size="1">Bookmarks</Button>
-                    </Link>
-                  </>
-                )}
-              </>
-            )}
-          </Grid>
+        <Flex gap={{ initial: "5", sm: "8" }} align="start">
+          <ProfilePicture user={user} size="lg" />
+          <Flex direction="column" pt="3" mr={{ initial: "2", sm: "0" }}>
+            <Text my="3" size="8" className="font-bold">
+              {user.name}
+            </Text>
+            <Text size="2" color="gray">
+              @{user.username}
+            </Text>
+            <Text size="2" color="gray">
+              {user.email}
+            </Text>
+            <Text size="2">{getStatus()}</Text>
+            <Grid gap="2" my="3" columns="2">
+              {viewer && user && (
+                <>
+                  {viewer?.id !== user.id ? (
+                    <>
+                      <FollowButton
+                        followerId={user.id}
+                        followingId={session?.user.id}
+                        setFollowers={setFolllowes}
+                      />
+                      <SendMessage
+                        profileId={user.id}
+                        profileName={user.name}
+                      />
+                    </>
+                  ) : (
+                    <>
+                      <Link href="/profile/edit">
+                        <Button size="1">Edit Profile</Button>
+                      </Link>
+                      <Link href="/posts/bookmarks">
+                        <Button size="1">Bookmarks</Button>
+                      </Link>
+                    </>
+                  )}
+                </>
+              )}
+            </Grid>
+          </Flex>
         </Flex>
+        <CountsComponent
+          counts={counts}
+          followings={followings}
+          followers={followers}
+          userName={user.name}
+        />
       </Flex>
-      <CountsComponent
-        counts={counts}
-        followings={followings}
-        followers={followers}
-        userName={user.name}
-      />
-    </Flex>
+      <Flex width="100%" justify="center">
+        <Box
+          height="3"
+          mt={{ initial: "3", sm: "5" }}
+          className="border-b-2 border-t-2 lg:w-3/5 max-lg:w-3/4"
+        ></Box>
+      </Flex>
+    </>
   );
 };
 

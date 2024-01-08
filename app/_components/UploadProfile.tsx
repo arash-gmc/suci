@@ -23,11 +23,7 @@ const UploadProfile = ({ passPublicId }: Props) => {
       }}
     >
       {({ open }) => (
-        <Button
-          type="button"
-          variant="soft"
-          onClick={() => open()}
-        >
+        <Button type="button" variant="soft" onClick={() => open()}>
           Upload
         </Button>
       )}

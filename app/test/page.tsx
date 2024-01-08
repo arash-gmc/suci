@@ -1,18 +1,22 @@
-import { Box } from "@radix-ui/themes";
-import React from "react";
+"use client";
+import { Box, Flex } from "@radix-ui/themes";
+import React, { useState } from "react";
+import { BiLike } from "react-icons/bi";
 
 const page = () => {
+  const [click, setClick] = useState(false);
   return (
-    <Box
-      p="8"
-      className={" bg-green-400"}
-    >
-      <span className="font-bold">
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Id debitis
-        quia error beatae distinctio. Illum dolorum neque vel qui fugiat. این
-        یکی تست است
-      </span>
-    </Box>
+    <Flex m="6" py="7" justify="center" className="text-2xl">
+      <button
+        className={"btn " + (click ? "click" : "")}
+        onClick={() => {
+          setClick(true);
+          setTimeout(() => setClick(false), 2000);
+        }}
+      >
+        <BiLike />
+      </button>
+    </Flex>
   );
 };
 
