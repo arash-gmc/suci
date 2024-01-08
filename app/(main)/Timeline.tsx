@@ -6,7 +6,6 @@ import NewPost from "./posts/_components/NewPost";
 import { PostAndRef } from "./interfaces";
 import PostsGrid from "./posts/_components/PostsGrid";
 import { Context } from "../_providers/Context";
-import Filters from "./filter/Filters";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Spinner from "../_components/Spinner";
 
@@ -58,20 +57,19 @@ const TimeLine = () => {
         dataLength={posts.length}
         hasMore={page < totalPages}
         loader={
-          <Flex
-            justify="center"
-            m="3"
-          >
+          <Flex justify="center" m="3">
             {!isLoading && <Spinner />}
           </Flex>
         }
         next={loadMore}
       >
-        <PostsGrid
-          posts={posts}
-          isLoading={isLoading}
-        />
+        <PostsGrid posts={posts} isLoading={isLoading} />
       </InfiniteScroll>
+      {isLoading && (
+        <Flex justify="center" align="end" height="9">
+          <Spinner />
+        </Flex>
+      )}
     </Box>
   );
 };

@@ -10,10 +10,10 @@ export default async function Home() {
           <TimeLine />
           <Box
             display={{ initial: "none", sm: "block" }}
-            className="relative w-60 overflow-y-scroll"
+            className="relative w-60 overflow-y-auto"
           >
             <Box>
-              <Box className="overflow-y-scroll fixed h-screen pb-24">
+              <Box className="overflow-y-auto fixed h-screen pb-20">
                 <Filters />
               </Box>
             </Box>
