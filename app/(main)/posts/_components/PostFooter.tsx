@@ -189,19 +189,19 @@ const PostFooter = ({ postId }: { postId: string }) => {
       {items.map((item) => (
         <Flex
           align="center"
-          className={
-            "cursor-pointer " + (item.done ? item.color + " font-bold" : "")
-          }
+          className={item.done ? item.color + " font-bold" : ""}
           key={item.value}
-          onClick={(e) => item.onClick()}
         >
-          <Text
-            className="w-3 whitespace-nowrap"
-            size="2"
-          >
+          <Text className="w-3 whitespace-nowrap select-none" size="2">
             {item.count ? item.count : null}
           </Text>
-          <Text size={{ initial: "5", sm: "6" }}>{item.icon}</Text>
+          {item.value === "comment" ? (
+            <Text size={{ initial: "5", sm: "6" }}>{item.icon}</Text>
+          ) : (
+            <button onClick={() => item.onClick()}>
+              <Text size={{ initial: "5", sm: "6" }}>{item.icon}</Text>
+            </button>
+          )}
         </Flex>
       ))}
     </Flex>

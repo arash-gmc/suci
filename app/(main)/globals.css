@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
@@ -10,22 +9,22 @@
 }
 
 @font-face {
-  font-family: 'vazir';
-  src: url('../../public/fonts/Vazir.woff2') format('woff2') ;
-  
+  font-family: "vazir";
+  src: url("../../public/fonts/Vazir.woff2") format("woff2");
 }
 
 @font-face {
-  font-family: 'ubuntu';
-  src: url('../../public/fonts/Ubuntu-R.woff2') format('woff2')  ;
+  font-family: "ubuntu";
+  src: url("../../public/fonts/Ubuntu-R.woff2") format("woff2");
 }
 
 body {
   color: rgb(var(--foreground-rgb));
+  user-select: none;
 }
 
-#root-div{
-  font-family: ubuntu,vazir;
+#root-div {
+  font-family: ubuntu, vazir;
 }
 
 /* h1{

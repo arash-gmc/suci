@@ -38,10 +38,7 @@ const QuickComment = ({ postId, addCount, setStatus }: Props) => {
       <Popover.Content style={{ width: 360 }}>
         <Flex gap="3">
           <Flex align="start">
-            <ProfilePicture
-              user={viewer}
-              size="sm"
-            />
+            <ProfilePicture user={viewer} size="sm" />
           </Flex>
           <Box grow="1">
             <TextArea
@@ -49,16 +46,9 @@ const QuickComment = ({ postId, addCount, setStatus }: Props) => {
               style={{ height: 80 }}
               onChange={(e) => setCommentText(e.currentTarget.value)}
             />
-            <Flex
-              gap="3"
-              mt="3"
-              justify="between"
-            >
+            <Flex gap="3" mt="3" justify="between">
               <Popover.Close>
-                <Button
-                  size="1"
-                  variant="outline"
-                >
+                <Button size="1" variant="outline">
                   Cancel
                 </Button>
               </Popover.Close>
