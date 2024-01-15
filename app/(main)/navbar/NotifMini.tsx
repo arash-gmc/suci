@@ -18,7 +18,7 @@ const NotifMini = ({ notifications, close }: Props) => {
   const { viewer } = useContext(Context);
   useEffect(
     () => () => {
-      if (viewer)
+      if (viewer && notifications.length > 0)
         axios.get("/api/notification/see", { headers: { userId: viewer.id } });
     },
     []

@@ -19,8 +19,9 @@ const TextCompress = ({ children, compressSize, moreLink }: Props) => {
           <Text
             weight="bold"
             style={{ color: "var(--accent-9)" }}
+            className="whitespace-nowrap"
           >
-            . . .
+            more{">>"}
           </Text>
         </Link>
       ) : (

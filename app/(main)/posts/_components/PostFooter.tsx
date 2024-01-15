@@ -161,14 +161,14 @@ const PostFooter = ({ postId }: { postId: string }) => {
         />
       ),
       done: interactions.comment,
-      color: "text-purple-600",
+      color: "text-orange-600",
       count: counts.comments,
       onClick: () => null,
     },
     {
       value: "bookmark",
       done: interactions?.bookmark,
-      color: "text-orange-400",
+      color: "text-yellow-400",
       icon: interactions?.bookmark ? <GoBookmarkFill /> : <GoBookmark />,
       count: counts?.bookmarks,
       onClick: interactions?.bookmark
@@ -192,7 +192,10 @@ const PostFooter = ({ postId }: { postId: string }) => {
           className={item.done ? item.color + " font-bold" : ""}
           key={item.value}
         >
-          <Text className="w-3 whitespace-nowrap select-none" size="2">
+          <Text
+            className="w-3 whitespace-nowrap select-none"
+            size="2"
+          >
             {item.count ? item.count : null}
           </Text>
           {item.value === "comment" ? (

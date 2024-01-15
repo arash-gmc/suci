@@ -44,8 +44,11 @@ const MessageMenu = ({ userId }: Props) => {
             </Text>
           </button>
         </Popover.Trigger>
-        <Popover.Content style={{ width: 320 }}>
-          <Flex direction="column">
+        <Popover.Content style={{ width: 340 }}>
+          <Flex
+            direction="column"
+            className="apply-fonts"
+          >
             {items.map((item) => (
               <Popover.Close key={item.user.id}>
                 <button
@@ -69,7 +72,10 @@ const MessageMenu = ({ userId }: Props) => {
                         size="sm"
                         user={item.user}
                       />
-                      <Flex direction="column">
+                      <Flex
+                        direction="column"
+                        align="start"
+                      >
                         <Text className="font-bold">{item.user.name}</Text>
                         <Text
                           color="gray"
@@ -95,7 +101,7 @@ const MessageMenu = ({ userId }: Props) => {
             ) : null}
             <Popover.Close>
               <button
-                className="font-bold py-1 justify-center"
+                className="font-bold pt-2 justify-center"
                 onClick={() => router.push("/messages")}
               >
                 Go to Message Box

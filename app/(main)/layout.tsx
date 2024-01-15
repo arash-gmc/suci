@@ -20,7 +20,11 @@ export default async function RootLayout({
   return (
     <html>
       <body>
-        <Theme accentColor="purple" grayColor="gray" radius="large">
+        <Theme
+          accentColor="purple"
+          grayColor="gray"
+          radius="large"
+        >
           <Session>
             <ContextProvider>
               <Box display={{ initial: "none", sm: "block" }}>
@@ -29,7 +33,7 @@ export default async function RootLayout({
               <Box display={{ initial: "block", sm: "none" }}>
                 <MiniNavbar />
               </Box>
-              <div id="root-div">{children}</div>
+              <div className="apply-fonts">{children}</div>
             </ContextProvider>
           </Session>
         </Theme>

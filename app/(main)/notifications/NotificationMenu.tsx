@@ -51,7 +51,7 @@ const NotificationsMenu = ({ userId }: Props) => {
             </Text>
           </button>
         </Popover.Trigger>
-        <Popover.Content style={{ width: 400 }}>
+        <Popover.Content style={{ width: 360 }}>
           <Flex direction="column">
             {items.map((item) => (
               <Flex
@@ -82,7 +82,7 @@ const NotificationsMenu = ({ userId }: Props) => {
             <Popover.Close>
               <button
                 onClick={() => router.push("/notifications")}
-                className="font-bold justify-center py-1"
+                className="font-bold justify-center pt-2"
               >
                 Go to Notifications Archive
               </button>

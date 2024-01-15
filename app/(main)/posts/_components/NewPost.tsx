@@ -1,5 +1,5 @@
 "use client";
-import { Box, Button, Flex, TextArea } from "@radix-ui/themes";
+import { Badge, Box, Button, Flex, TextArea } from "@radix-ui/themes";
 import axios from "axios";
 import React, { Dispatch, SetStateAction, useContext, useState } from "react";
 import { PostAndRef } from "../../interfaces";
@@ -32,13 +32,26 @@ const NewPost = ({ setPosts }: Props) => {
         gap="4"
         align="center"
       >
-        <Flex width="100%">
+        <Flex
+          width="100%"
+          position="relative"
+        >
           <TextArea
             placeholder="What's up?"
             onChange={(e) => setPostText(e.currentTarget.value)}
             rows={2}
             value={postText}
           />
+          <Box
+            position="absolute"
+            className="right-0 -bottom-6"
+          >
+            {postText.length > 0 && (
+              <Badge color={postText.length > 200 ? "red" : "gray"}>
+                {postText.length}/200
+              </Badge>
+            )}
+          </Box>
         </Flex>
         <Button
           disabled={!postText || loading}

@@ -16,6 +16,7 @@ const MiniMessageMenu = ({ contacts, close }: Props) => {
     <Flex
       direction="column"
       width="100%"
+      className="apply-fonts"
     >
       {contacts.map((item) => (
         <button
@@ -44,7 +45,12 @@ const MiniMessageMenu = ({ contacts, close }: Props) => {
                   size="sm"
                   user={item.user}
                 />
-                <Text size="2">{item.user.name?.split(" ")[0]}</Text>
+                <Text
+                  size="2"
+                  className="whitespace-nowrap"
+                >
+                  {item.user.name}
+                </Text>
               </Flex>
 
               <Text
@@ -69,7 +75,7 @@ const MiniMessageMenu = ({ contacts, close }: Props) => {
       ) : null}
 
       <button
-        className="font-bold py-1 justify-center"
+        className="font-bold py-2 justify-center"
         onClick={() => {
           router.push("/messages");
           close();
