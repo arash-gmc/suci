@@ -1,18 +1,28 @@
 "use client";
 import { Popover, Flex, Text, Badge, Box } from "@radix-ui/themes";
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import ProfilePicture from "../../_components/ProfilePicture";
-import { ChatContactsInfo } from "../../api/message/users/route";
 import { useRouter } from "next/navigation";
 import { Notif } from "../interfaces";
 import NotificationText from "../notifications/NotificationText";
+import axios from "axios";
+import { Context } from "@/app/_providers/Context";
 
 interface Props {
   notifications: Notif[];
   close: () => void;
 }
+
 const NotifMini = ({ notifications, close }: Props) => {
   const router = useRouter();
+  const { viewer } = useContext(Context);
+  useEffect(
+    () => () => {
+      if (viewer)
+        axios.get("/api/notification/see", { headers: { userId: viewer.id } });
+    },
+    []
+  );
   return (
     <Flex
       direction="column"

@@ -63,8 +63,16 @@ const MiniNavbar = () => {
   return (
     <>
       <nav className="fixed z-10 bg-slate-100 opacity-95 w-full">
-        <Flex direction="column" className="" width="100%">
-          <Flex justify="between" py="2" px="5">
+        <Flex
+          direction="column"
+          className=""
+          width="100%"
+        >
+          <Flex
+            justify="between"
+            py="2"
+            px="5"
+          >
             <Link href="/">
               <Logo size="6" />
             </Link>

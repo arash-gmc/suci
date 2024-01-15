@@ -5,7 +5,6 @@ import { IoNotifications } from "react-icons/io5";
 import axios from "axios";
 import { Notif } from "../interfaces";
 import NotificationText from "./NotificationText";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import ProfilePicture from "@/app/_components/ProfilePicture";
 

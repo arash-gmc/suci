@@ -41,10 +41,18 @@ const SinglePost = ({ rawPost, postDetail }: Props) => {
           <Text>repost this.</Text>
         </Flex>
       )}
-      <Flex gap="3" mx="3" px="2" className="border-b-2 py-2">
+      <Flex
+        gap="3"
+        mx="3"
+        px="2"
+        className="border-b-2 py-2"
+      >
         <Flex direction="column">
           <Link href={"/profile/" + author.username}>
-            <ProfilePicture user={author} size="md" />
+            <ProfilePicture
+              user={author}
+              size="md"
+            />
           </Link>
         </Flex>
 
@@ -61,25 +69,41 @@ const SinglePost = ({ rawPost, postDetail }: Props) => {
               direction={{ initial: "column", xs: "row" }}
             >
               <Link href={"/profile/" + author.username}>
-                <Text size="4" className="font-bold whitespace-nowrap">
+                <Text
+                  size="4"
+                  className="font-bold whitespace-nowrap"
+                >
                   {author.name}
                 </Text>
               </Link>
-              <Text size="1" color="gray">
+              <Text
+                size="1"
+                color="gray"
+              >
                 @{author.username}
               </Text>
             </Flex>
-            <Flex align="center" mx={{ initial: "1", sm: "5" }}>
+            <Flex
+              align="center"
+              mx={{ initial: "1", sm: "5" }}
+            >
               <Flex
                 direction={{ initial: "column-reverse", xs: "row" }}
-                align="start"
+                align="end"
               >
                 {post.isEdited && <Badge variant="soft">Edited</Badge>}
-                <Text size="1" color="gray" ml="1">
+                <Text
+                  size="1"
+                  color="gray"
+                  ml="1"
+                >
                   {TimeDiff(post.date)}
                 </Text>
               </Flex>
-              <Text color="gray" ml="3">
+              <Text
+                color="gray"
+                ml="3"
+              >
                 <Link href={"/posts/" + post.id}>
                   <HiDotsHorizontal />
                 </Link>
@@ -87,11 +111,19 @@ const SinglePost = ({ rawPost, postDetail }: Props) => {
             </Flex>
           </Flex>
 
-          <Box width="100%" pb="2">
+          <Box
+            width="100%"
+            pb="2"
+          >
             {postDetail ? (
               <Text>{post.text}</Text>
             ) : (
-              <TextCompress compressSize={200}>{post.text}</TextCompress>
+              <TextCompress
+                compressSize={200}
+                moreLink={"/posts/" + post.id}
+              >
+                {post.text}
+              </TextCompress>
             )}
           </Box>
 

@@ -7,6 +7,7 @@ import ProfilePicture from "@/app/_components/ProfilePicture";
 import NotificationText from "./NotificationText";
 // @ts-ignore
 import TimeDiff from "js-time-diff";
+import Link from "next/link";
 
 const page = async () => {
   const session = await getServerSession(nextauthConfig);
@@ -36,10 +37,12 @@ const page = async () => {
               align="center"
               gap="3"
             >
-              <ProfilePicture
-                size="sm"
-                user={item.fromUser}
-              />
+              <Link href={"/profile/" + item.fromUser.username}>
+                <ProfilePicture
+                  size="sm"
+                  user={item.fromUser}
+                />
+              </Link>
               <NotificationText notif={item} />
             </Flex>
             <Text

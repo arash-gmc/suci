@@ -52,7 +52,7 @@ const MiniNavbarRight = ({
           width="100%"
         >
           <Flex direction="column">
-            <Text>{viewer.name}</Text>
+            <Text size="6">{viewer.name}</Text>
             <Text
               size="1"
               color="gray"

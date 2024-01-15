@@ -7,6 +7,7 @@ import NewComment from "./NewComment";
 // @ts-ignore
 import TimeDiff from "js-time-diff";
 import CommentDeletion from "./CommentDeletion";
+import Link from "next/link";
 
 const Comments = ({
   postId,
@@ -33,20 +34,24 @@ const Comments = ({
           align="start"
           className="border-b-4 border-white"
         >
-          <ProfilePicture
-            size="sm"
-            user={comment.author}
-          />
+          <Link href={"/profile/" + comment.author.username}>
+            <ProfilePicture
+              size="sm"
+              user={comment.author}
+            />
+          </Link>
           <Flex
             direction="column"
             gap="2"
           >
-            <Text
-              className="font-bold"
-              size="2"
-            >
-              {comment.author.name}
-            </Text>
+            <Link href={"/profile/" + comment.author.username}>
+              <Text
+                className="font-bold"
+                size="2"
+              >
+                {comment.author.name}
+              </Text>
+            </Link>
             <Text>{comment.text}</Text>
             <Flex
               gap="3"

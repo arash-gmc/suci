@@ -50,7 +50,7 @@ const ProfilePicture = ({ user, size }: Props) => {
       height={sizeMap[size].picture}
       crop="thumb"
       className="rounded-full"
-      alt="profile-picture"
+      alt="profile"
     />
   );
 };

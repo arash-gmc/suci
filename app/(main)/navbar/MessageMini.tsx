@@ -4,6 +4,7 @@ import React from "react";
 import ProfilePicture from "../../_components/ProfilePicture";
 import { ChatContactsInfo } from "../../api/message/users/route";
 import { useRouter } from "next/navigation";
+import TextCompress from "@/app/_components/TextCompress";
 
 interface Props {
   contacts: ChatContactsInfo[];
@@ -43,14 +44,14 @@ const MiniMessageMenu = ({ contacts, close }: Props) => {
                   size="sm"
                   user={item.user}
                 />
-                <Text size="2">{item.user.name}</Text>
+                <Text size="2">{item.user.name?.split(" ")[0]}</Text>
               </Flex>
 
               <Text
                 color="gray"
                 size="2"
               >
-                {item.lastMessage}
+                <TextCompress>{item.lastMessage}</TextCompress>
               </Text>
             </Flex>
             <Badge>{item.unseens}</Badge>
