@@ -2,12 +2,15 @@
 import ProfilePicture from "@/app/_components/ProfilePicture";
 import { CommentAndAuthor } from "@/app/(main)/interfaces";
 import { Box, Flex, Text } from "@radix-ui/themes";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import NewComment from "./NewComment";
 // @ts-ignore
 import TimeDiff from "js-time-diff";
-import CommentDeletion from "./CommentDeletion";
 import Link from "next/link";
+import DeletionAlert from "@/app/_components/DeletionAlert";
+import axios from "axios";
+import { Context } from "@/app/_providers/Context";
+import { useRouter } from "next/navigation";
 
 const Comments = ({
   postId,
@@ -16,7 +19,14 @@ const Comments = ({
   postId: string;
   initialComments: CommentAndAuthor[];
 }) => {
+  const { viewer } = useContext(Context);
+  const router = useRouter();
   const [comments, setComments] = useState<CommentAndAuthor[]>(initialComments);
+  const deleteComment = async (commentId: string) => {
+    await axios.delete("/api/comment/delete", { headers: { commentId } });
+    setComments((prev) => prev.filter((cmnt) => cmnt.id !== commentId));
+    router.refresh();
+  };
   return (
     <Flex
       direction="column"
@@ -35,52 +45,34 @@ const Comments = ({
           className="border-b-4 border-white"
         >
           <Link href={"/profile/" + comment.author.username}>
-            <ProfilePicture
-              size="sm"
-              user={comment.author}
-            />
+            <ProfilePicture size="sm" user={comment.author} />
           </Link>
-          <Flex
-            direction="column"
-            gap="2"
-          >
+          <Flex direction="column" gap="2">
             <Link href={"/profile/" + comment.author.username}>
-              <Text
-                className="font-bold"
-                size="2"
-              >
+              <Text className="font-bold" size="2">
                 {comment.author.name}
               </Text>
             </Link>
             <Text>{comment.text}</Text>
-            <Flex
-              gap="3"
-              align="center"
-            >
-              <Text
-                color="gray"
-                size="1"
-              >
+            <Flex gap="3" align="center">
+              <Text color="gray" size="1">
                 {TimeDiff(comment.date)}
               </Text>
-              <CommentDeletion
-                commentId={comment.id}
-                authorId={comment.authorId}
-                deleteComment={() => {
-                  setComments((prev) =>
-                    prev.filter((cmnt) => cmnt.id !== comment.id)
-                  );
-                }}
-              />
+              {viewer?.id === comment.author.id && (
+                <DeletionAlert
+                  action={() => deleteComment(comment.id)}
+                  label="this comment"
+                  trigger={
+                    <button className=" text-red-600 text-sm">Delete</button>
+                  }
+                />
+              )}
             </Flex>
           </Flex>
         </Flex>
       ))}
 
-      <NewComment
-        postId={postId}
-        setComments={setComments}
-      />
+      <NewComment postId={postId} setComments={setComments} />
     </Flex>
   );
 };

@@ -7,15 +7,11 @@ export async function GET(request: NextRequest) {
   if (!postId)
     return NextResponse.json({ error: "not enough inputs" }, { status: 400 });
 
-  const records = await prisma.postsActions.findMany({
-    where: { postId, actionType: "like" },
-    include: { user: true },
-  });
+    const repostRecords = await prisma.posts.findMany({
+        where: { refId: postId },
+        include: { author: true },
+      });
+      const reposters = repostRecords.map((record) => record.author);
 
-  const users = records.map((record) => {
-    const { hashedPassword,...user } = record.user;
-    return user;
-  });
-
-  return NextResponse.json(users);
+  return NextResponse.json(reposters);
 }
