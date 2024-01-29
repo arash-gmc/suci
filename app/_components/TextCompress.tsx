@@ -13,13 +13,13 @@ const TextCompress = ({ children, compressSize, moreLink }: Props) => {
   if (compressSize + 5 >= children.length) return children;
   return (
     <>
-      <span>{children.slice(0, compressSize)}</span>
+      <span>{children.slice(0, compressSize)} ...</span>
       {moreLink ? (
         <Link href={moreLink}>
           <Text
             weight="bold"
             style={{ color: "var(--accent-9)" }}
-            className="whitespace-nowrap"
+            className="whitespace-nowrap pl-2"
           >
             more{">>"}
           </Text>

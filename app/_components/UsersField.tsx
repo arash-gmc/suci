@@ -13,7 +13,7 @@ const UsersField = ({ users, onUserClick }: Props) => {
       <Grid
         columns={{ initial: "3", xs: "4", sm: "5" }}
         gapY="5"
-        className="overflow-y-scroll"
+        className="overflow-y-auto"
       >
         {users.map((user) => (
           <Flex
@@ -27,7 +27,7 @@ const UsersField = ({ users, onUserClick }: Props) => {
               size="sm"
               user={user}
             />
-            <Text>{user.name}</Text>
+            <span>{user.name?.split(' ')[0]}</span>
           </Flex>
         ))}
       </Grid>
