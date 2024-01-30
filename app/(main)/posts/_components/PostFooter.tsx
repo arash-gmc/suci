@@ -182,7 +182,7 @@ const PostFooter = ({ postId }: { postId: string }) => {
     <Flex
       justify="center"
       className="text-2xl text-gray-500"
-      gap={{ initial: "5", sm: "8" }}
+      gap={{ initial: "4", xs: "6", sm: "8" }}
       align="center"
       height={{ initial: "4", sm: "5" }}
     >
@@ -192,10 +192,7 @@ const PostFooter = ({ postId }: { postId: string }) => {
           className={item.done ? item.color + " font-bold" : ""}
           key={item.value}
         >
-          <Text
-            className="w-3 whitespace-nowrap select-none"
-            size="2"
-          >
+          <Text className="w-3 whitespace-nowrap select-none" size="2">
             {item.count ? item.count : null}
           </Text>
           {item.value === "comment" ? (

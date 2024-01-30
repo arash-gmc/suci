@@ -2,12 +2,13 @@
 import UserFieldPopover from "@/app/_components/UserFieldPopover";
 import { CommentAndAuthor } from "@/app/(main)/interfaces";
 import { Flex, Text } from "@radix-ui/themes";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import EditPost from "./EditPost";
 import { User } from "@prisma/client";
 import axios from "axios";
 import DeletionAlert from "@/app/_components/DeletionAlert";
 import { useRouter } from "next/navigation";
+import { Context } from "@/app/_providers/Context";
 
 interface Props {
   postId: string;
@@ -19,6 +20,7 @@ interface Props {
 const PostBottom = ({ postId, comments, authorId, postText }: Props) => {
   const [likers, setLikers] = useState<User[]>([]);
   const [reposters, setReposters] = useState<User[]>([]);
+  const { viewer } = useContext(Context);
   const router = useRouter();
   useEffect(() => {
     if (!postId) return;
@@ -55,14 +57,22 @@ const PostBottom = ({ postId, comments, authorId, postText }: Props) => {
           />
         )}
       </Flex>
-      <Flex gap="4">
-        <EditPost authorId={authorId} initialText={postText} postId={postId} />
-        <DeletionAlert
-          action={() => deletePost()}
-          label="this post"
-          trigger={<button className=" text-red-600 font-bold">Delete</button>}
-        />
-      </Flex>
+      {authorId === viewer?.id && (
+        <Flex gap="4">
+          <EditPost
+            authorId={authorId}
+            initialText={postText}
+            postId={postId}
+          />
+          <DeletionAlert
+            action={() => deletePost()}
+            label="this post"
+            trigger={
+              <button className=" text-red-600 font-bold">Delete</button>
+            }
+          />
+        </Flex>
+      )}
     </Flex>
   );
 };
