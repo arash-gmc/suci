@@ -8,6 +8,7 @@ import PostsGrid from "./posts/_components/PostsGrid";
 import { Context } from "../_providers/Context";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Spinner from "../_components/Spinner";
+import LoadingBalls from "../_components/LoadingBalls";
 
 const TimeLine = () => {
   const [posts, setPosts] = useState<PostAndRef[]>([]);
@@ -65,11 +66,7 @@ const TimeLine = () => {
       >
         <PostsGrid posts={posts} isLoading={isLoading} />
       </InfiniteScroll>
-      {isLoading && (
-        <Flex justify="center" align="end" height="9">
-          <Spinner />
-        </Flex>
-      )}
+      {isLoading && <LoadingBalls />}
     </Box>
   );
 };
