@@ -8,6 +8,7 @@ import axios from "axios";
 import { ActionType } from "@prisma/client";
 import QuickComment from "./QuickComment";
 import { Context } from "@/app/_providers/Context";
+import { useRouter } from "next/navigation";
 
 interface Counts {
   likes: number;
@@ -31,6 +32,7 @@ const PostFooter = ({ postId }: { postId: string }) => {
   const [interactions, setInteractions] = useState<Interactions>(
     {} as Interactions
   );
+  const router = useRouter();
   useEffect(() => {
     if (viewer && postId)
       axios
@@ -176,7 +178,6 @@ const PostFooter = ({ postId }: { postId: string }) => {
         : () => doAction("bookmark"),
     },
   ];
-  if (!viewer) return <Flex height={{ initial: "4", sm: "5" }}></Flex>;
 
   return (
     <Flex
@@ -198,7 +199,11 @@ const PostFooter = ({ postId }: { postId: string }) => {
           {item.value === "comment" ? (
             <Text size={{ initial: "5", sm: "6" }}>{item.icon}</Text>
           ) : (
-            <button onClick={() => item.onClick()}>
+            <button
+              onClick={() =>
+                viewer ? item.onClick() : router.push("/api/auth/signin")
+              }
+            >
               <Text size={{ initial: "5", sm: "6" }}>{item.icon}</Text>
             </button>
           )}

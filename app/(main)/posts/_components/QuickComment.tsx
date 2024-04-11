@@ -5,6 +5,7 @@ import { FaRegComment } from "react-icons/fa6";
 import axios from "axios";
 import ProfilePicture from "@/app/_components/ProfilePicture";
 import { Context } from "@/app/_providers/Context";
+import { useRouter } from "next/navigation";
 
 interface Props {
   postId: string;
@@ -15,6 +16,7 @@ interface Props {
 const QuickComment = ({ postId, addCount, setStatus }: Props) => {
   const { viewer } = useContext(Context);
   const [commentText, setCommentText] = useState("");
+  const router = useRouter();
   const sendComment = () => {
     axios
       .post("/api/comment/for-post", {
@@ -27,7 +29,12 @@ const QuickComment = ({ postId, addCount, setStatus }: Props) => {
         setStatus();
       });
   };
-  if (!viewer) return null;
+  if (!viewer)
+    return (
+      <button onClick={() => router.push("/api/auth/signin")}>
+        <FaRegComment />
+      </button>
+    );
   return (
     <Popover.Root>
       <Popover.Trigger>
