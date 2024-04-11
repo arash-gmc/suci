@@ -62,57 +62,45 @@ const PostFooter = ({ postId }: { postId: string }) => {
 
   const doAction = (action: ActionType) => {
     if (viewer)
-      axios
-        .post("/api/post/actions", {
-          userId: viewer?.id,
-          postId,
-          actionType: action,
-        })
-        .then((res) => {
-          setCounts((prev) => ({
-            ...prev,
-            [action]: prev[action] + 1,
-          }));
-          setInteractions((prev) => ({ ...prev, [action]: true }));
-        });
+      axios.post("/api/post/actions", {
+        userId: viewer?.id,
+        postId,
+        actionType: action,
+      });
+    setCounts((prev) => ({
+      ...prev,
+      [action]: prev[action] + 1,
+    }));
+    setInteractions((prev) => ({ ...prev, [action]: true }));
   };
 
   const undoAction = (action: ActionType) => {
     if (viewer)
-      axios
-        .delete("/api/post/actions", {
-          headers: {
-            userId: viewer?.id,
-            postId,
-            actionType: action,
-          },
-        })
-        .then((res) => {
-          setCounts((prev) => ({
-            ...prev,
-            [action]: prev[action] - 1,
-          }));
-          setInteractions((prev) => ({ ...prev, [action]: false }));
-        });
+      axios.delete("/api/post/actions", {
+        headers: {
+          userId: viewer?.id,
+          postId,
+          actionType: action,
+        },
+      });
+    setCounts((prev) => ({
+      ...prev,
+      [action]: prev[action] - 1,
+    }));
+    setInteractions((prev) => ({ ...prev, [action]: false }));
   };
   const repost = () => {
-    axios
-      .post("/api/post/repost", { postId, userId: viewer?.id })
-      .then((res) => {
-        setCounts((prev) => ({ ...prev, reposts: prev.repost + 1 }));
-        setInteractions((prev) => ({ ...prev, repost: true }));
-      });
+    axios.post("/api/post/repost", { postId, userId: viewer?.id });
+    setCounts((prev) => ({ ...prev, reposts: prev.repost + 1 }));
+    setInteractions((prev) => ({ ...prev, repost: true }));
   };
 
   const unrepost = () => {
-    axios
-      .delete("/api/post/repost", {
-        headers: { postId, userId: viewer?.id },
-      })
-      .then((res) => {
-        setCounts((prev) => ({ ...prev, reposts: prev.repost - 1 }));
-        setInteractions((prev) => ({ ...prev, repost: false }));
-      });
+    axios.delete("/api/post/repost", {
+      headers: { postId, userId: viewer?.id },
+    });
+    setCounts((prev) => ({ ...prev, reposts: prev.repost - 1 }));
+    setInteractions((prev) => ({ ...prev, repost: false }));
   };
 
   const items: ActionItem[] = [
