@@ -17,9 +17,8 @@ const TextCompress = ({ children, compressSize, moreLink }: Props) => {
       {moreLink ? (
         <Link href={moreLink}>
           <Text
-            weight="bold"
             style={{ color: "var(--accent-9)" }}
-            className="whitespace-nowrap pl-2"
+            className="whitespace-nowrap pl-2 italic font-thin text-sm"
           >
             more{">>"}
           </Text>

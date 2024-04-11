@@ -9,6 +9,7 @@ import { ActionType } from "@prisma/client";
 import QuickComment from "./QuickComment";
 import { Context } from "@/app/_providers/Context";
 import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
 
 interface Counts {
   likes: number;
@@ -18,25 +19,34 @@ interface Counts {
   comments: number;
 }
 
-interface Interactions {
-  like: boolean;
-  dislike: boolean;
-  bookmark: boolean;
-  repost: boolean;
-  comment: boolean;
-}
+type Actions = "like" | "dislike" | "bookmark" | "repost" | "comment";
+
+type ActionsBoolean = {
+  [K in Actions]: boolean;
+};
+
+// type Counts = {
+//   [K in Actions]: number;
+// };
 
 const PostFooter = ({ postId }: { postId: string }) => {
   const { viewer } = useContext(Context);
   const [counts, setCounts] = useState<Counts>({} as Counts);
-  const [interactions, setInteractions] = useState<Interactions>(
-    {} as Interactions
+  const [animations, setAnimation] = useState<ActionsBoolean>({
+    like: false,
+    dislike: false,
+    bookmark: false,
+    repost: false,
+    comment: false,
+  });
+  const [interactions, setInteractions] = useState<ActionsBoolean>(
+    {} as ActionsBoolean
   );
   const router = useRouter();
   useEffect(() => {
     if (viewer && postId)
       axios
-        .get<Interactions>("/api/post/actions", {
+        .get<ActionsBoolean>("/api/post/actions", {
           headers: { postId, userId: viewer?.id },
         })
         .then((res) => setInteractions(res.data))
@@ -200,11 +210,26 @@ const PostFooter = ({ postId }: { postId: string }) => {
             <Text size={{ initial: "5", sm: "6" }}>{item.icon}</Text>
           ) : (
             <button
-              onClick={() =>
-                viewer ? item.onClick() : router.push("/api/auth/signin")
-              }
+              onClick={() => {
+                if (!viewer) return router.push("/api/auth/signin");
+                setAnimation((prev) => ({ ...prev, [item.value]: true }));
+                setTimeout(
+                  () =>
+                    setAnimation((prev) => ({ ...prev, [item.value]: false })),
+                  400
+                );
+                item.onClick();
+              }}
             >
-              <Text size={{ initial: "5", sm: "6" }}>{item.icon}</Text>
+              <motion.div
+                animate={
+                  animations[item.value as Actions]
+                    ? { scale: 1.3, y: -10 }
+                    : undefined
+                }
+              >
+                <Text size={{ initial: "5", sm: "6" }}>{item.icon}</Text>
+              </motion.div>
             </button>
           )}
         </Flex>
