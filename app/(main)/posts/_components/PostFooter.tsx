@@ -11,23 +11,22 @@ import { Context } from "@/app/_providers/Context";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 
-interface Counts {
-  likes: number;
-  dislikes: number;
-  bookmarks: number;
-  reposts: number;
-  comments: number;
-}
-
 type Actions = "like" | "dislike" | "bookmark" | "repost" | "comment";
 
 type ActionsBoolean = {
   [K in Actions]: boolean;
 };
 
-// type Counts = {
-//   [K in Actions]: number;
-// };
+type Counts = {
+  [K in Actions]: number;
+};
+
+interface ActionItem {
+  value: Actions;
+  color: string;
+  icon: React.JSX.Element;
+  onClick: () => void;
+}
 
 const PostFooter = ({ postId }: { postId: string }) => {
   const { viewer } = useContext(Context);
@@ -72,14 +71,7 @@ const PostFooter = ({ postId }: { postId: string }) => {
         .then((res) => {
           setCounts((prev) => ({
             ...prev,
-            [action + "s"]:
-              action === "like"
-                ? prev.likes + 1
-                : action === "dislike"
-                ? prev.dislikes + 1
-                : action === "bookmark"
-                ? prev.bookmarks + 1
-                : null,
+            [action]: prev[action] + 1,
           }));
           setInteractions((prev) => ({ ...prev, [action]: true }));
         });
@@ -98,14 +90,7 @@ const PostFooter = ({ postId }: { postId: string }) => {
         .then((res) => {
           setCounts((prev) => ({
             ...prev,
-            [action + "s"]:
-              action === "like"
-                ? prev.likes - 1
-                : action === "dislike"
-                ? prev.dislikes - 1
-                : action === "bookmark"
-                ? prev.bookmarks - 1
-                : null,
+            [action]: prev[action] - 1,
           }));
           setInteractions((prev) => ({ ...prev, [action]: false }));
         });
@@ -114,7 +99,7 @@ const PostFooter = ({ postId }: { postId: string }) => {
     axios
       .post("/api/post/repost", { postId, userId: viewer?.id })
       .then((res) => {
-        setCounts((prev) => ({ ...prev, reposts: prev.reposts + 1 }));
+        setCounts((prev) => ({ ...prev, reposts: prev.repost + 1 }));
         setInteractions((prev) => ({ ...prev, repost: true }));
       });
   };
@@ -125,28 +110,24 @@ const PostFooter = ({ postId }: { postId: string }) => {
         headers: { postId, userId: viewer?.id },
       })
       .then((res) => {
-        setCounts((prev) => ({ ...prev, reposts: prev.reposts - 1 }));
+        setCounts((prev) => ({ ...prev, reposts: prev.repost - 1 }));
         setInteractions((prev) => ({ ...prev, repost: false }));
       });
   };
 
-  const items = [
+  const items: ActionItem[] = [
     {
       value: "like",
-      done: interactions?.like,
       color: "text-blue-500",
       icon: interactions?.like ? <BiSolidLike /> : <BiLike />,
-      count: counts?.likes,
       onClick: interactions?.like
         ? () => undoAction("like")
         : () => doAction("like"),
     },
     {
       value: "dislike",
-      done: interactions?.dislike,
       color: "text-rose-600",
       icon: interactions?.dislike ? <BiSolidDislike /> : <BiDislike />,
-      count: counts?.dislikes,
       onClick: interactions?.dislike
         ? () => undoAction("dislike")
         : () => doAction("dislike"),
@@ -154,9 +135,7 @@ const PostFooter = ({ postId }: { postId: string }) => {
     {
       value: "repost",
       icon: <FaRetweet />,
-      done: interactions.repost,
       color: "text-green-700",
-      count: counts.reposts,
       onClick: () => (interactions.repost ? unrepost() : repost()),
     },
     {
@@ -165,24 +144,20 @@ const PostFooter = ({ postId }: { postId: string }) => {
         <QuickComment
           postId={postId}
           addCount={() =>
-            setCounts((prev) => ({ ...prev, comments: prev.comments + 1 }))
+            setCounts((prev) => ({ ...prev, comment: prev.comment + 1 }))
           }
           setStatus={() =>
             setInteractions((prev) => ({ ...prev, comment: true }))
           }
         />
       ),
-      done: interactions.comment,
       color: "text-orange-600",
-      count: counts.comments,
       onClick: () => null,
     },
     {
       value: "bookmark",
-      done: interactions?.bookmark,
       color: "text-yellow-400",
       icon: interactions?.bookmark ? <GoBookmarkFill /> : <GoBookmark />,
-      count: counts?.bookmarks,
       onClick: interactions?.bookmark
         ? () => undoAction("bookmark")
         : () => doAction("bookmark"),
@@ -200,11 +175,11 @@ const PostFooter = ({ postId }: { postId: string }) => {
       {items.map((item) => (
         <Flex
           align="center"
-          className={item.done ? item.color + " font-bold" : ""}
+          className={interactions[item.value] ? item.color + " font-bold" : ""}
           key={item.value}
         >
           <Text className="w-3 whitespace-nowrap select-none" size="2">
-            {item.count ? item.count : null}
+            {counts[item.value] ? counts[item.value] : null}
           </Text>
           {item.value === "comment" ? (
             <Text size={{ initial: "5", sm: "6" }}>{item.icon}</Text>
@@ -224,7 +199,7 @@ const PostFooter = ({ postId }: { postId: string }) => {
               <motion.div
                 animate={
                   animations[item.value as Actions]
-                    ? { scale: 1.3, y: -10 }
+                    ? { scale: 1.2, y: -6 }
                     : undefined
                 }
               >

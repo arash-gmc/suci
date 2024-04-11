@@ -12,17 +12,17 @@ export async function GET(request: NextRequest) {
     where: { postId },
     select: { actionType: true },
   });
-  let likes = 0;
-  let dislikes = 0;
-  let bookmarks = 0;
+  let like = 0;
+  let dislike = 0;
+  let bookmark = 0;
   records.forEach((record) => {
-    if (record.actionType === "like") likes++;
-    if (record.actionType === "dislike") dislikes++;
-    if (record.actionType === "bookmark") bookmarks++;
+    if (record.actionType === "like") like++;
+    if (record.actionType === "dislike") dislike++;
+    if (record.actionType === "bookmark") bookmark++;
   });
 
-  const reposts = await prisma.posts.count({ where: { refId: postId } });
-  const comments = await prisma.comment.count({ where: { postRefId: postId } });
+  const repost = await prisma.posts.count({ where: { refId: postId } });
+  const comment = await prisma.comment.count({ where: { postRefId: postId } });
 
-  return NextResponse.json({ likes, dislikes, bookmarks, reposts, comments });
+  return NextResponse.json({ like, dislike, bookmark, repost, comment });
 }
