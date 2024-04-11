@@ -47,12 +47,8 @@ const NavBar = () => {
                     className="relative cursor-pointer"
                   >
                     <ProfilePicture size="sm" user={viewer} />
-                    <div
-                      className={userMenu ? "" : "opacity-0"}
-                      style={{ transition: "opacity 0.3s" }}
-                    >
-                      <UserMenu />
-                    </div>
+
+                    {userMenu ? <UserMenu /> : null}
                   </Flex>
                 </>
               )}
