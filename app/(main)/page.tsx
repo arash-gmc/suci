@@ -1,6 +1,7 @@
 import { Box, Container, Flex } from "@radix-ui/themes";
 import TimeLine from "./Timeline";
 import Filters from "./filter/Filters";
+import GuestWelcome from "./GuestWelcome";
 
 export default async function Home() {
   return (
@@ -19,6 +20,7 @@ export default async function Home() {
             </Box>
           </Box>
         </Flex>
+        <GuestWelcome />
       </Container>
     </>
   );

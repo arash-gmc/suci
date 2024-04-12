@@ -33,12 +33,7 @@ const LoginForm = ({ searchParams }: Props) => {
       mt="6"
     >
       <Logo size="8" />
-      <Flex
-        direction="column"
-        gap="5"
-        className="w-full"
-        mt="5"
-      >
+      <Flex direction="column" gap="5" className="w-full" mt="5">
         <TextField.Input
           id="username"
           placeholder="Username or Email"
@@ -51,46 +46,30 @@ const LoginForm = ({ searchParams }: Props) => {
           placeholder="Password"
           ref={PasswordRef}
         />
-        <Flex
-          className="text-red-600 text-sm"
-          justify="center"
-        >
+        <Flex className="text-red-600 text-sm" justify="center">
           {!!searchParams.error && (
             <Text>Can not login with these inputs.</Text>
           )}
         </Flex>
       </Flex>
 
-      <Button
-        size="3"
-        type="button"
-        disabled={loading}
-        onClick={() => logIn()}
-      >
+      <Button size="3" type="button" disabled={loading} onClick={() => logIn()}>
         Login
         {loading && <Spinner />}
       </Button>
 
-      <Text
-        align="center"
-        className="pt-10"
-      >
+      <Text align="center" className="pt-10">
         Don&#39;t have an account?{" "}
-        <Link
-          href="/register"
-          style={{ color: "var(--accent-9)" }}
-        >
+        <Link href="/register" style={{ color: "var(--accent-9)" }}>
           Signup
         </Link>
       </Text>
       <Text align="center">
-        Or you can{" "}
-        <Link
-          href="/"
-          style={{ color: "var(--accent-9)" }}
-        >
-          Continue as a guest
-        </Link>
+        Or back to{" "}
+        <Link href="/" style={{ color: "var(--accent-9)" }}>
+          home
+        </Link>{" "}
+        without login
       </Text>
     </Flex>
   );

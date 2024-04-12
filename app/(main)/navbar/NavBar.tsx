@@ -60,7 +60,7 @@ const NavBar = () => {
                     }
                     searchPosts={true}
                   />
-                  <Link href="/api/auth/signin">SignIn</Link>
+                  <Link href="/api/auth/signin">LogIn</Link>
                   <Link href="/register">Register</Link>
                 </Flex>
               )}

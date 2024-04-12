@@ -1,5 +1,11 @@
 import { Dialog, Button, Flex, TextField, Text } from "@radix-ui/themes";
-import React, { ReactNode, useContext, useEffect, useState } from "react";
+import React, {
+  ReactNode,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import UsersField from "../../_components/UsersField";
 import { User } from "@prisma/client";
 import axios from "axios";
@@ -64,24 +70,13 @@ const ListWindow = ({
 
       <Dialog.Content style={{ maxWidth: 550, minHeight: 600 }}>
         <Dialog.Title>Create a New List</Dialog.Title>
-        <Dialog.Description
-          size="2"
-          mb="4"
-        >
+        <Dialog.Description size="2" mb="4">
           Use The Searchbar to add new peoples to your list
         </Dialog.Description>
 
-        <Flex
-          direction="column"
-          gap="3"
-        >
+        <Flex direction="column" gap="3">
           <label>
-            <Text
-              as="div"
-              size="2"
-              mb="1"
-              weight="bold"
-            >
+            <Text as="div" size="2" mb="1" weight="bold">
               List Name
             </Text>
             <TextField.Input
@@ -95,12 +90,7 @@ const ListWindow = ({
             />
           </label>
 
-          <Text
-            as="div"
-            size="2"
-            mb="1"
-            weight="bold"
-          >
+          <Text as="div" size="2" mb="1" weight="bold">
             List Members
           </Text>
 
@@ -118,11 +108,7 @@ const ListWindow = ({
           />
         </Flex>
 
-        <Flex
-          gap="3"
-          mt="4"
-          justify="end"
-        >
+        <Flex gap="3" mt="4" justify="end">
           <Dialog.Close>
             <Button
               variant="soft"
