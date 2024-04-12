@@ -11,15 +11,16 @@ interface Props {
 }
 
 const LoginForm = ({ searchParams }: Props) => {
-  const EmailRef = useRef<HTMLInputElement>(null);
-  const PasswordRef = useRef<HTMLInputElement>(null);
+  const testUser = true;
+  const [email, setEmail] = useState(testUser ? "test" : "");
+  const [password, setPassword] = useState(testUser ? "123456" : "");
   const [loading, setLoading] = useState(false);
 
   const logIn = () => {
     setLoading(true);
     signIn("credentials", {
-      email: EmailRef.current?.value,
-      password: PasswordRef.current?.value,
+      email,
+      password,
       redirect: true,
       callbackUrl: "/",
     });
@@ -37,14 +38,16 @@ const LoginForm = ({ searchParams }: Props) => {
         <TextField.Input
           id="username"
           placeholder="Username or Email"
-          ref={EmailRef}
+          value={email}
+          onChange={(e) => setEmail(e.currentTarget.value)}
         />
 
         <TextField.Input
           id="Password"
           type="password"
           placeholder="Password"
-          ref={PasswordRef}
+          value={password}
+          onChange={(e) => setPassword(e.currentTarget.value)}
         />
         <Flex className="text-red-600 text-sm" justify="center">
           {!!searchParams.error && (
