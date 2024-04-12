@@ -11,6 +11,7 @@ import DeletionAlert from "@/app/_components/DeletionAlert";
 import axios from "axios";
 import { Context } from "@/app/_providers/Context";
 import { useRouter } from "next/navigation";
+import useTheme from "next-theme";
 
 const Comments = ({
   postId,
@@ -21,6 +22,7 @@ const Comments = ({
 }) => {
   const { viewer } = useContext(Context);
   const router = useRouter();
+  const { theme } = useTheme();
   const [comments, setComments] = useState<CommentAndAuthor[]>(initialComments);
   const deleteComment = async (commentId: string) => {
     await axios.delete("/api/comment/delete", { headers: { commentId } });
@@ -33,7 +35,9 @@ const Comments = ({
       gap="2"
       mx={{ initial: "2", sm: "6" }}
       my="5"
-      className="rounded-xl bg-slate-100"
+      className={
+        "rounded-xl " + (theme === "light" ? "bg-slate-100" : "bg-slate-800")
+      }
     >
       {comments.map((comment) => (
         <Flex
@@ -42,7 +46,10 @@ const Comments = ({
           py="2"
           px="3"
           align="start"
-          className="border-b-4 border-white"
+          className={
+            "border-b-4 " +
+            (theme === "light" ? "border-white" : "border-slate-700")
+          }
         >
           <Link href={"/profile/" + comment.author.username}>
             <ProfilePicture size="sm" user={comment.author} />
