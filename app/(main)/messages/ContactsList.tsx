@@ -5,6 +5,7 @@ import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { useEffect, useState } from "react";
 import AddContact from "./AddContact";
 import TextCompress from "@/app/_components/TextCompress";
+import useTheme from "next-theme";
 
 interface Props {
   setUser: React.Dispatch<React.SetStateAction<string | null>>;
@@ -14,6 +15,7 @@ interface Props {
 const ContactsList = ({ setUser, selectedUserId, contactsInfo }: Props) => {
   const [searched, setSearched] = useState("");
   const [contacts, setContacts] = useState<ChatContactsInfo[]>([]);
+  const { theme } = useTheme();
   useEffect(() => {
     if (searched) {
       const filtered = contactsInfo.filter((contact) =>
@@ -29,14 +31,13 @@ const ContactsList = ({ setUser, selectedUserId, contactsInfo }: Props) => {
       direction="column"
       justify="between"
       width="100%"
-      className="overflow-y-scroll bg-slate-100 border-r-2"
+      className={
+        "overflow-y-scroll border-r-2 " +
+        (theme === "light" ? "bg-slate-100" : "bg-slate-600")
+      }
     >
       <Box>
-        <Box
-          p="4"
-          shrink="0"
-          className="bg-white"
-        >
+        <Box p="4" shrink="0">
           <TextField.Root>
             <TextField.Input
               placeholder="Find..."
@@ -44,17 +45,11 @@ const ContactsList = ({ setUser, selectedUserId, contactsInfo }: Props) => {
               onChange={(e) => setSearched(e.currentTarget.value)}
             />
             <TextField.Slot>
-              <MagnifyingGlassIcon
-                height="16"
-                width="16"
-              />
+              <MagnifyingGlassIcon height="16" width="16" />
             </TextField.Slot>
           </TextField.Root>
         </Box>
-        <Flex
-          direction="column"
-          className="w-full"
-        >
+        <Flex direction="column" className="w-full">
           {contacts.map((contact) => (
             <Flex
               key={contact.user.id}
@@ -62,26 +57,21 @@ const ContactsList = ({ setUser, selectedUserId, contactsInfo }: Props) => {
               align="center"
               justify="between"
               className={
-                (contact.user.id === selectedUserId
-                  ? "bg-sky-200 "
-                  : "bg-white ") + "m-1 rounded-2xl cursor-pointer px-3"
+                (theme === "light"
+                  ? contact.user.id === selectedUserId
+                    ? "bg-sky-200 "
+                    : "bg-white "
+                  : contact.user.id === selectedUserId
+                  ? "bg-sky-700 "
+                  : "bg-slate-700 ") + "m-1 rounded-2xl cursor-pointer px-3"
               }
               onClick={() => setUser(contact.user.id)}
             >
-              <Flex
-                align="center"
-                gap="2"
-              >
-                <ProfilePicture
-                  size="md"
-                  user={contact.user}
-                />
+              <Flex align="center" gap="2">
+                <ProfilePicture size="md" user={contact.user} />
                 <Box>
                   <Text as="p">{contact.user.name}</Text>
-                  <Text
-                    color="gray"
-                    size="2"
-                  >
+                  <Text color="gray" size="2">
                     <TextCompress compressSize={40}>
                       {contact.lastMessage}
                     </TextCompress>
@@ -93,12 +83,7 @@ const ContactsList = ({ setUser, selectedUserId, contactsInfo }: Props) => {
           ))}
         </Flex>
       </Box>
-      <Flex
-        p="4"
-        mb="2"
-        justify="center"
-        shrink="0"
-      >
+      <Flex p="4" mb="2" justify="center" shrink="0">
         <AddContact setUser={(userId: string) => setUser(userId)} />
       </Flex>
     </Flex>

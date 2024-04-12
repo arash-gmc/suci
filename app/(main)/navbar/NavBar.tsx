@@ -11,18 +11,29 @@ import MessageMenu from "../messages/MessageMenue";
 import Logo from "../../_components/Logo";
 import { signOut } from "next-auth/react";
 import UserMenu from "./UserMenu";
+import useTheme from "next-theme";
+import DarkModeToggler from "@/app/_components/DarkModeToggler";
 
 const NavBar = () => {
   const { viewer } = useContext(Context);
   const [userMenu, setUserMenu] = useState(false);
   const router = useRouter();
+  const { theme } = useTheme();
   return (
     <>
-      <nav className="border-b-2 p-2 h-14 fixed w-full z-10 opacity-95 bg-slate-100 px-5 ">
+      <nav
+        className={
+          "p-2 h-14 fixed w-full z-10 px-5 " +
+          (theme === "dark" ? "" : "border-b-2 bg-slate-100 opacity-95")
+        }
+        style={
+          theme === "dark" ? { backgroundColor: "var(--accent-8)" } : undefined
+        }
+      >
         <Container>
           <Flex
             justify="between"
-            className="text-sm text-gray-700"
+            className={"text-sm " + (theme === "light" ? "text-gray-700" : "")}
             align="center"
           >
             <Link href="/">
@@ -64,6 +75,7 @@ const NavBar = () => {
                   <Link href="/register">Register</Link>
                 </Flex>
               )}
+              <DarkModeToggler />
             </Flex>
           </Flex>
         </Container>

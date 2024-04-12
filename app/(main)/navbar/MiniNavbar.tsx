@@ -11,6 +11,8 @@ import MiniNavbarRight from "./MiniNavbarRight";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Logo from "@/app/_components/Logo";
+import useTheme from "next-theme";
+import DarkModeToggler from "@/app/_components/DarkModeToggler";
 
 export type Selected =
   | "profile"
@@ -26,6 +28,7 @@ const MiniNavbar = () => {
   const { viewer } = useContext(Context);
   const [contacts, setContacts] = useState<ChatContactsInfo[]>([]);
   const [notifications, setNotifications] = useState<Notif[]>([]);
+  const { theme } = useTheme();
   useEffect(() => {
     if (viewer?.id)
       axios
@@ -62,17 +65,17 @@ const MiniNavbar = () => {
 
   return (
     <>
-      <nav className="fixed z-10 bg-slate-100 opacity-95 w-full">
-        <Flex
-          direction="column"
-          className=""
-          width="100%"
-        >
-          <Flex
-            justify="between"
-            py="2"
-            px="5"
-          >
+      <nav
+        className={
+          "fixed  z-10 opacity-95 w-full " +
+          (theme === "dark" ? "" : " bg-slate-100")
+        }
+        style={
+          theme === "dark" ? { backgroundColor: "var(--accent-8)" } : undefined
+        }
+      >
+        <Flex direction="column" className="" width="100%">
+          <Flex justify="between" py="2" px="5">
             <Link href="/">
               <Logo size="6" />
             </Link>
@@ -91,7 +94,11 @@ const MiniNavbar = () => {
             grow="1"
             width="100%"
             px={{ initial: "3", xs: "8" }}
-            className={"overflow-hidden " + (expand ? "h-screen" : "h-0")}
+            className={
+              "overflow-hidden " +
+              (expand ? "h-screen" : "h-0") +
+              (theme === "dark" ? " bg-slate-800" : "")
+            }
           >
             {viewer && (
               <>
@@ -121,9 +128,15 @@ const MiniNavbar = () => {
                       </Text>
                     </button>
                   ))}
+                  <Flex mt="5">
+                    <DarkModeToggler />
+                  </Flex>
                 </Flex>
                 <Flex
-                  className="w-3/4 border-l-2 h-5/6 overflow-y-auto"
+                  className={
+                    "border-l-2 w-3/4 h-5/6 overflow-y-auto " +
+                    (theme === "dark" ? "border-l-slate-700" : "")
+                  }
                   px="2"
                   pt="4"
                 >
@@ -154,6 +167,9 @@ const MiniNavbar = () => {
                 <Link href="/register">
                   <Text>Register</Text>
                 </Link>
+                <Flex mt="3">
+                  <DarkModeToggler />
+                </Flex>
               </Flex>
             )}
           </Flex>

@@ -13,6 +13,7 @@ import NotifMini from "./NotifMini";
 import { Context } from "../../_providers/Context";
 import Filters from "../filter/Filters";
 import { signOut } from "next-auth/react";
+import useTheme from "next-theme";
 
 interface Props {
   selected: Selected;
@@ -29,59 +30,29 @@ const MiniNavbarRight = ({
   notifications,
   close,
 }: Props) => {
-  const { setWhere } = useContext(Context);
   const router = useRouter();
   if (selected === "profile")
     return (
-      <Flex
-        align="center"
-        gap="5"
-        direction="column"
-        pt="5"
-        width="100%"
-      >
-        <ProfilePicture
-          size="lg"
-          user={viewer}
-        />
+      <Flex align="center" gap="5" direction="column" pt="5" width="100%">
+        <ProfilePicture size="lg" user={viewer} />
 
-        <Flex
-          direction="column"
-          className="text-xl text-slate-600"
-          gap="5"
-          width="100%"
-        >
+        <Flex direction="column" className={"text-xl "} gap="5" width="100%">
           <Flex direction="column">
             <Text size="6">{viewer.name}</Text>
-            <Text
-              size="1"
-              color="gray"
-            >
+            <Text size="1" color="gray">
               @{viewer.username}
             </Text>
           </Flex>
-          <Link
-            href={"/profile/" + viewer.username}
-            onClick={() => close()}
-          >
+          <Link href={"/profile/" + viewer.username} onClick={() => close()}>
             Go to Profile
           </Link>
-          <Link
-            href="/profile/edit"
-            onClick={() => close()}
-          >
+          <Link href="/profile/edit" onClick={() => close()}>
             Edit Profile
           </Link>
-          <Link
-            href="/posts/bookmarks"
-            onClick={() => close()}
-          >
+          <Link href="/posts/bookmarks" onClick={() => close()}>
             Bookmarks
           </Link>
-          <button
-            onClick={() => signOut()}
-            className="text-left"
-          >
+          <button onClick={() => signOut()} className="text-left">
             Sign Out
           </button>
         </Flex>
@@ -89,34 +60,17 @@ const MiniNavbarRight = ({
     );
   if (selected === "filter")
     return (
-      <Flex
-        justify="center"
-        width="100%"
-      >
+      <Flex justify="center" width="100%">
         <Filters />
       </Flex>
     );
   if (selected === "message")
-    return (
-      <MessageMini
-        contacts={contacts}
-        close={close}
-      />
-    );
+    return <MessageMini contacts={contacts} close={close} />;
   if (selected === "notification")
-    return (
-      <NotifMini
-        notifications={notifications}
-        close={close}
-      />
-    );
+    return <NotifMini notifications={notifications} close={close} />;
   if (selected === "search")
     return (
-      <Flex
-        pt="4"
-        width="100%"
-        justify="center"
-      >
+      <Flex pt="4" width="100%" justify="center">
         <Search
           onUserClick={(user) => {
             router.push("/profile/" + user.username);

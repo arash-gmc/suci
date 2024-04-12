@@ -5,6 +5,7 @@ import { MessageDeliver } from "../interfaces";
 import { FaCheck, FaCheckDouble, FaRegClock } from "react-icons/fa6";
 import { BiCheckDouble } from "react-icons/bi";
 import DisplayDate from "./DisplayDate";
+import useTheme from "next-theme";
 interface Props {
   messages: MessageDeliver[];
   viewerId: string | null;
@@ -13,6 +14,7 @@ interface Props {
 
 const ChatBox = ({ messages, viewerId, contactId }: Props) => {
   const scrollDiv = useRef<HTMLDivElement>(null);
+  const { theme } = useTheme();
   useEffect(() => {
     scrollDiv.current?.scrollIntoView();
   }, [messages, contactId]);
@@ -23,11 +25,7 @@ const ChatBox = ({ messages, viewerId, contactId }: Props) => {
       className="max-h-full overflow-y-scroll border-b-2"
       style={{ backgroundColor: "var(--accent-3)" }}
     >
-      <Flex
-        direction="column-reverse"
-        gap="3"
-        p="5"
-      >
+      <Flex direction="column-reverse" gap="3" p="5">
         {messages.map((message, index) => (
           <Flex
             key={message.id}
@@ -41,24 +39,20 @@ const ChatBox = ({ messages, viewerId, contactId }: Props) => {
               />
             )}
             {index === messages.length - 1 && (
-              <DisplayDate
-                curr={message.date}
-                prev={new Date(0)}
-              />
+              <DisplayDate curr={message.date} prev={new Date(0)} />
             )}
             <Box
               className={
                 (message.fromUserId === viewerId
-                  ? "bg-teal-200 "
-                  : "bg-gray-50") + " rounded-2xl"
+                  ? "bg-teal-200"
+                  : "bg-gray-50") +
+                (theme === "dark" ? " text-black" : "") +
+                " rounded-2xl"
               }
               py="2"
               px="5"
             >
-              <Flex
-                direction="column"
-                gap="1"
-              >
+              <Flex direction="column" gap="1">
                 <Text size={{ initial: "2", sm: "4" }}>{message.text}</Text>
 
                 <Flex

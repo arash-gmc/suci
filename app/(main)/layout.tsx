@@ -6,6 +6,8 @@ import Session from "../_providers/Session";
 import ContextProvider from "../_providers/Context";
 import NavBar from "./navbar/NavBar";
 import MiniNavbar from "./navbar/MiniNavbar";
+import ThemeProviderComponent from "../_providers/Theme";
+import Main from "./Main";
 
 export const metadata: Metadata = {
   title: "Suci",
@@ -20,23 +22,13 @@ export default async function RootLayout({
   return (
     <html>
       <body>
-        <Theme
-          accentColor="purple"
-          grayColor="gray"
-          radius="large"
-        >
-          <Session>
-            <ContextProvider>
-              <Box display={{ initial: "none", sm: "block" }}>
-                <NavBar />
-              </Box>
-              <Box display={{ initial: "block", sm: "none" }}>
-                <MiniNavbar />
-              </Box>
-              <div className="apply-fonts">{children}</div>
-            </ContextProvider>
-          </Session>
-        </Theme>
+        <Session>
+          <ContextProvider>
+            <ThemeProviderComponent>
+              <Main>{children}</Main>
+            </ThemeProviderComponent>
+          </ContextProvider>
+        </Session>
       </body>
     </html>
   );

@@ -5,6 +5,7 @@ import axios from "axios";
 import { Message, User } from "@prisma/client";
 import { MessageDeliver } from "../interfaces";
 import crypto from "crypto";
+import useTheme from "next-theme";
 
 interface Props {
   toId: string;
@@ -16,6 +17,7 @@ interface Props {
 const NewMessage = ({ toId, fromId, addMessage, replaceMessage }: Props) => {
   const [message, setMessage] = useState("");
   const [contact, setContact] = useState<null | User>(null);
+  const { theme } = useTheme();
   useEffect(() => {
     if (toId)
       axios
@@ -54,7 +56,7 @@ const NewMessage = ({ toId, fromId, addMessage, replaceMessage }: Props) => {
       align="center"
       py="4"
       px="3"
-      className="bg-slate-100"
+      className={theme === "light" ? "bg-slate-100" : "bg-slate-800"}
     >
       <Flex width="100%">
         <TextArea

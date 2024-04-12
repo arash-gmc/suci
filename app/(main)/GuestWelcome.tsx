@@ -1,13 +1,21 @@
 "use client";
 import { Box, Button, Dialog, Flex } from "@radix-ui/themes";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Logo from "../_components/Logo";
 import { Context } from "../_providers/Context";
 import Link from "next/link";
 
 const GuestWelcome = () => {
   const { viewer } = useContext(Context);
-  const [showWindow, setShowWindow] = useState(true);
+  const [showWindow, setShowWindow] = useState(false);
+  useEffect(() => {
+    const visitTimes = Number(localStorage.getItem("visitTimes")) || 0;
+    if (visitTimes % 3 === 0)
+      setTimeout(() => {
+        setShowWindow(true);
+      }, 3000);
+    localStorage.setItem("visitTimes", visitTimes + 1 + "");
+  }, []);
   if (viewer === null)
     return (
       <Dialog.Root open={showWindow}>
@@ -19,7 +27,7 @@ const GuestWelcome = () => {
             direction="column"
           >
             <Flex justify="center" display={{ initial: "none", sm: "flex" }}>
-              <div className="border-2 border-slate-900 rounded-full p-5 w-36 h-36">
+              <div className="border-2  rounded-full p-5 w-36 h-36">
                 <Flex height="100%" align="center">
                   <Logo size="7" />
                 </Flex>
