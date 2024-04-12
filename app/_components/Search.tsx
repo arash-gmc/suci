@@ -56,6 +56,7 @@ const Search = ({
           type="text"
           onChange={onSearch}
           value={searchText}
+          className="outline-none"
         />
         <TextField.Slot>
           <MagnifyingGlassIcon height="16" width="16" />

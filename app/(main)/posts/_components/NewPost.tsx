@@ -32,8 +32,9 @@ const NewPost = ({ setPosts }: Props) => {
           <TextArea
             placeholder="What's up?"
             onChange={(e) => setPostText(e.currentTarget.value)}
-            rows={2}
+            rows={3}
             value={postText}
+            size="3"
             className="placeholder:font-bold"
           />
           <Box position="absolute" className="right-0 -bottom-6">
