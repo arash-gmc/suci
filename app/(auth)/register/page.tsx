@@ -1,13 +1,5 @@
 "use client";
-import {
-  Button,
-  Flex,
-  Grid,
-  Heading,
-  Select,
-  Text,
-  TextField,
-} from "@radix-ui/themes";
+import { Button, Flex, Text, TextField } from "@radix-ui/themes";
 import axios, { AxiosError } from "axios";
 import { signIn } from "next-auth/react";
 import React, { useState } from "react";
@@ -15,7 +7,6 @@ import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { newUserSchema } from "../../api/user/register/schema";
 import SelectController from "@/app/_components/SelectController";
-import { CldUploadWidget } from "next-cloudinary";
 import { CheckCircledIcon } from "@radix-ui/react-icons";
 import Logo from "@/app/_components/Logo";
 import Link from "next/link";
@@ -59,22 +50,9 @@ const RegisterPage = () => {
   const { register, handleSubmit, control } = useForm<InputFields>();
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Flex
-        gap="4"
-        direction="column"
-        className="max-w-2xl mx-auto"
-      >
-        <Flex
-          align="center"
-          gap="1"
-          width="100%"
-          justify="center"
-          mb="5"
-        >
-          <Text
-            className="font-bold"
-            size="5"
-          >
+      <Flex gap="4" direction="column" className="max-w-2xl mx-auto">
+        <Flex align="center" gap="1" width="100%" justify="center" mb="5">
+          <Text className="font-bold" size="5">
             Signup in{" "}
           </Text>
           <Logo size="6" />
@@ -104,12 +82,7 @@ const RegisterPage = () => {
           control={control}
           items={years}
         />
-        <Flex
-          my="2"
-          gap="5"
-          align="center"
-          justify="center"
-        >
+        <Flex my="2" gap="5" align="center" justify="center">
           <Text>Profile Picture</Text>
 
           <UploadProfile passPublicId={(pId) => setPublicId(pId)} />
@@ -118,18 +91,10 @@ const RegisterPage = () => {
         <Flex justify="center">
           <Button size="3">Register</Button>
         </Flex>
-        <Flex
-          justify="center"
-          gap="2"
-          align="center"
-        >
+        <Flex justify="center" gap="2" align="center">
           Already have an account?
           <Link href="/login">
-            <Button
-              size="2"
-              variant="ghost"
-              type="button"
-            >
+            <Button size="2" variant="ghost" type="button">
               Sign in
             </Button>
           </Link>

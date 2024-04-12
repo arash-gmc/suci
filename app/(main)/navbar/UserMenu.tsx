@@ -11,7 +11,7 @@ const UserMenu = () => {
     <Flex
       direction="column"
       p="2"
-      className="absolute top-14 -left-40 border-2 border-purple-500 w-48 bg-slate-50 rounded-md text-md min-w-max font-bold"
+      className="absolute top-11 -left-44 border-2 border-purple-500 w-48 bg-slate-50 rounded-md text-md min-w-max font-bold"
     >
       <Flex direction="column" className="border-b-2 py-2">
         <Text>{viewer.name}</Text>

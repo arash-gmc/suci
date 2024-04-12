@@ -91,7 +91,7 @@ const PostFooter = ({ postId }: { postId: string }) => {
   };
   const repost = () => {
     axios.post("/api/post/repost", { postId, userId: viewer?.id });
-    setCounts((prev) => ({ ...prev, reposts: prev.repost + 1 }));
+    setCounts((prev) => ({ ...prev, repost: prev.repost + 1 }));
     setInteractions((prev) => ({ ...prev, repost: true }));
   };
 
@@ -99,7 +99,7 @@ const PostFooter = ({ postId }: { postId: string }) => {
     axios.delete("/api/post/repost", {
       headers: { postId, userId: viewer?.id },
     });
-    setCounts((prev) => ({ ...prev, reposts: prev.repost - 1 }));
+    setCounts((prev) => ({ ...prev, repost: prev.repost - 1 }));
     setInteractions((prev) => ({ ...prev, repost: false }));
   };
 
@@ -190,6 +190,11 @@ const PostFooter = ({ postId }: { postId: string }) => {
                     ? { scale: 1.2, y: -6 }
                     : undefined
                 }
+                whileHover={{
+                  rotate: [10, -10, 0],
+                  scale: 1.06,
+                }}
+                transition={{ duration: 0.2 }}
               >
                 <Text size={{ initial: "5", sm: "6" }}>{item.icon}</Text>
               </motion.div>
