@@ -1,7 +1,7 @@
 "use client";
 import CalloutComponent from "@/app/_components/Callout";
 import Spinner from "@/app/_components/Spinner";
-import { Context } from "@/app/_providers/Context";
+import { ViewerContext } from "@/app/_providers/ViewerContext";
 import {
   Button,
   Callout,
@@ -25,7 +25,7 @@ const ResetPassword = () => {
   const [calloutColor, setCalloutColor] = useState<"red" | "green" | "blue">(
     "blue"
   );
-  const { viewer } = useContext(Context);
+  const { viewer } = useContext(ViewerContext);
   const fields: { label: string; value: string; ref: Ref<HTMLInputElement> }[] =
     [
       { label: "Old Password", value: "oldPassword", ref: oldPassword },
@@ -80,42 +80,22 @@ const ResetPassword = () => {
   };
   return (
     <Container>
-      <Flex
-        direction="column"
-        gap="4"
-        px="4"
-        className="md:w-2/3 min-w-fit"
-      >
+      <Flex direction="column" gap="4" px="4" className="md:w-2/3 min-w-fit">
         <Heading my="3">Reset Password</Heading>
         {fields.map((field) => (
           <Flex key={field.value}>
             <Text className="w-1/2 max-sm:w-3/4">{field.label}</Text>
             <TextField.Root className="w-full">
-              <TextField.Input
-                type="password"
-                ref={field.ref}
-              />
+              <TextField.Input type="password" ref={field.ref} />
             </TextField.Root>
           </Flex>
         ))}
-        <Flex
-          gap="5"
-          my="5"
-          justify="end"
-        >
-          <Button
-            onClick={() => resetPassword()}
-            disabled={loading}
-          >
+        <Flex gap="5" my="5" justify="end">
+          <Button onClick={() => resetPassword()} disabled={loading}>
             Reset Password {loading && <Spinner />}
           </Button>
         </Flex>
-        {message && (
-          <CalloutComponent
-            color={calloutColor}
-            message={message}
-          />
-        )}
+        {message && <CalloutComponent color={calloutColor} message={message} />}
       </Flex>
     </Container>
   );

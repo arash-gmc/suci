@@ -1,5 +1,5 @@
 "use client";
-import { Context } from "@/app/_providers/Context";
+import { ViewerContext } from "@/app/_providers/ViewerContext";
 import { AlertDialog, Button, Flex } from "@radix-ui/themes";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -21,25 +21,14 @@ const DeletionAlert = ({ trigger, action, label }: Props) => {
           You are about to remove {label}. Are you sure?
         </AlertDialog.Description>
 
-        <Flex
-          gap="3"
-          mt="4"
-          justify="end"
-        >
+        <Flex gap="3" mt="4" justify="end">
           <AlertDialog.Cancel>
-            <Button
-              variant="soft"
-              color="gray"
-            >
+            <Button variant="soft" color="gray">
               Cancel
             </Button>
           </AlertDialog.Cancel>
           <AlertDialog.Action>
-            <Button
-              variant="solid"
-              color="red"
-              onClick={() => action()}
-            >
+            <Button variant="solid" color="red" onClick={() => action()}>
               Delete
             </Button>
           </AlertDialog.Action>

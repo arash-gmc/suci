@@ -2,11 +2,11 @@
 import { Box, Button, Dialog, Flex } from "@radix-ui/themes";
 import React, { useContext, useEffect, useState } from "react";
 import Logo from "../_components/Logo";
-import { Context } from "../_providers/Context";
+import { ViewerContext } from "../_providers/ViewerContext";
 import Link from "next/link";
 
 const GuestWelcome = () => {
-  const { viewer } = useContext(Context);
+  const { viewer } = useContext(ViewerContext);
   const [showWindow, setShowWindow] = useState(false);
   useEffect(() => {
     const visitTimes = Number(localStorage.getItem("visitTimes")) || 0;

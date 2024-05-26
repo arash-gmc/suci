@@ -7,7 +7,7 @@ import { FaRetweet } from "react-icons/fa6";
 import axios from "axios";
 import { ActionType } from "@prisma/client";
 import QuickComment from "./QuickComment";
-import { Context } from "@/app/_providers/Context";
+import { ViewerContext } from "@/app/_providers/ViewerContext";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 
@@ -29,7 +29,7 @@ interface ActionItem {
 }
 
 const PostFooter = ({ postId }: { postId: string }) => {
-  const { viewer } = useContext(Context);
+  const { viewer } = useContext(ViewerContext);
   const [counts, setCounts] = useState<Counts>({} as Counts);
   const [animations, setAnimation] = useState<ActionsBoolean>({
     like: false,

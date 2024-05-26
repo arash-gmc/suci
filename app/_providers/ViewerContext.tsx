@@ -5,22 +5,21 @@ import { useSession } from "next-auth/react";
 import React, { ReactNode, useEffect, useState } from "react";
 import { PostFiltersObject } from "../(main)/filter/Filters";
 
-interface Context {
+interface ViewerContextType {
   viewer: User | null | undefined;
-  where: Prisma.PostsWhereInput;
-  setWhere: React.Dispatch<React.SetStateAction<Prisma.PostsWhereInput>>;
   selectedFilters: PostFiltersObject;
   setSelectedFilters: React.Dispatch<React.SetStateAction<PostFiltersObject>>;
 }
 
-export const Context = React.createContext<Context>({} as Context);
+export const ViewerContext = React.createContext<ViewerContextType>(
+  {} as ViewerContextType
+);
 interface Props {
   children: ReactNode;
 }
-const ContextProvider = ({ children }: Props) => {
+const ViewerContextProvider = ({ children }: Props) => {
   const { data: rawUser, status } = useSession();
   const [viewer, setViewer] = useState<User | null | undefined>(undefined);
-  const [where, setWhere] = useState<Prisma.PostsWhereInput>({});
   const [selectedFilters, setSelectedFilters] = useState<PostFiltersObject>({
     all: true,
     age: false,
@@ -42,18 +41,16 @@ const ContextProvider = ({ children }: Props) => {
     if (status === "unauthenticated") setViewer(null);
   }, [status]);
   return (
-    <Context.Provider
+    <ViewerContext.Provider
       value={{
         viewer,
-        where,
-        setWhere,
         selectedFilters,
         setSelectedFilters,
       }}
     >
       {children}
-    </Context.Provider>
+    </ViewerContext.Provider>
   );
 };
 
-export default ContextProvider;
+export default ViewerContextProvider;

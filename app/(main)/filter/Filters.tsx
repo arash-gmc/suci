@@ -1,12 +1,13 @@
 "use client";
 import { useContext, useEffect, useState } from "react";
 import MultiSelectingButtons from "../../_components/MultiSelectingButtons";
-import { Context } from "../../_providers/Context";
+import { ViewerContext } from "../../_providers/ViewerContext";
 import axios from "axios";
 import SingleSelectingButtons from "../../_components/SingleSelectingButtons";
 import { Flex, Button } from "@radix-ui/themes";
 import ListWindow, { FetchedList } from "./ListWindow";
 import { PlusIcon } from "@radix-ui/react-icons";
+import { PostFilterContext } from "@/app/_providers/PostFilterProvider";
 export type PostFilters = "all" | "age" | "city" | "boys" | "girls" | "reposts";
 export type PostFiltersObject = Record<PostFilters, boolean>;
 export interface ButtonsLabel {
@@ -15,8 +16,9 @@ export interface ButtonsLabel {
 }
 
 const Filters = () => {
-  const { viewer, setWhere, selectedFilters, setSelectedFilters } =
-    useContext(Context);
+  const { viewer, selectedFilters, setSelectedFilters } =
+    useContext(ViewerContext);
+  const { setWhereObj: setWhere } = useContext(PostFilterContext);
   const options: ButtonsLabel[] = [
     { label: "All", value: "all" },
     { label: "Boys", value: "boys" },
@@ -142,10 +144,7 @@ const Filters = () => {
         }));
 
   return (
-    <Flex
-      direction="column"
-      gap="2"
-    >
+    <Flex direction="column" gap="2">
       <MultiSelectingButtons
         options={options}
         status={selectedFilters}

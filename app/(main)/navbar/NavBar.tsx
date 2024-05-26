@@ -6,7 +6,7 @@ import { useContext, useState } from "react";
 import ProfilePicture from "../../_components/ProfilePicture";
 import Search from "../../_components/Search";
 import NotificationsMenu from "../notifications/NotificationMenu";
-import { Context } from "../../_providers/Context";
+import { ViewerContext } from "../../_providers/ViewerContext";
 import MessageMenu from "../messages/MessageMenue";
 import Logo from "../../_components/Logo";
 import { signOut } from "next-auth/react";
@@ -15,7 +15,7 @@ import useTheme from "next-theme";
 import DarkModeToggler from "@/app/_components/DarkModeToggler";
 
 const NavBar = () => {
-  const { viewer } = useContext(Context);
+  const { viewer } = useContext(ViewerContext);
   const [userMenu, setUserMenu] = useState(false);
   const router = useRouter();
   const { theme } = useTheme();

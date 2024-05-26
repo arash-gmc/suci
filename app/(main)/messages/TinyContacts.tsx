@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
-import { Context } from "../../_providers/Context";
+import { ViewerContext } from "../../_providers/ViewerContext";
 import { Badge, Box, Flex, Text } from "@radix-ui/themes";
 import ProfilePicture from "../../_components/ProfilePicture";
 import { ChatContactsInfo } from "../../api/message/users/route";

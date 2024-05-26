@@ -9,7 +9,7 @@ import ProfilePicture from "@/app/_components/ProfilePicture";
 import { getYear } from "date-fns";
 import SendMessage from "./SendMessage";
 import CountsComponent from "./Counts";
-import { Context } from "@/app/_providers/Context";
+import { ViewerContext } from "@/app/_providers/ViewerContext";
 import Link from "next/link";
 
 interface Props {
@@ -28,7 +28,7 @@ const ProfileHeader = ({ user, session }: Props) => {
   const [counts, setCounts] = useState<Counts>({} as Counts);
   const [followings, setFollowings] = useState<User[]>([]);
   const [followers, setFollowers] = useState<User[]>([]);
-  const { viewer } = useContext(Context);
+  const { viewer } = useContext(ViewerContext);
 
   useEffect(() => {
     if (user.id) {

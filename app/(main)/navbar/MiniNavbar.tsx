@@ -4,7 +4,7 @@ import { Badge, Flex, Grid, Heading, Text } from "@radix-ui/themes";
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { FaArrowUp } from "react-icons/fa6";
-import { Context } from "../../_providers/Context";
+import { ViewerContext } from "../../_providers/ViewerContext";
 import { ChatContactsInfo } from "../../api/message/users/route";
 import { Notif } from "../interfaces";
 import MiniNavbarRight from "./MiniNavbarRight";
@@ -25,7 +25,7 @@ const MiniNavbar = () => {
   const [expand, setExpand] = useState(false);
   const path = usePathname();
   const [selectedItem, setSelectedItem] = useState<Selected>("profile");
-  const { viewer } = useContext(Context);
+  const { viewer } = useContext(ViewerContext);
   const [contacts, setContacts] = useState<ChatContactsInfo[]>([]);
   const [notifications, setNotifications] = useState<Notif[]>([]);
   const { theme } = useTheme();

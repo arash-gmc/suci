@@ -4,7 +4,7 @@ import React, { useContext, useState } from "react";
 import { FaRegComment } from "react-icons/fa6";
 import axios from "axios";
 import ProfilePicture from "@/app/_components/ProfilePicture";
-import { Context } from "@/app/_providers/Context";
+import { ViewerContext } from "@/app/_providers/ViewerContext";
 import { useRouter } from "next/navigation";
 
 interface Props {
@@ -14,7 +14,7 @@ interface Props {
 }
 
 const QuickComment = ({ postId, addCount, setStatus }: Props) => {
-  const { viewer } = useContext(Context);
+  const { viewer } = useContext(ViewerContext);
   const [commentText, setCommentText] = useState("");
   const router = useRouter();
   const sendComment = () => {

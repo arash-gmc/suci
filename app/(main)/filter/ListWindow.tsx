@@ -9,7 +9,7 @@ import React, {
 import UsersField from "../../_components/UsersField";
 import { User } from "@prisma/client";
 import axios from "axios";
-import { Context } from "../../_providers/Context";
+import { ViewerContext } from "../../_providers/ViewerContext";
 import Search from "../../_components/Search";
 
 export interface FetchedList {
@@ -35,7 +35,7 @@ const ListWindow = ({
 }: Props) => {
   const [members, setMembers] = useState<User[]>([]);
   const [listName, setListName] = useState<string>(initialName || "");
-  const { viewer } = useContext(Context);
+  const { viewer } = useContext(ViewerContext);
 
   const addOrUpdate = async () => {
     if (listId) {

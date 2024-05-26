@@ -3,7 +3,7 @@ import { ChatBubbleIcon } from "@radix-ui/react-icons";
 import { Popover, Button, Flex, Box, TextArea, Text } from "@radix-ui/themes";
 import React, { useContext, useState } from "react";
 import axios from "axios";
-import { Context } from "@/app/_providers/Context";
+import { ViewerContext } from "@/app/_providers/ViewerContext";
 import ProfilePicture from "@/app/_components/ProfilePicture";
 import Link from "next/link";
 
@@ -13,7 +13,7 @@ interface Props {
 }
 
 const SendMessage = ({ profileId, profileName }: Props) => {
-  const { viewer } = useContext(Context);
+  const { viewer } = useContext(ViewerContext);
   const [messageText, setMessageText] = useState("");
   const sendMessage = () => {
     axios
@@ -34,10 +34,7 @@ const SendMessage = ({ profileId, profileName }: Props) => {
       <Popover.Content style={{ width: 360 }}>
         <Flex gap="3">
           <Flex align="start">
-            <ProfilePicture
-              user={viewer}
-              size="sm"
-            />
+            <ProfilePicture user={viewer} size="sm" />
           </Flex>
           <Box grow="1">
             <TextArea
@@ -45,24 +42,15 @@ const SendMessage = ({ profileId, profileName }: Props) => {
               style={{ height: 80 }}
               onChange={(e) => setMessageText(e.currentTarget.value)}
             />
-            <Flex
-              mt="3"
-              justify="between"
-            >
+            <Flex mt="3" justify="between">
               <Flex gap="3">
                 <Popover.Close>
-                  <Button
-                    size="1"
-                    variant="outline"
-                  >
+                  <Button size="1" variant="outline">
                     Cancel
                   </Button>
                 </Popover.Close>
                 <Popover.Close>
-                  <Button
-                    size="1"
-                    variant="outline"
-                  >
+                  <Button size="1" variant="outline">
                     <Link href={"/messages?contactId=" + profileId}>
                       Go to Chat
                     </Link>

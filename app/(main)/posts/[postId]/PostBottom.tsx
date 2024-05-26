@@ -8,7 +8,7 @@ import { User } from "@prisma/client";
 import axios from "axios";
 import DeletionAlert from "@/app/_components/DeletionAlert";
 import { useRouter } from "next/navigation";
-import { Context } from "@/app/_providers/Context";
+import { ViewerContext } from "@/app/_providers/ViewerContext";
 
 interface Props {
   postId: string;
@@ -20,7 +20,7 @@ interface Props {
 const PostBottom = ({ postId, comments, authorId, postText }: Props) => {
   const [likers, setLikers] = useState<User[]>([]);
   const [reposters, setReposters] = useState<User[]>([]);
-  const { viewer } = useContext(Context);
+  const { viewer } = useContext(ViewerContext);
   const router = useRouter();
   useEffect(() => {
     if (!postId) return;

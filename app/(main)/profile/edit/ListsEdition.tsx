@@ -1,5 +1,5 @@
 "use client";
-import { Context } from "@/app/_providers/Context";
+import { ViewerContext } from "@/app/_providers/ViewerContext";
 import React, { useContext, useEffect, useState } from "react";
 import ListWindow, { FetchedList } from "../../filter/ListWindow";
 import axios from "axios";
@@ -9,7 +9,7 @@ import Spinner from "@/app/_components/Spinner";
 import { PlusIcon } from "@radix-ui/react-icons";
 
 const ListsEdition = () => {
-  const { viewer } = useContext(Context);
+  const { viewer } = useContext(ViewerContext);
 
   const [lists, setLists] = useState<FetchedList[] | null>(null);
   useEffect(() => {
@@ -37,10 +37,7 @@ const ListsEdition = () => {
   if (!viewer) return null;
   if (!lists)
     return (
-      <Flex
-        mt="5"
-        justify="center"
-      >
+      <Flex mt="5" justify="center">
         <Spinner />
       </Flex>
     );
@@ -56,21 +53,13 @@ const ListsEdition = () => {
     >
       <Heading mb="4">Lists Editation</Heading>
       {lists.length === 0 ? (
-        <Flex
-          className="sm:text-xl"
-          justify="center"
-          my="5"
-        >
+        <Flex className="sm:text-xl" justify="center" my="5">
           You have no list yet. Use the bellow button to create one.
         </Flex>
       ) : (
         <>
           {lists.map((list) => (
-            <Flex
-              gap="3"
-              key={list.id}
-              align="end"
-            >
+            <Flex gap="3" key={list.id} align="end">
               <Text size={{ initial: "6", sm: "7" }}>{list.name}</Text>
               <ListWindow
                 initialName={list.name}

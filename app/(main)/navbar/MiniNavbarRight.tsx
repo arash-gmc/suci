@@ -10,7 +10,7 @@ import { ChatContactsInfo } from "../../api/message/users/route";
 import { Notif } from "../interfaces";
 import MessageMini from "./MessageMini";
 import NotifMini from "./NotifMini";
-import { Context } from "../../_providers/Context";
+import { ViewerContext } from "../../_providers/ViewerContext";
 import Filters from "../filter/Filters";
 import { signOut } from "next-auth/react";
 import useTheme from "next-theme";

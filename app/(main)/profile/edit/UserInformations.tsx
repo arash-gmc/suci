@@ -3,7 +3,7 @@ import CalloutComponent from "@/app/_components/Callout";
 import SelectComponent from "@/app/_components/SelectComponent";
 import Spinner from "@/app/_components/Spinner";
 import UploadProfile from "@/app/_components/UploadProfile";
-import { Context } from "@/app/_providers/Context";
+import { ViewerContext } from "@/app/_providers/ViewerContext";
 import { Box, Button, Flex, Heading, Text, TextField } from "@radix-ui/themes";
 import axios, { AxiosError } from "axios";
 import { CldImage } from "next-cloudinary";
@@ -17,7 +17,7 @@ for (let i = 2010; i > 1950; i--) {
 }
 
 const UserInformations = () => {
-  const { viewer } = useContext(Context);
+  const { viewer } = useContext(ViewerContext);
   const nameRef = useRef<HTMLInputElement>(null);
   const usernameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
@@ -91,11 +91,7 @@ const UserInformations = () => {
   if (!viewer) return null;
   return (
     <Box className="w-full md:w-2/3">
-      <Flex
-        direction="column"
-        gap="3"
-        px={{ initial: "1", sm: "4" }}
-      >
+      <Flex direction="column" gap="3" px={{ initial: "1", sm: "4" }}>
         <Heading my="3">Edit User Informations</Heading>
         {textFields.map((field) => (
           <Flex key={field.value}>
@@ -138,21 +134,11 @@ const UserInformations = () => {
             />
           </Flex>
         </Flex>
-        <Flex
-          className="mt-4"
-          align="center"
-        >
-          <Flex
-            className="w-1/3"
-            align="center"
-          >
+        <Flex className="mt-4" align="center">
+          <Flex className="w-1/3" align="center">
             Profile Picture
           </Flex>
-          <Flex
-            className="w-full"
-            align="center"
-            gap="5"
-          >
+          <Flex className="w-full" align="center" gap="5">
             <UploadProfile passPublicId={(pId) => setPublicId(pId)} />
 
             {publicId && (
@@ -166,40 +152,26 @@ const UserInformations = () => {
               />
             )}
             {publicId && (
-              <Button
-                variant="soft"
-                onClick={() => setPublicId(null)}
-              >
+              <Button variant="soft" onClick={() => setPublicId(null)}>
                 Remove
               </Button>
             )}
           </Flex>
         </Flex>
 
-        <Flex
-          className="w-full"
-          my="5"
-          gap="4"
-          justify="end"
-        >
+        <Flex className="w-full" my="5" gap="4" justify="end">
           <Link href={"/profile/" + viewer?.username}>
             <Button>Back to Profile</Button>
           </Link>
 
-          <Button
-            onClick={updateUser}
-            disabled={loading}
-          >
+          <Button onClick={updateUser} disabled={loading}>
             Apply {loading && <Spinner />}
           </Button>
         </Flex>
 
         <Box ref={calloutRef}>
           {!!calloutMessage && (
-            <CalloutComponent
-              color={calloutColor}
-              message={calloutMessage}
-            />
+            <CalloutComponent color={calloutColor} message={calloutMessage} />
           )}
         </Box>
       </Flex>

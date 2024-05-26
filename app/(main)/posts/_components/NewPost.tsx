@@ -3,7 +3,7 @@ import { Badge, Box, Button, Flex, TextArea } from "@radix-ui/themes";
 import axios from "axios";
 import React, { Dispatch, SetStateAction, useContext, useState } from "react";
 import { PostAndRef } from "../../interfaces";
-import { Context } from "../../../_providers/Context";
+import { ViewerContext } from "../../../_providers/ViewerContext";
 import Spinner from "@/app/_components/Spinner";
 
 interface Props {
@@ -11,7 +11,7 @@ interface Props {
 }
 
 const NewPost = ({ setPosts }: Props) => {
-  const { viewer } = useContext(Context);
+  const { viewer } = useContext(ViewerContext);
   const [postText, setPostText] = useState<string>("");
   const [loading, setLoading] = useState(false);
   const addPost = async () => {

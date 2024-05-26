@@ -1,13 +1,11 @@
-import type { Metadata } from "next";
-import "./globals.css";
 import "@radix-ui/themes/styles.css";
-import { Box, Theme } from "@radix-ui/themes";
+import type { Metadata } from "next";
 import Session from "../_providers/Session";
-import ContextProvider from "../_providers/Context";
-import NavBar from "./navbar/NavBar";
-import MiniNavbar from "./navbar/MiniNavbar";
 import ThemeProviderComponent from "../_providers/Theme";
+import ViewerContextProvider from "../_providers/ViewerContext";
+import PostFilterContextProvider from "../_providers/PostFilterProvider";
 import Main from "./Main";
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Suci",
@@ -23,11 +21,13 @@ export default async function RootLayout({
     <html>
       <body>
         <Session>
-          <ContextProvider>
-            <ThemeProviderComponent>
-              <Main>{children}</Main>
-            </ThemeProviderComponent>
-          </ContextProvider>
+          <ViewerContextProvider>
+            <PostFilterContextProvider>
+              <ThemeProviderComponent>
+                <Main>{children}</Main>
+              </ThemeProviderComponent>
+            </PostFilterContextProvider>
+          </ViewerContextProvider>
         </Session>
       </body>
     </html>

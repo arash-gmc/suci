@@ -3,7 +3,7 @@ import { Button, Flex, TextArea } from "@radix-ui/themes";
 import axios from "axios";
 import React, { Dispatch, SetStateAction, useContext, useState } from "react";
 import { CommentAndAuthor, PostAndRef } from "../../interfaces";
-import { Context } from "../../../_providers/Context";
+import { ViewerContext } from "../../../_providers/ViewerContext";
 import Spinner from "@/app/_components/Spinner";
 
 interface Props {
@@ -12,7 +12,7 @@ interface Props {
 }
 
 const NewComment = ({ setComments: setComments, postId }: Props) => {
-  const { viewer } = useContext(Context);
+  const { viewer } = useContext(ViewerContext);
   const [loading, setLoading] = useState(false);
   const [commentText, setCommentText] = useState<string>("");
   const addComment = async () => {

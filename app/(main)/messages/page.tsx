@@ -4,7 +4,7 @@ import { Message, User } from "@prisma/client";
 import ContactsList from "./ContactsList";
 import { Flex, Text } from "@radix-ui/themes";
 import ChatBox from "./ChatBox";
-import { Context } from "../../_providers/Context";
+import { ViewerContext } from "../../_providers/ViewerContext";
 import NewMessage from "./NewMessage";
 import axios from "axios";
 import TinyUsers from "./TinyContacts";
@@ -21,7 +21,7 @@ const Messanger = ({ searchParams }: Props) => {
   const [selectedUserId, setSelectedUserId] = useState<string | null>(
     searchParams.contactId || null
   );
-  const { viewer } = useContext(Context);
+  const { viewer } = useContext(ViewerContext);
   const [messages, setMessages] = useState<MessageDeliver[]>([]);
   const [IsContactsFetched, setFetchedContacts] = useState(false);
   const [contactsInfo, setContactsInfo] = useState<ChatContactsInfo[]>([]);
@@ -98,10 +98,7 @@ const Messanger = ({ searchParams }: Props) => {
 
   if (!viewer || !IsContactsFetched)
     return (
-      <Flex
-        justify="center"
-        m="6"
-      >
+      <Flex justify="center" m="6">
         <Spinner />
       </Flex>
     );
@@ -128,10 +125,7 @@ const Messanger = ({ searchParams }: Props) => {
     );
   return (
     <Flex className="fixed bg-white bottom-0 left-0 right-0 top-14 max-md:top-12">
-      <Flex
-        className="w-1/3"
-        display={{ initial: "none", md: "flex" }}
-      >
+      <Flex className="w-1/3" display={{ initial: "none", md: "flex" }}>
         <ContactsList
           setUser={setSelectedUserId}
           selectedUserId={selectedUserId}
@@ -149,10 +143,7 @@ const Messanger = ({ searchParams }: Props) => {
           contactsInfo={contactsInfo}
         />
       </Flex>
-      <Flex
-        className="w-full"
-        direction="column"
-      >
+      <Flex className="w-full" direction="column">
         <ChatBox
           messages={messages}
           viewerId={viewer.id}

@@ -1,6 +1,6 @@
 "use client";
 import ProfilePicture from "@/app/_components/ProfilePicture";
-import { Context } from "@/app/_providers/Context";
+import { ViewerContext } from "@/app/_providers/ViewerContext";
 import { Popover, Flex, Box, TextArea, Button } from "@radix-ui/themes";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -14,7 +14,7 @@ interface Props {
 }
 
 const EditPost = ({ authorId, initialText, postId }: Props) => {
-  const { viewer } = useContext(Context);
+  const { viewer } = useContext(ViewerContext);
   const [editedText, setEditedText] = useState("");
   const router = useRouter();
 
@@ -35,10 +35,7 @@ const EditPost = ({ authorId, initialText, postId }: Props) => {
       <Popover.Content style={{ width: 360 }}>
         <Flex gap="3">
           <Flex align="start">
-            <ProfilePicture
-              user={viewer}
-              size="sm"
-            />
+            <ProfilePicture user={viewer} size="sm" />
           </Flex>
           <Box grow="1">
             <TextArea
@@ -47,16 +44,9 @@ const EditPost = ({ authorId, initialText, postId }: Props) => {
               value={editedText}
               onChange={(e) => setEditedText(e.currentTarget.value)}
             />
-            <Flex
-              gap="3"
-              mt="3"
-              justify="between"
-            >
+            <Flex gap="3" mt="3" justify="between">
               <Popover.Close>
-                <Button
-                  size="1"
-                  variant="outline"
-                >
+                <Button size="1" variant="outline">
                   Cancel
                 </Button>
               </Popover.Close>

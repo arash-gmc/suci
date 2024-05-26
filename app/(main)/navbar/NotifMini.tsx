@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { Notif } from "../interfaces";
 import NotificationText from "../notifications/NotificationText";
 import axios from "axios";
-import { Context } from "@/app/_providers/Context";
+import { ViewerContext } from "@/app/_providers/ViewerContext";
 
 interface Props {
   notifications: Notif[];
@@ -15,7 +15,7 @@ interface Props {
 
 const NotifMini = ({ notifications, close }: Props) => {
   const router = useRouter();
-  const { viewer } = useContext(Context);
+  const { viewer } = useContext(ViewerContext);
   useEffect(
     () => () => {
       if (viewer && notifications.length > 0)
@@ -24,33 +24,17 @@ const NotifMini = ({ notifications, close }: Props) => {
     []
   );
   return (
-    <Flex
-      direction="column"
-      gap="2"
-      width="100%"
-    >
+    <Flex direction="column" gap="2" width="100%">
       {notifications.map((item) => (
-        <Flex
-          align="center"
-          key={item.id}
-          gap="1"
-          className="border-b-2 py-1"
-        >
-          <ProfilePicture
-            user={item.fromUser}
-            size="sm"
-          />
+        <Flex align="center" key={item.id} gap="1" className="border-b-2 py-1">
+          <ProfilePicture user={item.fromUser} size="sm" />
           <Box onClick={() => close()}>
             <NotificationText notif={item} />
           </Box>
         </Flex>
       ))}
       {notifications.length === 0 ? (
-        <Flex
-          justify="center"
-          pb="3"
-          className="border-b-2"
-        >
+        <Flex justify="center" pb="3" className="border-b-2">
           There is no new notification.
         </Flex>
       ) : null}

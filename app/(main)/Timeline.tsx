@@ -5,19 +5,18 @@ import { useContext, useEffect, useState } from "react";
 import NewPost from "./posts/_components/NewPost";
 import { PostAndRef } from "./interfaces";
 import PostsGrid from "./posts/_components/PostsGrid";
-import { Context } from "../_providers/Context";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Spinner from "../_components/Spinner";
 import LoadingBalls from "../_components/LoadingBalls";
+import { PostFilterContext } from "../_providers/PostFilterProvider";
 
 const TimeLine = () => {
   const [posts, setPosts] = useState<PostAndRef[]>([]);
-
   const [isLoading, setLoading] = useState<boolean>(true);
   const [page, setPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const pageSize = 10;
-  const { where } = useContext(Context);
+  const { whereObj: where } = useContext(PostFilterContext);
 
   useEffect(() => {
     setLoading(true);

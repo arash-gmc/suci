@@ -1,4 +1,4 @@
-import { Context } from "@/app/_providers/Context";
+import { ViewerContext } from "@/app/_providers/ViewerContext";
 import { Flex, Text } from "@radix-ui/themes";
 import { signOut } from "next-auth/react";
 import useTheme from "next-theme";
@@ -6,7 +6,7 @@ import Link from "next/link";
 import React, { useContext } from "react";
 
 const UserMenu = () => {
-  const { viewer } = useContext(Context);
+  const { viewer } = useContext(ViewerContext);
   const { theme } = useTheme();
   if (!viewer) return null;
   return (

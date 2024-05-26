@@ -9,7 +9,7 @@ import TimeDiff from "js-time-diff";
 import Link from "next/link";
 import DeletionAlert from "@/app/_components/DeletionAlert";
 import axios from "axios";
-import { Context } from "@/app/_providers/Context";
+import { ViewerContext } from "@/app/_providers/ViewerContext";
 import { useRouter } from "next/navigation";
 import useTheme from "next-theme";
 
@@ -20,7 +20,7 @@ const Comments = ({
   postId: string;
   initialComments: CommentAndAuthor[];
 }) => {
-  const { viewer } = useContext(Context);
+  const { viewer } = useContext(ViewerContext);
   const router = useRouter();
   const { theme } = useTheme();
   const [comments, setComments] = useState<CommentAndAuthor[]>(initialComments);
