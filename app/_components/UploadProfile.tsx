@@ -9,9 +9,10 @@ interface Props {
 const UploadProfile = ({ passPublicId }: Props) => {
   return (
     <CldUploadWidget
-      uploadPreset="qxnmut04"
+      uploadPreset={process.env.CLOUDINARY_PRESET}
       options={{
-        sources: ["local"],
+        sources: ["local", "google_drive", "instagram", "url"],
+        folder: "suci/profiles",
         multiple: false,
         cropping: true,
         croppingAspectRatio: 1,
