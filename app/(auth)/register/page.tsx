@@ -1,6 +1,6 @@
 "use client";
-import { Button, Flex, Text, TextField } from "@radix-ui/themes";
-import axios, { AxiosError } from "axios";
+import { Button, Callout, Flex, Text, TextField } from "@radix-ui/themes";
+import axios from "axios";
 import { signIn } from "next-auth/react";
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
@@ -11,6 +11,9 @@ import { CheckCircledIcon } from "@radix-ui/react-icons";
 import Logo from "@/app/_components/Logo";
 import Link from "next/link";
 import UploadProfile from "@/app/_components/UploadProfile";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { User } from "@prisma/client";
+import Spinner from "@/app/_components/Spinner";
 
 const years: { label: string; value: string }[] = [];
 for (let i = 2010; i > 1950; i--) {
@@ -20,6 +23,8 @@ for (let i = 2010; i > 1950; i--) {
 const RegisterPage = () => {
   type InputFields = z.infer<typeof newUserSchema>;
   const [publicId, setPublicId] = useState<string | undefined>();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string>();
   const fields: {
     label: string;
     type: React.HTMLInputTypeAttribute;
@@ -31,41 +36,52 @@ const RegisterPage = () => {
     { label: "Password", value: "password", type: "password" },
     { label: "City", value: "city", type: "text" },
   ];
-  const onSubmit = async (data: InputFields) => {
-    try {
-      await axios.post("/api/user/register", {
+  const onSubmit = (data: InputFields) => {
+    setLoading(true);
+    axios
+      .post<User, Error>("/api/user/register", {
         ...data,
         imagePublicId: publicId,
-      });
-      await signIn("credentials", {
-        email: data.email,
-        password: data.password,
-        redirect: true,
-        callbackUrl: "/",
-      });
-    } catch (error) {
-      console.log(error);
-    }
+      })
+      .then((res) => {
+        signIn("credentials", {
+          email: data.email,
+          password: data.password,
+          redirect: true,
+          callbackUrl: "/",
+        });
+      })
+      .catch((e) => {
+        setError(e.response.data.message);
+        console.log(e);
+      })
+      .finally(() => setLoading(false));
   };
-  const { register, handleSubmit, control } = useForm<InputFields>();
+  const { register, handleSubmit, control, formState } = useForm<InputFields>({
+    resolver: zodResolver(newUserSchema),
+  });
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Flex gap="4" direction="column" className="max-w-2xl mx-auto">
-        <Flex align="center" gap="1" width="100%" justify="center" mb="5">
+      <Flex gap="5" direction="column" className="max-w-3xl mx-auto">
+        <Flex align="center" gap="1" width="100%" justify="center" mb="3">
           <Text className="font-bold" size="5">
-            Signup in{" "}
+            Register in{" "}
           </Text>
           <Logo size="6" />
         </Flex>
 
         {fields.map((field) => (
-          <TextField.Input
-            key={field.value}
-            placeholder={field.label}
-            size="2"
-            type={field.type}
-            {...register(field.value)}
-          />
+          <div className="relative" key={field.value}>
+            <TextField.Input
+              placeholder={field.label}
+              size="2"
+              type={field.type}
+              {...register(field.value)}
+            />
+            <Text color="red" size="1" className="absolute -bottom-5">
+              {formState.errors[field.value]?.message}
+            </Text>
+          </div>
         ))}
         <SelectController
           name="gender"
@@ -82,14 +98,21 @@ const RegisterPage = () => {
           control={control}
           items={years}
         />
-        <Flex my="2" gap="5" align="center" justify="center">
+        {error && (
+          <Callout.Root variant="soft" color="red">
+            <Callout.Text>{error}</Callout.Text>
+          </Callout.Root>
+        )}
+        <Flex gap="5" align="center" justify="center">
           <Text>Profile Picture</Text>
 
           <UploadProfile passPublicId={(pId) => setPublicId(pId)} />
           {publicId && <CheckCircledIcon />}
         </Flex>
         <Flex justify="center">
-          <Button size="3">Register</Button>
+          <Button size="3" disabled={loading}>
+            Register {loading && <Spinner />}
+          </Button>
         </Flex>
         <Flex justify="center" gap="2" align="center">
           Already have an account?

@@ -4,7 +4,7 @@ import Spinner from "@/app/_components/Spinner";
 import { Button, Flex, Grid, TextField, Text } from "@radix-ui/themes";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 
 interface Props {
   searchParams: { error: string };

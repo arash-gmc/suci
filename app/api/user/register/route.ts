@@ -12,18 +12,30 @@ export async function POST(request: NextRequest) {
 
   if (!validation.success) {
     console.log(validation.error.errors);
-    return NextResponse.json(validation.error.errors, { status: 400 });
+    return NextResponse.json(
+      {
+        ...validation.error.errors,
+        message: "There is a problem with input Fields.",
+      },
+      { status: 400 }
+    );
   }
   const repetiveEmail = await prisma.user.findUnique({
     where: { email: body.email },
   });
 
+  if (repetiveEmail)
+    return NextResponse.json(
+      { message: "This email is already exists." },
+      { status: 400 }
+    );
+
   const repetiveUsername = await prisma.user.findUnique({
     where: { username: body.username },
   });
-  if (repetiveEmail || repetiveUsername)
+  if (repetiveUsername)
     return NextResponse.json(
-      { error: "email or username is already exists." },
+      { message: "This username is already exists." },
       { status: 400 }
     );
 
