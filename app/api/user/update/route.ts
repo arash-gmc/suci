@@ -4,29 +4,26 @@ import { z } from "zod";
 
 const usernameRegx = RegExp("^[a-zA-Z][a-zA-Z0-9_-]*$");
 
-const schema = z.object({
+const updateUserSchema = z.object({
   id: z.string(),
-  name: z.string().min(5).max(32),
+  name: z.string().min(3).max(32),
   email: z.string().email(),
   username: z
     .string()
     .min(3)
     .max(32)
-    .regex(
-      usernameRegx,
-      "username characters must be english letter or numbers or _ or - and starts with a letter "
-    ),
+    .regex(usernameRegx, "Allowed Characters: letter, number, _"),
   city: z.string().max(255),
   brithYear: z.string().max(255),
   gender: z.enum(["male", "female", "none"]),
   publicId: z.string().nullable(),
 });
 
-type Body = z.infer<typeof schema>;
+type Body = z.infer<typeof updateUserSchema>;
 
 export async function PATCH(request: NextRequest) {
   const body: Body = await request.json();
-  const validation = schema.safeParse(body);
+  const validation = updateUserSchema.safeParse(body);
   if (!validation.success)
     return NextResponse.json(validation.error.errors, { status: 400 });
   const {
