@@ -23,7 +23,6 @@ type Counts = {
 
 interface ActionItem {
   value: Actions;
-  color: string;
   icon: React.JSX.Element;
   onClick: () => void;
 }
@@ -106,7 +105,6 @@ const PostFooter = ({ postId }: { postId: string }) => {
   const items: ActionItem[] = [
     {
       value: "like",
-      color: "text-blue-500",
       icon: interactions?.like ? <BiSolidLike /> : <BiLike />,
       onClick: interactions?.like
         ? () => undoAction("like")
@@ -114,7 +112,6 @@ const PostFooter = ({ postId }: { postId: string }) => {
     },
     {
       value: "dislike",
-      color: "text-rose-600",
       icon: interactions?.dislike ? <BiSolidDislike /> : <BiDislike />,
       onClick: interactions?.dislike
         ? () => undoAction("dislike")
@@ -123,7 +120,6 @@ const PostFooter = ({ postId }: { postId: string }) => {
     {
       value: "repost",
       icon: <FaRetweet />,
-      color: "text-green-700",
       onClick: () => (interactions.repost ? unrepost() : repost()),
     },
     {
@@ -139,12 +135,10 @@ const PostFooter = ({ postId }: { postId: string }) => {
           }
         />
       ),
-      color: "text-orange-600",
       onClick: () => null,
     },
     {
       value: "bookmark",
-      color: "text-yellow-400",
       icon: interactions?.bookmark ? <GoBookmarkFill /> : <GoBookmark />,
       onClick: interactions?.bookmark
         ? () => undoAction("bookmark")
@@ -163,7 +157,12 @@ const PostFooter = ({ postId }: { postId: string }) => {
       {items.map((item) => (
         <Flex
           align="center"
-          className={interactions[item.value] ? item.color + " font-bold" : ""}
+          className={interactions[item.value] ? "font-bold" : ""}
+          style={{
+            color: interactions[item.value]
+              ? "var(--accent-10)"
+              : "var(--accent-7)",
+          }}
           key={item.value}
         >
           <Text className="w-3 whitespace-nowrap select-none" size="2">

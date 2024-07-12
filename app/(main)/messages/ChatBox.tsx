@@ -23,7 +23,7 @@ const ChatBox = ({ messages, viewerId, contactId }: Props) => {
       height="100%"
       width="100%"
       className="max-h-full overflow-y-scroll border-b-2"
-      style={{ backgroundColor: "var(--accent-3)" }}
+      style={{ backgroundColor: "var(--accent-2)" }}
     >
       <Flex direction="column-reverse" gap="3" p="5">
         {messages.map((message, index) => (
@@ -43,11 +43,26 @@ const ChatBox = ({ messages, viewerId, contactId }: Props) => {
             )}
             <Box
               className={
-                (message.fromUserId === viewerId
-                  ? "bg-teal-200"
-                  : "bg-gray-50") +
-                (theme === "dark" ? " text-black" : "") +
+                // (message.fromUserId === viewerId
+                //   ? "bg-teal-200"
+                //   : "bg-gray-50") +
+                // (theme === "dark" ? " text-black" : "") +
                 " rounded-2xl"
+              }
+              style={
+                theme === "dark"
+                  ? message.fromUserId === viewerId
+                    ? {
+                        backgroundColor: "var(--accent-8)",
+                      }
+                    : { backgroundColor: "var(--accent-5)" }
+                  : message.fromUserId === viewerId
+                  ? {
+                      backgroundColor: "var(--accent-a6)",
+                    }
+                  : {
+                      backgroundColor: "var(--accent-3)",
+                    }
               }
               py="2"
               px="5"

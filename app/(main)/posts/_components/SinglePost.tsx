@@ -46,6 +46,7 @@ const SinglePost = ({ rawPost, postDetail }: Props) => {
         mx={{ initial: "0", xs: "3" }}
         px="2"
         className="border-b-2 py-2"
+        style={{ borderColor: "var(--accent-5)" }}
       >
         <Flex direction="column">
           <Link href={"/profile/" + author.username}>
@@ -84,7 +85,7 @@ const SinglePost = ({ rawPost, postDetail }: Props) => {
                   {TimeDiff(post.date)}
                 </Text>
               </Flex>
-              <Text color="gray" ml="3">
+              <Text ml="3" style={{ color: "var(--accent-10)" }}>
                 <Link href={"/posts/" + post.id}>
                   <HiDotsHorizontal />
                 </Link>

@@ -22,10 +22,10 @@ const ProfilePicture = ({ user, size }: Props) => {
     lg: { picture: 174, avatar: "9" },
   };
   if (!user.imagePublicId) {
-    let color: "gray" | "indigo" | "pink" = "gray";
+    let color: "gray" | "grass" | "pink" = "gray";
     let fallback = "?";
 
-    if (user.gender === "male") color = "indigo";
+    if (user.gender === "male") color = "grass";
     if (user.gender === "female") color = "pink";
     if (user.name) {
       const nameChuncks = user.name.trim().split(" ");
@@ -35,7 +35,7 @@ const ProfilePicture = ({ user, size }: Props) => {
     if (user.name) fallback = user.name[0];
     return (
       <Avatar
-        variant="solid"
+        variant="soft"
         color={color}
         radius="full"
         size={sizeMap[size].avatar}

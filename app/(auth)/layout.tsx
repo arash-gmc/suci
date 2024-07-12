@@ -20,7 +20,7 @@ export default async function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Theme
-          accentColor="purple"
+          accentColor="blue"
           grayColor="gray"
           radius="large"
           scaling="105%"
@@ -31,7 +31,7 @@ export default async function RootLayout({
             align="start"
             style={{ background: "var(--accent-6)" }}
           >
-            <Box className="p-8 sm:rounded-xl bg-slate-50 w-1/4 min-w-fit z-10 max-sm:w-full max-sm:min-h-screen ">
+            <Box className="p-8 sm:rounded-xl bg-slate-50 w-1/3 max-w-md min-w-fit z-10 max-sm:w-full max-sm:min-h-screen ">
               {children}
             </Box>
           </Flex>

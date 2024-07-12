@@ -13,7 +13,7 @@ const AddContact = ({ setUser, mini }: Props) => {
   return (
     <Popover.Root>
       <Popover.Trigger>
-        <Button size="3" variant="outline" className="bg-white">
+        <Button size="3" variant="soft">
           {mini ? "+" : "+ Add New Chat"}
         </Button>
       </Popover.Trigger>

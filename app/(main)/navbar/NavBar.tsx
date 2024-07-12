@@ -1,5 +1,5 @@
 "use client";
-import { Container, Flex, Text } from "@radix-ui/themes";
+import { Box, Container, Flex, Text } from "@radix-ui/themes";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useContext, useState } from "react";
@@ -24,59 +24,71 @@ const NavBar = () => {
       <nav
         className={
           "p-2 h-14 fixed w-full z-10 px-5 " +
-          (theme === "dark" ? "" : "border-b-2 bg-slate-100 opacity-95")
+          (theme === "dark" ? "" : "border-b-2 opacity-95")
         }
-        style={
-          theme === "dark" ? { backgroundColor: "var(--accent-8)" } : undefined
-        }
+        style={{
+          backgroundColor:
+            theme === "dark" ? "var(--accent-8)" : "var(--accent-3)",
+        }}
       >
         <Container>
-          <Flex
-            justify="between"
-            className={"text-sm " + (theme === "light" ? "text-gray-700" : "")}
-            align="center"
-          >
+          <Flex justify="between" className={"text-sm "} align="center">
             <Link href="/">
               <Logo size="6" />
             </Link>
 
-            <Flex gap="5" align="center">
-              {viewer && (
-                <>
-                  <MessageMenu userId={viewer.id} />
-                  <NotificationsMenu userId={viewer.id} />
+            {viewer && (
+              <Flex
+                gap="5"
+                align="center"
+                style={
+                  theme === "light" ? { color: "var(--accent-11)" } : undefined
+                }
+              >
+                <MessageMenu userId={viewer.id} />
+                <NotificationsMenu userId={viewer.id} />
 
-                  <Search
-                    onUserClick={(user) =>
-                      router.push("/profile/" + user.username)
-                    }
-                    searchPosts={true}
-                  />
+                <Search
+                  onUserClick={(user) =>
+                    router.push("/profile/" + user.username)
+                  }
+                  searchPosts={true}
+                />
 
-                  <Flex
-                    onClick={() => setUserMenu((prev) => !prev)}
-                    className="relative cursor-pointer"
-                  >
-                    <ProfilePicture size="sm" user={viewer} />
+                <Flex
+                  onClick={() => setUserMenu((prev) => !prev)}
+                  className="relative cursor-pointer"
+                >
+                  <ProfilePicture size="sm" user={viewer} />
 
-                    {userMenu ? <UserMenu /> : null}
-                  </Flex>
-                </>
-              )}
-              {viewer === null && (
-                <Flex align="center" gap="5">
-                  <Search
-                    onUserClick={(user) =>
-                      router.push("/profile/" + user.username)
-                    }
-                    searchPosts={true}
-                  />
-                  <Link href="/api/auth/signin">LogIn</Link>
-                  <Link href="/register">Register</Link>
+                  {userMenu ? <UserMenu /> : null}
                 </Flex>
-              )}
+              </Flex>
+            )}
+            {viewer === null && (
+              <Flex align="center" gap="5">
+                <Search
+                  onUserClick={(user) =>
+                    router.push("/profile/" + user.username)
+                  }
+                  searchPosts={true}
+                />
+
+                <Link href="/api/auth/signin" className="font-bold">
+                  LogIn
+                </Link>
+                <Link href="/register" className="font-bold">
+                  Register
+                </Link>
+              </Flex>
+            )}
+            <Box
+              style={
+                theme === "light" ? { color: "var(--accent-11)" } : undefined
+              }
+            >
               <DarkModeToggler />
-            </Flex>
+            </Box>
           </Flex>
         </Container>
       </nav>

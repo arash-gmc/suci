@@ -10,7 +10,7 @@ const GuestWelcome = () => {
   const [showWindow, setShowWindow] = useState(false);
   useEffect(() => {
     const visitTimes = Number(localStorage.getItem("visitTimes")) || 0;
-    if (visitTimes % 3 === 0)
+    if (visitTimes % 5 === 0)
       setTimeout(() => {
         setShowWindow(true);
       }, 3000);

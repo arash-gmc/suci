@@ -15,8 +15,9 @@ const UserMenu = () => {
       p="2"
       className={
         "absolute top-11 -left-44 border-2  w-48  rounded-md text-md min-w-max font-bold " +
-        (theme === "dark" ? "bg-slate-700" : "border-purple-500 bg-slate-50")
+        (theme === "dark" ? "bg-slate-700" : "bg-slate-50")
       }
+      style={{ borderColor: "var(--accent-5)" }}
     >
       <Flex direction="column" className="border-b-2 py-2">
         <Text>{viewer.name}</Text>

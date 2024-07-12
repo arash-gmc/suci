@@ -86,7 +86,7 @@ const Search = ({
             >
               <Flex gap="2" align="center" className="">
                 <ProfilePicture user={user} size="sm" />
-                <Text>{user.name}</Text>
+                <Text weight="bold">{user.name}</Text>
               </Flex>
             </button>
           ))}
