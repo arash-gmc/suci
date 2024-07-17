@@ -161,7 +161,7 @@ const PostFooter = ({ postId }: { postId: string }) => {
           style={{
             color: interactions[item.value]
               ? "var(--accent-10)"
-              : "var(--accent-7)",
+              : "var(--accent-a8)",
           }}
           key={item.value}
         >

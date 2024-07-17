@@ -1,7 +1,7 @@
 "use client";
 import UserFieldPopover from "@/app/_components/UserFieldPopover";
 import { CommentAndAuthor } from "@/app/(main)/interfaces";
-import { Flex, Text } from "@radix-ui/themes";
+import { Button, Flex, Text } from "@radix-ui/themes";
 import React, { useContext, useEffect, useState } from "react";
 import EditPost from "./EditPost";
 import { User } from "@prisma/client";
@@ -9,6 +9,7 @@ import axios from "axios";
 import DeletionAlert from "@/app/_components/DeletionAlert";
 import { useRouter } from "next/navigation";
 import { ViewerContext } from "@/app/_providers/ViewerContext";
+import { MdDelete } from "react-icons/md";
 
 interface Props {
   postId: string;
@@ -68,7 +69,11 @@ const PostBottom = ({ postId, comments, authorId, postText }: Props) => {
             action={() => deletePost()}
             label="this post"
             trigger={
-              <button className=" text-red-600 font-bold">Delete</button>
+              <Button variant="soft" color="red">
+                <Text size="5">
+                  <MdDelete />
+                </Text>
+              </Button>
             }
           />
         </Flex>

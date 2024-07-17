@@ -1,11 +1,12 @@
 "use client";
 import ProfilePicture from "@/app/_components/ProfilePicture";
 import { ViewerContext } from "@/app/_providers/ViewerContext";
-import { Popover, Flex, Box, TextArea, Button } from "@radix-ui/themes";
+import { Popover, Flex, Box, TextArea, Button, Text } from "@radix-ui/themes";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { useContext, useEffect, useState } from "react";
 import { FaRegComment } from "react-icons/fa6";
+import { CiEdit } from "react-icons/ci";
 
 interface Props {
   initialText: string | null;
@@ -30,7 +31,11 @@ const EditPost = ({ authorId, initialText, postId }: Props) => {
   return (
     <Popover.Root>
       <Popover.Trigger>
-        <button className="font-bold text-blue-600">Edit</button>
+        <Button variant="soft" color="mint">
+          <Text size="5">
+            <CiEdit />
+          </Text>
+        </Button>
       </Popover.Trigger>
       <Popover.Content style={{ width: 360 }}>
         <Flex gap="3">

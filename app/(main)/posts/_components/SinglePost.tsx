@@ -85,11 +85,13 @@ const SinglePost = ({ rawPost, postDetail }: Props) => {
                   {TimeDiff(post.date)}
                 </Text>
               </Flex>
-              <Text ml="3" style={{ color: "var(--accent-10)" }}>
-                <Link href={"/posts/" + post.id}>
-                  <HiDotsHorizontal />
-                </Link>
-              </Text>
+              {!postDetail && (
+                <Text ml="3" style={{ color: "var(--accent-10)" }}>
+                  <Link href={"/posts/" + post.id}>
+                    <HiDotsHorizontal />
+                  </Link>
+                </Text>
+              )}
             </Flex>
           </Flex>
 
