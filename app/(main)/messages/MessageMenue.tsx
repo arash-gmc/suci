@@ -28,10 +28,7 @@ const MessageMenu = ({ userId }: Props) => {
     <div className="relative">
       {!!count && (
         <div className="absolute -right-3 -top-3">
-          <Badge
-            color="red"
-            className="rounded-full"
-          >
+          <Badge color="red" className="rounded-full">
             {count}
           </Badge>
         </div>
@@ -39,16 +36,13 @@ const MessageMenu = ({ userId }: Props) => {
       <Popover.Root>
         <Popover.Trigger>
           <button>
-            <Text size="6">
+            <Text size="7">
               <FaEnvelope />
             </Text>
           </button>
         </Popover.Trigger>
         <Popover.Content style={{ width: 340 }}>
-          <Flex
-            direction="column"
-            className="apply-fonts"
-          >
+          <Flex direction="column" className="apply-fonts">
             {items.map((item) => (
               <Popover.Close key={item.user.id}>
                 <button
@@ -64,23 +58,11 @@ const MessageMenu = ({ userId }: Props) => {
                     justify="between"
                     className="border-b-2"
                   >
-                    <Flex
-                      gap="2"
-                      align="center"
-                    >
-                      <ProfilePicture
-                        size="sm"
-                        user={item.user}
-                      />
-                      <Flex
-                        direction="column"
-                        align="start"
-                      >
+                    <Flex gap="2" align="center">
+                      <ProfilePicture size="sm" user={item.user} />
+                      <Flex direction="column" align="start">
                         <Text className="font-bold">{item.user.name}</Text>
-                        <Text
-                          color="gray"
-                          size="2"
-                        >
+                        <Text color="gray" size="2">
                           <TextCompress>{item.lastMessage}</TextCompress>
                         </Text>
                       </Flex>
@@ -91,11 +73,7 @@ const MessageMenu = ({ userId }: Props) => {
               </Popover.Close>
             ))}
             {count === 0 ? (
-              <Flex
-                justify="center"
-                pb="3"
-                className="border-b-2"
-              >
+              <Flex justify="center" pb="3" className="border-b-2">
                 You dont have any new messages.
               </Flex>
             ) : null}

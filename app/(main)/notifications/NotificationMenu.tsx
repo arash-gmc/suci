@@ -32,10 +32,7 @@ const NotificationsMenu = ({ userId }: Props) => {
     <div className="relative">
       {!!count && (
         <div className="absolute -right-3 -top-3">
-          <Badge
-            size="1"
-            color="red"
-          >
+          <Badge size="1" color="red">
             {count}
           </Badge>
         </div>
@@ -43,10 +40,7 @@ const NotificationsMenu = ({ userId }: Props) => {
       <Popover.Root>
         <Popover.Trigger>
           <button>
-            <Text
-              size="6"
-              onClick={() => seeNotifs()}
-            >
+            <Text size="7" onClick={() => seeNotifs()}>
               <IoNotifications />
             </Text>
           </button>
@@ -61,21 +55,14 @@ const NotificationsMenu = ({ userId }: Props) => {
                 className="border-b-2"
                 key={item.id}
               >
-                <ProfilePicture
-                  size="sm"
-                  user={item.fromUser}
-                />
+                <ProfilePicture size="sm" user={item.fromUser} />
                 <Popover.Close>
                   <NotificationText notif={item} />
                 </Popover.Close>
               </Flex>
             ))}
             {items.length === 0 ? (
-              <Flex
-                justify="center"
-                pb="3"
-                className="border-b-2"
-              >
+              <Flex justify="center" pb="3" className="border-b-2">
                 There are no new notifications.
               </Flex>
             ) : null}

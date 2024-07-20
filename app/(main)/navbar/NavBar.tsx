@@ -34,7 +34,7 @@ const NavBar = () => {
         <Container>
           <Flex justify="between" className={"text-sm "} align="center">
             <Link href="/">
-              <Logo size="6" />
+              <Logo size="6" color={theme === "dark" ? "white" : undefined} />
             </Link>
 
             {viewer && (
@@ -45,15 +45,15 @@ const NavBar = () => {
                   theme === "light" ? { color: "var(--accent-11)" } : undefined
                 }
               >
-                <MessageMenu userId={viewer.id} />
-                <NotificationsMenu userId={viewer.id} />
-
                 <Search
                   onUserClick={(user) =>
                     router.push("/profile/" + user.username)
                   }
                   searchPosts={true}
                 />
+
+                <NotificationsMenu userId={viewer.id} />
+                <MessageMenu userId={viewer.id} />
 
                 <Flex
                   onClick={() => setUserMenu((prev) => !prev)}
