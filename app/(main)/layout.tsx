@@ -8,7 +8,7 @@ import Main from "./Main";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Suci",
+  title: "EchoFeed",
   description: "Social Media for all intersts",
 };
 

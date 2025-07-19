@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import balls from "@/public/balls.svg";
+import balls from "../../assets/balls.svg";
 import { Flex } from "@radix-ui/themes";
 
 const LoadingBalls = () => {

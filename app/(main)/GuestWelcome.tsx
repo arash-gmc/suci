@@ -36,7 +36,7 @@ const GuestWelcome = () => {
 
             <Flex className="text-lg" gap="5" direction="column">
               <p>
-                Welcome to Suci, A greate social media Platform for Sharing your
+                Welcome to EchoFeed, A greate social media Platform for Sharing your
                 Thoughts.
               </p>
               <p>To use this website properly, please login.</p>

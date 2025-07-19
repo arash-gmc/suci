@@ -23,7 +23,7 @@ const NavBar = () => {
     <>
       <nav
         className={
-          "p-2 h-14 fixed w-full z-10 px-5 " +
+          "p-2 h-16 fixed w-full z-10 px-5 " +
           (theme === "dark" ? "" : "border-b-2 opacity-95")
         }
         style={{
@@ -34,7 +34,7 @@ const NavBar = () => {
         <Container>
           <Flex justify="between" className={"text-sm "} align="center">
             <Link href="/">
-              <Logo size="6" color={theme === "dark" ? "white" : undefined} />
+              <Logo size="6" color={theme === "dark" ? "white" : "#333"} />
             </Link>
 
             {viewer && (

@@ -7,8 +7,8 @@ import { Box, Flex, Theme } from "@radix-ui/themes";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Suci",
-  description: "Social Media for all intersts",
+  title: "EchoFeed",
+  description: "Let your vibe echo",
 };
 
 export default async function RootLayout({
