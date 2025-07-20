@@ -149,6 +149,7 @@ const Filters = () => {
         options={options}
         status={selectedFilters}
         toggleStatus={toggleStatus}
+        title={"Post Filters"}
       />
       {viewer && (
         <SingleSelectingButtons
