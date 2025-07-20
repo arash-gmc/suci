@@ -8,6 +8,10 @@ type Theme = "dark" | "light";
 const DarkModeToggler = () => {
   const { setTheme } = useTheme();
   const [storageTheme, setStorageTheme] = useState("");
+  const toggleTheme = (e: boolean) => {
+    const isDark = e.valueOf();
+    setTheme(isDark ? "dark" : "light");
+  };
   useEffect(() => {
     const theme = localStorage.getItem("theme");
     if (theme) setStorageTheme(theme);
@@ -15,16 +19,13 @@ const DarkModeToggler = () => {
   if (!storageTheme) return null;
   return (
     <Flex gap="2">
-      <Text size="5">
+      <Text size="6">
         <IoMoon />
       </Text>
       <Switch
         defaultChecked={storageTheme === "dark"}
         color="cyan"
-        onCheckedChange={(e) => {
-          const isDark = e.valueOf();
-          setTheme(isDark ? "dark" : "light");
-        }}
+        onCheckedChange={toggleTheme}
       />
     </Flex>
   );

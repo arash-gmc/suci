@@ -10,7 +10,7 @@ const GuestWelcome = () => {
   const [showWindow, setShowWindow] = useState(false);
   useEffect(() => {
     const visitTimes = Number(localStorage.getItem("visitTimes")) || 0;
-    if (visitTimes % 5 === 0)
+    if (visitTimes % 10 === 0.5)
       setTimeout(() => {
         setShowWindow(true);
       }, 3000);
@@ -26,8 +26,8 @@ const GuestWelcome = () => {
             py={{ initial: "3", sm: "6" }}
             direction="column"
           >
-            <Flex justify="center" display={{ initial: "none", sm: "flex" }}>
-              <div className="border-2  rounded-full p-5 w-36 h-36">
+            <Flex justify="start" display={{ initial: "none", sm: "flex" }}>
+              <div className="rounded-full p-5 w-36 h-36">
                 <Flex height="100%" align="center">
                   <Logo size="7" />
                 </Flex>

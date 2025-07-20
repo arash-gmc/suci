@@ -13,11 +13,9 @@ import { signOut } from "next-auth/react";
 import UserMenu from "./UserMenu";
 import useTheme from "next-theme";
 import DarkModeToggler from "@/app/_components/DarkModeToggler";
+import RightPannel from "./RightPannel";
 
 const NavBar = () => {
-  const { viewer } = useContext(ViewerContext);
-  const [userMenu, setUserMenu] = useState(false);
-  const router = useRouter();
   const { theme } = useTheme();
   return (
     <>
@@ -36,59 +34,7 @@ const NavBar = () => {
             <Link href="/">
               <Logo size="6" color={theme === "dark" ? "white" : "#333"} />
             </Link>
-
-            {viewer && (
-              <Flex
-                gap="5"
-                align="center"
-                style={
-                  theme === "light" ? { color: "var(--accent-11)" } : undefined
-                }
-              >
-                <Search
-                  onUserClick={(user) =>
-                    router.push("/profile/" + user.username)
-                  }
-                  searchPosts={true}
-                />
-
-                <NotificationsMenu userId={viewer.id} />
-                <MessageMenu userId={viewer.id} />
-
-                <Flex
-                  onClick={() => setUserMenu((prev) => !prev)}
-                  className="relative cursor-pointer"
-                >
-                  <ProfilePicture size="sm" user={viewer} />
-
-                  {userMenu ? <UserMenu /> : null}
-                </Flex>
-              </Flex>
-            )}
-            {viewer === null && (
-              <Flex align="center" gap="5">
-                <Search
-                  onUserClick={(user) =>
-                    router.push("/profile/" + user.username)
-                  }
-                  searchPosts={true}
-                />
-
-                <Link href="/api/auth/signin" className="font-bold">
-                  LogIn
-                </Link>
-                <Link href="/register" className="font-bold">
-                  Register
-                </Link>
-              </Flex>
-            )}
-            <Box
-              style={
-                theme === "light" ? { color: "var(--accent-11)" } : undefined
-              }
-            >
-              <DarkModeToggler />
-            </Box>
+            <RightPannel />
           </Flex>
         </Container>
       </nav>
