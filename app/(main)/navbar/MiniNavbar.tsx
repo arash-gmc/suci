@@ -77,7 +77,7 @@ const MiniNavbar = () => {
         <Flex direction="column" className="" width="100%">
           <Flex justify="between" py="2" px="5">
             <Link href="/">
-              <Logo size="6" />
+              <Logo size="sm" />
             </Link>
             <Text
               className="border-2 border-slate-400 rounded-lg p-2 cursor-pointer"

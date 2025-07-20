@@ -156,6 +156,7 @@ const Filters = () => {
           options={listsOptions}
           selectedValue={selectedList}
           toggleSelected={(selected) => setSelectedList(selected)}
+          title={"Lists"}
         />
       )}
       <ListWindow

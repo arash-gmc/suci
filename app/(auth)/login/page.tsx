@@ -33,7 +33,7 @@ const LoginForm = ({ searchParams }: Props) => {
       className="w-full"
       mt="6"
     >
-      <Logo size="8" />
+      <Logo size="lg" />
       <Flex direction="column" gap="5" className="w-full" mt="5">
         <TextField.Input
           id="username"

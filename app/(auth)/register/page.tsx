@@ -64,10 +64,7 @@ const RegisterPage = () => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <Flex gap="5" direction="column" className="max-w-3xl mx-auto">
         <Flex align="center" gap="1" width="100%" justify="center" mb="3">
-          <Text className="font-bold" size="5">
-            Register in{" "}
-          </Text>
-          <Logo size="6" />
+          <Logo size="lg" />
         </Flex>
 
         {fields.map((field) => (

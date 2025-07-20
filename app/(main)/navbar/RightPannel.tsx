@@ -19,22 +19,16 @@ const RightPannel = () => {
   const { theme } = useTheme();
 
   return (
-    <Flex
-      gap="5"
-      align="center"
-      style={theme === "light" ? { color: "var(--accent-11)" } : undefined}
-    >
+    <Flex gap="5" align="center">
       <Search
         onUserClick={(user) => router.push("/profile/" + user.username)}
         searchPosts={true}
       />
       {viewer && <NotificationsMenu userId={viewer.id} />}
       {viewer && <MessageMenu userId={viewer.id} />}
-      <Flex
-        style={theme === "light" ? { color: "var(--accent-11)" } : undefined}
-      >
-        <DarkModeToggler />
-      </Flex>
+
+      <DarkModeToggler />
+
       {viewer && (
         <Flex
           onClick={() => setUserMenu((prev) => !prev)}
@@ -47,10 +41,10 @@ const RightPannel = () => {
       )}
       {viewer === null && (
         <Flex align="center" gap="5">
-          <Link href="/register" className="font-bold">
+          <Link href="/register" className="font-bold text-inherit">
             Register
           </Link>
-          <Link href="/api/auth/signin" className="font-bold">
+          <Link href="/api/auth/signin" className="font-bold text-inherit">
             LogIn
           </Link>
         </Flex>

@@ -1,18 +1,8 @@
 "use client";
-import { Box, Container, Flex, Text } from "@radix-ui/themes";
+import { Container, Flex } from "@radix-ui/themes";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useContext, useState } from "react";
-import ProfilePicture from "../../_components/ProfilePicture";
-import Search from "../../_components/Search";
-import NotificationsMenu from "../notifications/NotificationMenu";
-import { ViewerContext } from "../../_providers/ViewerContext";
-import MessageMenu from "../messages/MessageMenue";
 import Logo from "../../_components/Logo";
-import { signOut } from "next-auth/react";
-import UserMenu from "./UserMenu";
 import useTheme from "next-theme";
-import DarkModeToggler from "@/app/_components/DarkModeToggler";
 import RightPannel from "./RightPannel";
 
 const NavBar = () => {
@@ -30,9 +20,13 @@ const NavBar = () => {
         }}
       >
         <Container>
-          <Flex justify="between" className={"text-sm "} align="center">
+          <Flex
+            justify="between"
+            className={"text-sm " + (theme === "dark" ? "" : "text-gray-800")}
+            align="center"
+          >
             <Link href="/">
-              <Logo size="6" color={theme === "dark" ? "white" : "#333"} />
+              <Logo size="md" />
             </Link>
             <RightPannel />
           </Flex>

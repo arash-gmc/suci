@@ -29,15 +29,15 @@ const GuestWelcome = () => {
             <Flex justify="start" display={{ initial: "none", sm: "flex" }}>
               <div className="rounded-full p-5 w-36 h-36">
                 <Flex height="100%" align="center">
-                  <Logo size="7" />
+                  <Logo size="md" />
                 </Flex>
               </div>
             </Flex>
 
             <Flex className="text-lg" gap="5" direction="column">
               <p>
-                Welcome to EchoFeed, A greate social media Platform for Sharing your
-                Thoughts.
+                Welcome to EchoFeed, A greate social media Platform for Sharing
+                your Thoughts.
               </p>
               <p>To use this website properly, please login.</p>
               <Flex direction="column" align="center" gap="2">
