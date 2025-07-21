@@ -1,6 +1,8 @@
 import React from "react";
 import { Text, Flex } from "@radix-ui/themes";
 import { TbFishChristianity } from "react-icons/tb";
+// import SiteLogo from "../../assets/logo.svg";
+// import { ReactComponent as SiteLogo } from "../../assets/logo.svg";
 import SiteLogo from "../../assets/logo.svg";
 import { motion } from "framer-motion";
 import useTheme from "next-theme";

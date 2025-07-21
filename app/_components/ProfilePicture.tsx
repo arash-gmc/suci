@@ -2,6 +2,7 @@
 import { User } from "@prisma/client";
 import { Avatar } from "@radix-ui/themes";
 import { CldImage } from "next-cloudinary";
+import useTheme from "next-theme";
 import React from "react";
 
 interface Props {
@@ -21,11 +22,12 @@ const ProfilePicture = ({ user, size }: Props) => {
     md: { picture: 76, avatar: "5" },
     lg: { picture: 174, avatar: "9" },
   };
+  const { theme } = useTheme();
   if (!user.imagePublicId) {
-    let color: "gray" | "grass" | "pink" = "gray";
+    let color: "gray" | "cyan" | "pink" = "gray";
     let fallback = "?";
 
-    if (user.gender === "male") color = "grass";
+    if (user.gender === "male") color = "cyan";
     if (user.gender === "female") color = "pink";
     if (user.name) {
       const nameChuncks = user.name.trim().split(" ");
@@ -40,6 +42,7 @@ const ProfilePicture = ({ user, size }: Props) => {
         radius="full"
         size={sizeMap[size].avatar}
         fallback={fallback}
+        highContrast={theme === "dark"}
       />
     );
   }
