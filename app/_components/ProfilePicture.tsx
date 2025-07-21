@@ -19,15 +19,15 @@ const ProfilePicture = ({ user, size }: Props) => {
     }
   > = {
     sm: { picture: 42, avatar: "3" },
-    md: { picture: 76, avatar: "5" },
+    md: { picture: 64, avatar: "4" },
     lg: { picture: 174, avatar: "9" },
   };
   const { theme } = useTheme();
   if (!user.imagePublicId) {
-    let color: "gray" | "cyan" | "pink" = "gray";
+    let color: "gray" | "blue" | "pink" = "gray";
     let fallback = "?";
 
-    if (user.gender === "male") color = "cyan";
+    if (user.gender === "male") color = "blue";
     if (user.gender === "female") color = "pink";
     if (user.name) {
       const nameChuncks = user.name.trim().split(" ");

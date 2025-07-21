@@ -42,6 +42,7 @@ const NewComment = ({ setComments: setComments, postId }: Props) => {
             rows={2}
             className="p-2"
             value={commentText}
+            style={{ backgroundColor: "var(--accent-1)" }}
           />
         </Flex>
         <Button

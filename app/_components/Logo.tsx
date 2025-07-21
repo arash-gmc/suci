@@ -25,7 +25,7 @@ const Logo = ({ size }: Props) => {
     <Text size={size ? sizeMap[size].text : undefined} className="font-bold">
       <Flex align="end" gap="2">
         <motion.div
-          whileHover={{ x: -16 }}
+          whileHover={{ rotate: -90, scale: 1.2 }}
           transition={{ type: "tween", duration: 0.5 }}
         >
           <SiteLogo height={sizeMap[size].icon} width={sizeMap[size].icon} />

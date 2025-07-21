@@ -5,7 +5,10 @@ import GuestWelcome from "./GuestWelcome";
 
 export default async function Home() {
   return (
-    <>
+    <Box
+      style={{ backgroundColor: "var(--gray-3)" }}
+      pt={{ initial: "0", sm: "6" }}
+    >
       <Container>
         <Flex gap="3">
           <TimeLine />
@@ -22,6 +25,6 @@ export default async function Home() {
         </Flex>
         <GuestWelcome />
       </Container>
-    </>
+    </Box>
   );
 }

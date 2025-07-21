@@ -41,18 +41,18 @@ const PostBottom = ({ postId, comments, authorId, postText }: Props) => {
   const commenters = comments.map((comment) => comment.author);
   return (
     <Flex justify="between" mt="3" mx="8" className=" text-sm">
-      <Flex gap="4" className="text-gray-600">
+      <Flex gap="4" className="text-gray-600" align="center">
         {likers.length > 0 && (
           <UserFieldPopover
-            label={likers.length + " likes"}
+            label={likers.length + " like"}
             users={likers}
             title="People who liked this post."
           />
         )}
-        {commenters.length > 0 && <Text>{comments.length + " comments"}</Text>}
+        {commenters.length > 0 && <Text>{comments.length + " comment"}</Text>}
         {reposters.length > 0 && (
           <UserFieldPopover
-            label={reposters.length + " reposts"}
+            label={reposters.length + " repost"}
             users={reposters}
             title="People who reposted this post."
           />

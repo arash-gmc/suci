@@ -33,11 +33,12 @@ const Comments = ({
     <Flex
       direction="column"
       gap="2"
-      mx={{ initial: "2", sm: "6" }}
+      mx={{ initial: "2", sm: "8" }}
       my="5"
-      className={
-        "rounded-xl " + (theme === "light" ? "bg-slate-100" : "bg-slate-800")
-      }
+      style={{
+        backgroundColor: "var(--accent-4)",
+      }}
+      className={"rounded-xl "}
     >
       {comments.map((comment) => (
         <Flex

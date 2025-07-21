@@ -52,7 +52,7 @@ const Search = ({
     <Box className="relative">
       <TextField.Root>
         <TextField.Input
-          placeholder="Search Users"
+          placeholder={searchPosts ? "Search..." : "Search users..."}
           type="text"
           onChange={onSearch}
           value={searchText}

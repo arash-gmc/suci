@@ -9,7 +9,7 @@ const ThemeProviderComponent = ({ children }: PropsWithChildren) => {
   if (darkMode)
     return (
       <ThemeProvider attribute="class">
-        <Theme accentColor="blue" color="red" grayColor="gray" radius="large">
+        <Theme accentColor="cyan" grayColor="slate" radius="large">
           {children}
         </Theme>
       </ThemeProvider>

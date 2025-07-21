@@ -32,7 +32,7 @@ const SinglePost = ({ rawPost, postDetail }: Props) => {
           color="gray"
           ml="5"
           my="1"
-          className="text-gray-500"
+          style={{ color: "var(--gray-10)" }}
         >
           <FaRetweet />
           <Link href={"/profile/" + rawPost.author.username}>
@@ -45,8 +45,11 @@ const SinglePost = ({ rawPost, postDetail }: Props) => {
         gap="3"
         mx={{ initial: "0", xs: "3" }}
         px="2"
-        className="border-b-2 py-2"
-        style={{ borderColor: "var(--accent-5)" }}
+        className="border-2 rounded-2xl pt-3 pb-2 shadow-lg"
+        style={{
+          borderColor: "var(--gray-5)",
+          backgroundColor: "var(--gray-1)",
+        }}
       >
         <Flex direction="column">
           <Link href={"/profile/" + author.username}>
@@ -71,7 +74,7 @@ const SinglePost = ({ rawPost, postDetail }: Props) => {
                   {author.name}
                 </Text>
               </Link>
-              <Text size="1" color="gray">
+              <Text size="1" style={{ color: "var(--gray-9)" }} ml="1">
                 @{author.username}
               </Text>
             </Flex>
@@ -95,7 +98,7 @@ const SinglePost = ({ rawPost, postDetail }: Props) => {
             </Flex>
           </Flex>
 
-          <Box width="100%" pb="2">
+          <Box width="100%" pb="2" className="text-sm sm:text-base">
             {postDetail ? (
               <Text>{post.text}</Text>
             ) : (

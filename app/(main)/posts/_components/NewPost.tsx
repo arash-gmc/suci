@@ -30,12 +30,11 @@ const NewPost = ({ setPosts }: Props) => {
       <Flex m="4" gap="4" align="center">
         <Flex width="100%" position="relative">
           <TextArea
-            placeholder="What's up?"
+            placeholder="Tell your story..."
             onChange={(e) => setPostText(e.currentTarget.value)}
             rows={3}
             value={postText}
             size="3"
-            className="placeholder:font-bold"
           />
           <Box position="absolute" className="right-0 -bottom-6">
             {postText.length > 0 && (

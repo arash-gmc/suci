@@ -66,13 +66,11 @@ const MiniNavbar = () => {
   return (
     <>
       <nav
-        className={
-          "fixed  z-10 opacity-95 w-full " +
-          (theme === "dark" ? "" : " bg-slate-100")
-        }
-        style={
-          theme === "dark" ? { backgroundColor: "var(--accent-8)" } : undefined
-        }
+        className={"fixed  z-10 opacity-95 w-full "}
+        style={{
+          backgroundColor:
+            theme === "dark" ? "var(--accent-8)" : "var(--gray-3)",
+        }}
       >
         <Flex direction="column" className="" width="100%">
           <Flex justify="between" py="2" px="5">
@@ -175,7 +173,7 @@ const MiniNavbar = () => {
           </Flex>
         </Flex>
       </nav>
-      <div className="w-full h-14"></div>
+      <div className="w-full h-12"></div>
     </>
   );
 };

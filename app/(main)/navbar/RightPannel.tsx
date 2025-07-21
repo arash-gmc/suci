@@ -19,7 +19,11 @@ const RightPannel = () => {
   const { theme } = useTheme();
 
   return (
-    <Flex gap="5" align="center">
+    <Flex
+      gap="5"
+      align="center"
+      style={{ color: theme === "dark" ? undefined : "var(--gray-11)" }}
+    >
       <Search
         onUserClick={(user) => router.push("/profile/" + user.username)}
         searchPosts={true}

@@ -18,7 +18,7 @@ const PostsGrid = ({ posts, isLoading }: Props) => {
       </Flex>
     );
   return (
-    <Flex direction="column" gap={{ initial: "1", sm: "3" }} mt="5">
+    <Flex direction="column" gap={{ initial: "2", sm: "4" }} mt="3" mx="3">
       {posts.map((post) => (
         <SinglePost rawPost={post} key={post.id} />
       ))}

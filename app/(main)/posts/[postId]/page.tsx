@@ -23,21 +23,15 @@ const PostDetails = async ({ params }: Props) => {
 
   if (!post) notFound();
   return (
-    <Container mt={{ initial: "3", sm: "8" }}>
-      <SinglePost
-        rawPost={post}
-        postDetail={true}
-      />
+    <Container mt="1" px="3">
+      <SinglePost rawPost={post} postDetail={true} />
       <PostBottom
         postId={params.postId}
         authorId={post.authorId}
         comments={comments}
         postText={post.text}
       />
-      <Comments
-        postId={params.postId}
-        initialComments={comments}
-      />
+      <Comments postId={params.postId} initialComments={comments} />
     </Container>
   );
 };
