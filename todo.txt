@@ -1,0 +1,7 @@
+-show loading indicator right after click.
+-move loading indicator to upper level. (not timeline)
+-refine the color of loading ball
+-add background images for register and sign indicator
+-add city and country api
+-instant chat messaging by using sockets
+-add filter box when not logged in in mini mode

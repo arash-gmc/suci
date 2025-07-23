@@ -7,6 +7,7 @@ import { ChatContactsInfo } from "../../api/message/users/route";
 import { FaEnvelope } from "react-icons/fa6";
 import { useRouter } from "next/navigation";
 import TextCompress from "@/app/_components/TextCompress";
+import { motion } from "framer-motion";
 
 interface Props {
   userId: string;
@@ -36,9 +37,15 @@ const MessageMenu = ({ userId }: Props) => {
       <Popover.Root>
         <Popover.Trigger>
           <button>
-            <Text size="7">
-              <FaEnvelope />
-            </Text>
+            <motion.div
+              animate={{ x: 0 }}
+              whileHover={{ x: [10, -10, 10, 0], scale: 1.1 }}
+              transition={{ type: "tween", duration: 0.3 }}
+            >
+              <Text size="7">
+                <FaEnvelope />
+              </Text>
+            </motion.div>
           </button>
         </Popover.Trigger>
         <Popover.Content style={{ width: 340 }}>

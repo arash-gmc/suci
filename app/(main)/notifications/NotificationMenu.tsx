@@ -7,6 +7,7 @@ import { Notif } from "../interfaces";
 import NotificationText from "./NotificationText";
 import { useRouter } from "next/navigation";
 import ProfilePicture from "@/app/_components/ProfilePicture";
+import { motion } from "framer-motion";
 
 interface Props {
   userId: string;
@@ -41,7 +42,13 @@ const NotificationsMenu = ({ userId }: Props) => {
         <Popover.Trigger>
           <button>
             <Text size="7" onClick={() => seeNotifs()}>
-              <IoNotifications />
+              <motion.div
+                animate={{ rotate: 0 }}
+                whileHover={{ rotate: [-30, 30, -30, 30, 0], scale: 1.1 }}
+                transition={{ type: "tween", duration: 0.3 }}
+              >
+                <IoNotifications />
+              </motion.div>
             </Text>
           </button>
         </Popover.Trigger>

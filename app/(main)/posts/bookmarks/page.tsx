@@ -1,10 +1,11 @@
 import prisma from "@/prisma/client";
 import React from "react";
 import PostsGrid from "../_components/PostsGrid";
-import { Container, Flex, Text } from "@radix-ui/themes";
+import { Box, Container, Flex, Text } from "@radix-ui/themes";
 import { getServerSession } from "next-auth";
 import { nextauthConfig } from "@/app/api/auth/[...nextauth]/route";
 import Link from "next/link";
+import ProfilePicture from "@/app/_components/ProfilePicture";
 
 interface Props {
   searchParams: { searched: string };
@@ -42,9 +43,11 @@ const page = async ({ searchParams }: Props) => {
     );
   return (
     <Container>
-      <Text size="7" m="5" align="center" className="font-bold w-full">
-        Your Bookmarks
-      </Text>
+      <Box my="5">
+        <Text size="4" m="5">
+          You have bookmarked <strong>{posts.length}</strong> posts.
+        </Text>
+      </Box>
       <PostsGrid posts={posts} isLoading={false} />
     </Container>
   );

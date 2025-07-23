@@ -12,13 +12,8 @@ const LoadingBalls = () => {
       .then(setSvgContent);
   }, []);
   return (
-    <Flex justify="center">
+    <Flex justify="center" className="h-screen">
       <Image src="/balls.svg" alt="Loading..." height={100} width={100} />
-      {/* <Balls height={100} /> */}
-      {/* <div
-        dangerouslySetInnerHTML={{ __html: svgContent }}
-        style={{ width: 100, height: 100 }}
-      /> */}
     </Flex>
   );
 };
