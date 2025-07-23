@@ -48,7 +48,9 @@ const page = async ({ searchParams }: Props) => {
           You have bookmarked <strong>{posts.length}</strong> posts.
         </Text>
       </Box>
-      <PostsGrid posts={posts} isLoading={false} />
+      <Box px="4">
+        <PostsGrid posts={posts} isLoading={false} />
+      </Box>
     </Container>
   );
 };

@@ -77,16 +77,19 @@ const MiniNavbar = () => {
             <Link href="/">
               <Logo size="sm" />
             </Link>
-            <Text
-              className="border-2 border-slate-400 rounded-lg p-2 cursor-pointer"
-              onClick={() => {
-                setExpand((prev) => !prev);
-                setSelectedItem("profile");
-              }}
-            >
-              {expand && <FaArrowUp />}
-              {!expand && <HamburgerMenuIcon />}
-            </Text>
+            <Flex align={"end"} gap="4">
+              <DarkModeToggler />
+              <Text
+                className="border-2 border-slate-400 rounded-lg p-2 cursor-pointer"
+                onClick={() => {
+                  setExpand((prev) => !prev);
+                  setSelectedItem("profile");
+                }}
+              >
+                {expand && <FaArrowUp />}
+                {!expand && <HamburgerMenuIcon />}
+              </Text>
+            </Flex>
           </Flex>
           <Flex
             grow="1"
@@ -126,9 +129,6 @@ const MiniNavbar = () => {
                       </Text>
                     </button>
                   ))}
-                  <Flex mt="5">
-                    <DarkModeToggler />
-                  </Flex>
                 </Flex>
                 <Flex
                   className={
@@ -165,9 +165,6 @@ const MiniNavbar = () => {
                 <Link href="/register">
                   <Text>Register</Text>
                 </Link>
-                <Flex mt="3">
-                  <DarkModeToggler />
-                </Flex>
               </Flex>
             )}
           </Flex>

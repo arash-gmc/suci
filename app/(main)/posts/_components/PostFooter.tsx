@@ -10,6 +10,7 @@ import QuickComment from "./QuickComment";
 import { ViewerContext } from "@/app/_providers/ViewerContext";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
+import ButtonAnimation from "@/app/_components/ButtonAnimation";
 
 type Actions = "like" | "dislike" | "bookmark" | "repost" | "comment";
 
@@ -183,20 +184,11 @@ const PostFooter = ({ postId }: { postId: string }) => {
                 item.onClick();
               }}
             >
-              <motion.div
-                animate={
-                  animations[item.value as Actions]
-                    ? { scale: 1.2, y: -6 }
-                    : undefined
-                }
-                whileHover={{
-                  // rotate: [10, -10, 0],
-                  scale: 1.1,
-                }}
-                transition={{ duration: 0.2 }}
+              <ButtonAnimation
+                clickAnimation={animations[item.value as Actions]}
               >
                 <Text size={{ initial: "5", sm: "6" }}>{item.icon}</Text>
-              </motion.div>
+              </ButtonAnimation>
             </button>
           )}
         </Flex>

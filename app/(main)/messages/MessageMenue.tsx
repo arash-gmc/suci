@@ -39,8 +39,8 @@ const MessageMenu = ({ userId }: Props) => {
           <button>
             <motion.div
               animate={{ x: 0 }}
-              whileHover={{ x: [10, -10, 10, 0], scale: 1.1 }}
-              transition={{ type: "tween", duration: 0.3 }}
+              whileHover={{ x: [10, -7, 5, -2, 0], scale: 1.1 }}
+              transition={{ type: "tween", duration: 0.4 }}
             >
               <Text size="7">
                 <FaEnvelope />

@@ -144,7 +144,7 @@ const Filters = () => {
         }));
 
   return (
-    <Flex direction="column" gap="2">
+    <Flex direction="column" gap="2" pb="5">
       <MultiSelectingButtons
         options={options}
         status={selectedFilters}

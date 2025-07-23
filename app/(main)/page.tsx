@@ -10,7 +10,7 @@ export default async function Home() {
       pt={{ initial: "0", sm: "6" }}
     >
       <Container>
-        <Flex gap="3">
+        <Flex gap={{ initial: "2", md: "5" }} px={{ initial: "1", md: "3" }}>
           <TimeLine />
           <Box
             display={{ initial: "none", sm: "block" }}

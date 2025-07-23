@@ -6,6 +6,7 @@ import axios from "axios";
 import ProfilePicture from "@/app/_components/ProfilePicture";
 import { ViewerContext } from "@/app/_providers/ViewerContext";
 import { useRouter } from "next/navigation";
+import ButtonAnimation from "@/app/_components/ButtonAnimation";
 
 interface Props {
   postId: string;
@@ -38,9 +39,11 @@ const QuickComment = ({ postId, addCount, setStatus }: Props) => {
   return (
     <Popover.Root>
       <Popover.Trigger>
-        <button>
-          <FaRegComment />
-        </button>
+        <ButtonAnimation clickAnimation={false}>
+          <button>
+            <FaRegComment />
+          </button>
+        </ButtonAnimation>
       </Popover.Trigger>
       <Popover.Content style={{ width: 360 }}>
         <Flex gap="3">
